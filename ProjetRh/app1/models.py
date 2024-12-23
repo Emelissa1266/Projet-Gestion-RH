@@ -15,6 +15,10 @@ class Utilisateur(models.Model):
 
 class Competances(models.Model):
     descripton= models.CharField(max_length=40)
+
+class Formations(models.Model):
+    nom_formation= models.CharField(max_length=20)
+    date_obtention= models.DateField(default=timezone.now)
    
 
 
@@ -27,6 +31,7 @@ class Employe(models.Model):
     Historique_professionnel= models.CharField(max_length=500)
     Service_Employe= models.ForeignKey(Service, on_delete=models.CASCADE)
     Competance_Employe=models.ManyToManyField(Competances, related_name="comp")
+    Employe_Formation= models.ManyToManyField(Formations, related_name="frm")
     
 
     
@@ -72,10 +77,6 @@ class Contrat(models.Model):
 
 
 
-class Formations(models.Model):
-    nom_formation= models.CharField(max_length=20)
-    date_obtention= models.DateField(default=timezone.now)
-    Employe_Formation= models.ForeignKey(Employe, on_delete=models.CASCADE)
 
 class Condidat (models.Model):
     Nom= models.CharField(max_length= 20)
@@ -84,7 +85,7 @@ class Condidat (models.Model):
     CV = models.CharField(max_length= 500)
     date_condidature= models.DateField(default=timezone.now)
     Utilisateur_Condidat= models.ForeignKey(Utilisateur, on_delete=models.CASCADE)
-
+    Etat_condidature= models.CharField(max_length=30)
 
 
 class Recrutement(models.Model):
@@ -92,6 +93,7 @@ class Recrutement(models.Model):
     description= models.CharField(max_length= 500)
     status= models.CharField(max_length=100)
     Condidat_Recrutement= models.ManyToManyField(Condidat, related_name="Rcrt_cond")
+   
 
 
 
