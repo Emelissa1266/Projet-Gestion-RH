@@ -5,20 +5,37 @@ from django.utils import timezone
 class Service(models.Model):
     Nom= models.CharField(max_length=20)
     description= models.CharField(max_length=200)
+    def __str__(self):
+        return self.nom
+
 
 
 class Utilisateur(models.Model):
     Login = models.CharField(max_length= 30, unique=True)
     mot_de_passe = models.CharField(max_length=20)
-    role = models.CharField(max_length=30)
+    ROLE_CHOICES = [
+        ('admin', 'Admin'),
+        ('employee', 'Employee'),
+        ('candidate', 'Candidate'),
+    ]
+    role = models.CharField(max_length=30, choices=ROLE_CHOICES)
+
+    def __str__(self):
+        return self.login
 
 
 class Competances(models.Model):
     descripton= models.CharField(max_length=40)
 
+    def __str__(self):
+        return self.description
+
 class Formations(models.Model):
     nom_formation= models.CharField(max_length=20)
     date_obtention= models.DateField(default=timezone.now)
+
+    def __str__(self):
+        return self.nom_formation
    
 
 
@@ -30,8 +47,11 @@ class Employe(models.Model):
     adresse= models.CharField(max_length=30)
     Historique_professionnel= models.CharField(max_length=500)
     Service_Employe= models.ForeignKey(Service, on_delete=models.CASCADE)
-    Competance_Employe=models.ManyToManyField(Competances, related_name="comp")
-    Employe_Formation= models.ManyToManyField(Formations, related_name="frm")
+    Competance_Employe=models.ManyToManyField(Competances, related_name="comp", blank=True)
+    Employe_Formation= models.ManyToManyField(Formations, related_name="frm", blank=True)
+
+    def __str__(self):
+        return f"{self.prenom} {self.nom}"
     
 
     
@@ -44,7 +64,11 @@ class Salaire(models.Model):
     heures_supplementaires= models.IntegerField(default=0)
     retenus= models.FloatField(max_length=15)
     salaire_net= models.FloatField(max_length=20)
-    Employe_salaire= models.ForeignKey(Employe, on_delete=models.CASCADE)
+    Employe_salaire= models.ForeignKey(Employe, on_delete=models.CASCADE, related_name="salaires")
+
+    def __str__(self):
+        return f"Salaire pour {self.employe.nom} - {self.mois}"
+
 
 
 class Evaluation(models.Model):
@@ -52,7 +76,10 @@ class Evaluation(models.Model):
     criteres= models.CharField(max_length=200)
     Resultat= models.CharField(max_length=200)
     Commentaire= models.CharField(max_length=500)
-    Employe_Evaluation= models.ForeignKey(Employe, on_delete=models.CASCADE)
+    Employe_Evaluation= models.ForeignKey(Employe, on_delete=models.CASCADE, related_name="evaluations")
+
+    def __str__(self):
+        return f"Évaluation de {self.employe.nom} - {self.date_evaluation}"
 
 
 
@@ -60,32 +87,50 @@ class Evaluation(models.Model):
 class Conge(models.Model):
     date_deb= models.DateField(default=timezone.now)
     date_fin= models.DateField(default=timezone.now)
-    type_conge= models.CharField(max_length=15)
+    TYPE_CHOICES = [
+        ('paid', 'Paid Leave'),
+        ('sick', 'Sick Leave'),
+        ('unpaid', 'Unpaid Leave'),
+        ('maternity', 'Maternity Leave'),]
+    type_conge = models.CharField(max_length=15, choices=TYPE_CHOICES)
     solde_conge= models.FloatField(max_length= 10)
-    Employe_Conge= models.ForeignKey(Employe, on_delete=models.CASCADE)
+    Employe_Conge= models.ForeignKey(Employe, on_delete=models.CASCADE, related_name="conges")
+
+    def __str__(self):
+        return f"Congé de {self.employe.nom} - {self.type_conge}"
 
 
 
 class Contrat(models.Model):
      date_deb= models.DateField(default=timezone.now)
      date_fin= models.DateField(default=timezone.now)
-     type_contrat= models.CharField(max_length=15)
+     TYPE_CHOICES = [
+        ('permanent', 'Permanent'),
+        ('temporary', 'Temporary'),
+        ('internship', 'Internship'),
+    ]
+     type_contrat= models.CharField(max_length=15, choices=TYPE_CHOICES)
      salaire_monsuel= models.FloatField(max_length=20)
      salaire_quotidien= models.FloatField(max_length=20)
-     Employe_Contrat= models.ForeignKey(Employe, on_delete=models.CASCADE)
+     Employe_Contrat= models.ForeignKey(Employe, on_delete=models.CASCADE, related_name="contrats")
 
-
+     def __str__(self):
+        return f"Contrat de {self.employe.nom} - {self.type_contrat}"
 
 
 
 class Condidat (models.Model):
     Nom= models.CharField(max_length= 20)
     Prenom= models.CharField(max_length= 20)
-    Email= models.CharField(max_length= 30)
-    CV = models.CharField(max_length= 500)
+    Email= models.CharField(max_length= 30, unique=True)
+    CV = models.TextField()
     date_condidature= models.DateField(default=timezone.now)
-    Utilisateur_Condidat= models.ForeignKey(Utilisateur, on_delete=models.CASCADE)
+    Utilisateur_Condidat= models.ForeignKey(Utilisateur, on_delete=models.CASCADE, related_name="condidats")
     Etat_condidature= models.CharField(max_length=30)
+
+    def __str__(self):
+        return f"{self.prenom} {self.nom}"
+    
 
 
 class Recrutement(models.Model):
@@ -93,6 +138,9 @@ class Recrutement(models.Model):
     description= models.CharField(max_length= 500)
     status= models.CharField(max_length=100)
     Condidat_Recrutement= models.ManyToManyField(Condidat, related_name="Rcrt_cond")
+
+    def __str__(self):
+        return self.offre_emploi
     
 
 
