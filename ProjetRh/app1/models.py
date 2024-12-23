@@ -8,9 +8,14 @@ class Service(models.Model):
 
 
 class Utilisateur(models.Model):
-    Login = models.CharField(max_length= 30)
+    Login = models.CharField(max_length= 30, unique=True)
     mot_de_passe = models.CharField(max_length=20)
     role = models.CharField(max_length=30)
+
+
+class Competances(models.Model):
+    descripton= models.CharField(max_length=40)
+   
 
 
 class Employe(models.Model):
@@ -21,6 +26,7 @@ class Employe(models.Model):
     adresse= models.CharField(max_length=30)
     Historique_professionnel= models.CharField(max_length=500)
     Service_Employe= models.ForeignKey(Service, on_delete=models.CASCADE)
+    Competance_Employe=models.ManyToManyField(Competances, related_name="comp")
     
 
     
@@ -64,9 +70,6 @@ class Contrat(models.Model):
      Employe_Contrat= models.ForeignKey(Employe, on_delete=models.CASCADE)
 
 
-class Competances(models.Model):
-    descripton= models.CharField(max_length=40)
-    Competance_Employe=models.ManyToManyField(Employe , related_name="comp")
 
 
 class Formations(models.Model):
