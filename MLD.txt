@@ -1,0 +1,25 @@
+
+Employé (id_employe, nom, prenom, date_naissance, date_embauche, adresse,Historique id_service*)
+
+Compétence (id_competence, id_employe*, description)
+
+Formation (id_formation, id_employe*, nom_formation, date_obtention)
+
+Service (id_service, nom, description)
+
+Congé (id_conge, id_employe*, date_debut, date_fin, type_conge, solde_conge)
+
+Contrat (id_contrat, id_employe*, type_contrat, date_debut, date_fin, salaire_mensuel, salaire_quotidien)
+
+Salaire (id_salaire, id_employe*, mois_annee, salaire_base, primes, heures_supplementaires, retenues, salaire_net)
+
+Recrutement (id_recrutement, description, OffreEmploi,  statut, id_candidat*)
+
+9.	OffreEmploi (id_offre, titre, description, date_publication, statut)
+
+Candidat (id_candidat,id_utilisateur* nom, prenom, email, cv, date_candidature)
+
+Évaluation (id_evaluation, id_employe*, date_evaluationcommentaires,Critères,Resultat_evaluations )
+
+Utilisateur (id_utilisateur,id_condidat*, email, mot_de_passe, role)
+
