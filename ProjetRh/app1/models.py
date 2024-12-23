@@ -93,7 +93,8 @@ class Recrutement(models.Model):
     description= models.CharField(max_length= 500)
     status= models.CharField(max_length=100)
     Condidat_Recrutement= models.ManyToManyField(Condidat, related_name="Rcrt_cond")
-   
+    
+
 
 
 
