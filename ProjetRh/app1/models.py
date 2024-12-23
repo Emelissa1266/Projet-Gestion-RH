@@ -56,3 +56,30 @@ class Contrat(models.Model):
      salaire_quotidien= models.FloatField(max_length=20)
      Employe_Contrat= models.ForeignKey(Employe, on_delete=models.CASCADE)
 
+
+class Competances(models.Model):
+    descripton= models.CharField(max_length=40)
+    Competance_Employe=models.ManyToManyField(Employe, related_name='comp')
+
+
+class Formations(models.Model):
+    nom_formation= models.CharField(max_length=20)
+    date_obtention= models.DateField(default=timezone.now)
+    Employe_Formation= models.ForeignKey(Employe, on_delete=models.CASCADE)
+
+
+class Recrutement(models.Model):
+    offre_emploi= models.CharField(max_length=40)
+    description= models.CharField(max_length= 500)
+    status= models.CharField(max_length=100)
+
+
+class Condidat (models.Model):
+    Nom= models.CharField(max_length= 20)
+    Prenom= models.CharField(max_length= 20)
+    Email= models.CharField(max_length= 20)
+    CV = models.CharField(max_length= 500)
+    date_condidature= models.DateField(default=timezone.now)
+    Employe_Recrutement= models.ForeignKey(Employe, on_delete=models.CASCADE)
+
+
