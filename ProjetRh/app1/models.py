@@ -7,6 +7,12 @@ class Service(models.Model):
     description= models.CharField(max_length=200)
 
 
+class Utilisateur(models.Model):
+    Login = models.CharField(max_length= 30)
+    mot_de_passe = models.CharField(max_length=20)
+    role = models.CharField(max_length=30)
+
+
 class Employe(models.Model):
     nom= models.CharField(max_length=20)
     prenom= models.CharField(max_length=20)
@@ -15,6 +21,7 @@ class Employe(models.Model):
     adresse= models.CharField(max_length=30)
     Historique_professionnel= models.CharField(max_length=500)
     Service_Employe= models.ForeignKey(Service, on_delete=models.CASCADE)
+    
 
     
 
@@ -77,9 +84,12 @@ class Recrutement(models.Model):
 class Condidat (models.Model):
     Nom= models.CharField(max_length= 20)
     Prenom= models.CharField(max_length= 20)
-    Email= models.CharField(max_length= 20)
+    Email= models.CharField(max_length= 30)
     CV = models.CharField(max_length= 500)
     date_condidature= models.DateField(default=timezone.now)
     Employe_Recrutement= models.ForeignKey(Employe, on_delete=models.CASCADE)
+    Utilisateur_Condidat= models.ForeignKey(Utilisateur, on_delete=models.CASCADE)
+
+
 
 

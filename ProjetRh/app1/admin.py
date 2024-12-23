@@ -7,6 +7,9 @@ from .models import Salaire
 from .models import Service
 from .models import Competances
 from .models import  Formations
+from .models import Condidat
+from .models import Recrutement
+from .models import Utilisateur
 
 # Register your models here.
 admin.site.register(Employe)
@@ -17,4 +20,7 @@ admin.site.register(Salaire)
 admin.site.register(Service)
 admin.site.register(Competances)
 admin.site.register(Formations)
+admin.site.register(Condidat)
+admin.site.register(Recrutement)
+admin.site.register(Utilisateur)
 
