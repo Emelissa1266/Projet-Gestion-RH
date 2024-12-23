@@ -2,6 +2,11 @@ from django.db import models
 from django.utils import timezone
 
 # Create your models here.
+class Service(models.Model):
+    Nom= models.CharField(max_length=20)
+    description= models.CharField(max_length=200)
+
+
 class Employe(models.Model):
     nom= models.CharField(max_length=20)
     prenom= models.CharField(max_length=20)
@@ -32,10 +37,6 @@ class Evaluation(models.Model):
     Employe_Evaluation= models.ForeignKey(Employe, on_delete=models.CASCADE)
 
 
-class Service(models.Model):
-    Nom= models.CharField(max_length=20)
-    description= models.CharField(max_length=200)
-
 
 
 class Conge(models.Model):
@@ -55,4 +56,3 @@ class Contrat(models.Model):
      salaire_quotidien= models.FloatField(max_length=20)
      Employe_Contrat= models.ForeignKey(Employe, on_delete=models.CASCADE)
 
-     
