@@ -77,21 +77,23 @@ class Formations(models.Model):
     date_obtention= models.DateField(default=timezone.now)
     Employe_Formation= models.ForeignKey(Employe, on_delete=models.CASCADE)
 
-
-class Recrutement(models.Model):
-    offre_emploi= models.CharField(max_length=40)
-    description= models.CharField(max_length= 500)
-    status= models.CharField(max_length=100)
-
-
 class Condidat (models.Model):
     Nom= models.CharField(max_length= 20)
     Prenom= models.CharField(max_length= 20)
     Email= models.CharField(max_length= 30)
     CV = models.CharField(max_length= 500)
     date_condidature= models.DateField(default=timezone.now)
-    Condidat_Recrutement= models.ManyToManyField(Recrutement, related_name="Rcrt_cond")
     Utilisateur_Condidat= models.ForeignKey(Utilisateur, on_delete=models.CASCADE)
+
+
+
+class Recrutement(models.Model):
+    offre_emploi= models.CharField(max_length=40)
+    description= models.CharField(max_length= 500)
+    status= models.CharField(max_length=100)
+    Condidat_Recrutement= models.ManyToManyField(Condidat, related_name="Rcrt_cond")
+
+
 
 
 
