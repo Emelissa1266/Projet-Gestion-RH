@@ -30,7 +30,7 @@ class Salaire(models.Model):
     annee= models.DateField(default=timezone.now)
     salaire_base= models.FloatField(max_length=15)
     primes=models.FloatField(max_length=15)
-    heures_supplementaires= models.IntegerField(max_length=5)
+    heures_supplementaires= models.IntegerField
     retenus= models.FloatField(max_length=15)
     salaire_net= models.FloatField(max_length=20)
     Employe_salaire= models.ForeignKey(Employe, on_delete=models.CASCADE)
