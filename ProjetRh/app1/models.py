@@ -66,7 +66,7 @@ class Contrat(models.Model):
 
 class Competances(models.Model):
     descripton= models.CharField(max_length=40)
-    Competance_Employe=models.ManyToManyField(Employe, related_name='comp')
+    Competance_Employe=models.ManyToManyField(Employe , related_name="comp")
 
 
 class Formations(models.Model):
@@ -87,7 +87,7 @@ class Condidat (models.Model):
     Email= models.CharField(max_length= 30)
     CV = models.CharField(max_length= 500)
     date_condidature= models.DateField(default=timezone.now)
-    Condidat_Recrutement= models.ManyToManyField(Recrutement, related_name='Rcrt_cond')
+    Condidat_Recrutement= models.ManyToManyField(Recrutement, related_name="Rcrt_cond")
     Utilisateur_Condidat= models.ForeignKey(Utilisateur, on_delete=models.CASCADE)
 
 
