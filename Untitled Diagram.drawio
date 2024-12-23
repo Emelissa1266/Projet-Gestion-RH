@@ -325,8 +325,11 @@
         <mxCell id="SB-FFFIjVD-oxgu6gbSo-373" value="1,N" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;labelBackgroundColor=none;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
           <mxGeometry x="444" y="119" width="40" height="30" as="geometry" />
         </mxCell>
+        <mxCell id="SB-FFFIjVD-oxgu6gbSo-390" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="SB-FFFIjVD-oxgu6gbSo-374" target="SB-FFFIjVD-oxgu6gbSo-344">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
         <mxCell id="SB-FFFIjVD-oxgu6gbSo-374" value="1,1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;labelBackgroundColor=none;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
-          <mxGeometry x="620" y="136.5" width="60" height="27" as="geometry" />
+          <mxGeometry x="620" y="130" width="60" height="20" as="geometry" />
         </mxCell>
         <mxCell id="SB-FFFIjVD-oxgu6gbSo-375" value="Compétence" style="swimlane;fontStyle=0;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;rounded=0;shadow=0;strokeWidth=1;labelBackgroundColor=none;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
           <mxGeometry x="655" y="331" width="120" height="90" as="geometry">
