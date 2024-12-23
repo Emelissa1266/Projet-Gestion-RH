@@ -30,7 +30,7 @@ class Salaire(models.Model):
     annee= models.DateField(default=timezone.now)
     salaire_base= models.FloatField(max_length=15)
     primes=models.FloatField(max_length=15)
-    heures_supplementaires= models.IntegerField(max_length=5)
+    heures_supplementaires= models.IntegerField(default=0)
     retenus= models.FloatField(max_length=15)
     salaire_net= models.FloatField(max_length=20)
     Employe_salaire= models.ForeignKey(Employe, on_delete=models.CASCADE)
@@ -87,7 +87,7 @@ class Condidat (models.Model):
     Email= models.CharField(max_length= 30)
     CV = models.CharField(max_length= 500)
     date_condidature= models.DateField(default=timezone.now)
-    Employe_Recrutement= models.ForeignKey(Employe, on_delete=models.CASCADE)
+    Condidat_Recrutement= models.ManyToManyField(Recrutement, related_name='Rcrt_cond')
     Utilisateur_Condidat= models.ForeignKey(Utilisateur, on_delete=models.CASCADE)
 
 
