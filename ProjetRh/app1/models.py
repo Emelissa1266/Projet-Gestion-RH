@@ -57,8 +57,7 @@ class Employe(models.Model):
     
 
 class Salaire(models.Model):
-    mois= models.DateField(default=timezone.now)
-    annee= models.DateField(default=timezone.now)
+    mois_annee= models.DateField(default=timezone.now)
     salaire_base= models.FloatField(max_length=15)
     primes=models.FloatField(max_length=15)
     heures_supplementaires= models.IntegerField(default=0)
