@@ -16,9 +16,10 @@ class Utilisateur(models.Model):
     ROLE_CHOICES = [
         ('admin', 'Admin'),
         ('employee', 'Employee'),
+        ('manager', 'Manager'),
         ('candidate', 'Candidate'),
     ]
-    role = models.CharField(max_length=30, choices=ROLE_CHOICES)
+    role = models.CharField(max_length=30, choices=ROLE_CHOICES, default='candidate')
 
     def __str__(self):
         return self.login
@@ -27,12 +28,14 @@ class Utilisateur(models.Model):
 class Competances(models.Model):
     descripton= models.CharField(max_length=40)
 
+
     def __str__(self):
         return self.description
 
 class Formations(models.Model):
     nom_formation= models.CharField(max_length=20)
     date_obtention= models.DateField(default=timezone.now)
+    description= models.CharField(max_length=200)
 
     def __str__(self):
         return self.nom_formation
@@ -49,6 +52,7 @@ class Employe(models.Model):
     Service_Employe= models.ForeignKey(Service, on_delete=models.CASCADE)
     Competance_Employe=models.ManyToManyField(Competances, related_name="comp", blank=True)
     Employe_Formation= models.ManyToManyField(Formations, related_name="frm", blank=True)
+    Employe_Utilisateur= models.OneToOneField(Utilisateur, on_delete=models.CASCADE, related_name="employe")
 
     def __str__(self):
         return f"{self.prenom} {self.nom}"
@@ -57,8 +61,7 @@ class Employe(models.Model):
     
 
 class Salaire(models.Model):
-    mois= models.DateField(default=timezone.now)
-    annee= models.DateField(default=timezone.now)
+    mois_annee= models.DateField(default=timezone.now)
     salaire_base= models.FloatField(max_length=15)
     primes=models.FloatField(max_length=15)
     heures_supplementaires= models.IntegerField(default=0)
@@ -137,6 +140,7 @@ class Recrutement(models.Model):
     offre_emploi= models.CharField(max_length=40)
     description= models.CharField(max_length= 500)
     status= models.CharField(max_length=100)
+    date_debut= models.DateField(default=timezone.now)
     Condidat_Recrutement= models.ManyToManyField(Condidat, related_name="Rcrt_cond")
 
     def __str__(self):
