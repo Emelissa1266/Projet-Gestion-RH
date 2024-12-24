@@ -1,0 +1,56 @@
+--> Agent RH:  ** s'authentifier
+
+               ** Gestion des employes:
+                   -ajout, mod, supp
+
+               ** Gestion des conges:
+                   -ajout, mod, supp
+                   -suivi du solde du conge
+                   -notification pour les employes
+                   -date fin > date_deb
+
+                ** gestion des salaires:
+                   - ajout, mod, supp
+                   -Calcul automatique des salaires
+                   - Generation automatique d'une fiche de paie 
+                   -Gestion des primes et des avantages 
+                
+                ** Gestion des contrats:
+                   -ajout, mod, supp
+                   -Rechercher (consulter) des contrats
+                   -Gestion des renouvllements des contrats
+                   -Archivage des contrats
+                
+                ** Gestion des evaluations:
+                    -supprimer des evaluations
+                    -imprimer les rapports des evaluations
+                    -ouvrir les evaluations pour les managers
+
+                ** Gestions des recrutements :
+                    -Publier les offres d'emploi (ajout, mod, supp)
+                    -suivi des condidatures 
+                    -Gestion des entretiens
+
+                ** Suivi des taches des employes et des managers 
+                ** Suivi des horaires de travail des employeset des managers y compris les absences
+
+
+
+--> Manager :  ** consulter les fiches des employes
+               ** evaluer les employes
+               ** S'authentifier
+
+
+--> Employes: ** S'authentifier
+              ** consulter les conges
+              ** consulter les salaires
+              ** envoyer demendes conges
+              ** demende avance sur le salaire
+              ** consulter leur contrat
+              ** demende/accepte/refuse les renouvllements
+
+
+--> Condidats: ** S'authentifier
+               ** S'inscrire(creer un compte)
+               ** demande de recrutement
+               ** Consulter etat de condidature 
