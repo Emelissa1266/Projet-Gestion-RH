@@ -16,7 +16,7 @@ def authentifier(request):
                 request.session["utilisateur"] = utilisateur.id
                 return redirect("services")
             except Utilisateur.DoesNotExist:
-                form.add_error(None, "Login ou mot de passe incorrect! creer un compte")
+                form.add_error(None, "Login ou mot de passe incorrect! Si vous n'avez pas un compte creer un")
     else:
         form = AuthentificationForm()
     return render(request, "authentification.html", {"form": form})

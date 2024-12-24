@@ -19,7 +19,7 @@ class Utilisateur(models.Model):
         ('manager', 'Manager'),
         ('candidate', 'Candidate'),
     ]
-    role = models.CharField(max_length=30, choices=ROLE_CHOICES)
+    role = models.CharField(max_length=30, choices=ROLE_CHOICES, default='candidate')
 
     def __str__(self):
         return self.login
