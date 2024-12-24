@@ -1,0 +1,23 @@
+}
+.btn-custom {
+    margin: 10px;
+    width: 150px;
+    padding: 10px 20px;
+    font-size: 16px;
+}
+</style>
+</head>
+<body>
+<div class="container home-container">
+<h1>Bienvenue, Candidat</h1>
+<p>Commencez votre parcours avec nous dès maintenant !</p>
+<div>
+    <a href="{% url 'inscription' %}" class="btn btn-primary btn-custom">Commencer</a>
+    <a href="{% url 'connexion' %}" class="btn btn-success btn-custom">Connexion</a>
+</div>
+</div>
+
+<!-- Lien vers Bootstrap JS -->
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+</body>
+</html>

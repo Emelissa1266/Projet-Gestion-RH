@@ -3,5 +3,8 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('authentifier/', views.authentifier),
+    path('login/', views.authentifier, name='connexion'),
+    path('signup/', views.signup, name='inscription'),  # Ajoute une vue pour l'inscription
+    path('home/', views.home_candidat, name='homecandidat'),  # Page d'accueil pour le candidat
 ]
+
