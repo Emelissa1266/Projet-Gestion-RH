@@ -7,7 +7,6 @@ from .models import Utilisateur, Candidat
 def home_candidat(request):
     return render(request, 'home_candidat.html')
 
-
 def authentifier(request):
     if request.method == "POST":
         form = loginForm(request.POST)
@@ -26,7 +25,7 @@ def authentifier(request):
                 form.add_error('login', "Login ou mot de passe incorrect !")
     else:
         form = loginForm()
-    return render(request, "login.html", {"form": form})
+        return render(request, "login.html", {"form": form})
 
 
 # Vue pour l'inscription
