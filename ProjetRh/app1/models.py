@@ -1,7 +1,8 @@
 from django.db import models
 from django.utils import timezone
 
-# Create your models here.
+# Modèle pour les services
+
 class Service(models.Model):
     Nom= models.CharField(max_length=20)
     description= models.CharField(max_length=200)
@@ -9,10 +10,12 @@ class Service(models.Model):
         return self.nom
 
 
-
+# Modèle pour les utilisateurs
 class Utilisateur(models.Model):
     Login = models.CharField(max_length= 30, unique=True)
     mot_de_passe = models.CharField(max_length=20)
+    nom = models.CharField(max_length=30, blank=True, null=True)
+    prenom = models.CharField(max_length=30, blank=True, null=True)
     ROLE_CHOICES = [
         ('admin', 'Admin'),
         ('employee', 'Employee'),
@@ -24,7 +27,7 @@ class Utilisateur(models.Model):
     def __str__(self):
         return self.login
 
-
+# Modèle pour les compétences
 class Competances(models.Model):
     descripton= models.CharField(max_length=40)
 
@@ -32,6 +35,7 @@ class Competances(models.Model):
     def __str__(self):
         return self.description
 
+# Modèle pour les formations
 class Formations(models.Model):
     nom_formation= models.CharField(max_length=20)
     date_obtention= models.DateField(default=timezone.now)
@@ -41,7 +45,7 @@ class Formations(models.Model):
         return self.nom_formation
    
 
-
+# Modèle pour les employés
 class Employe(models.Model):
     nom= models.CharField(max_length=20)
     prenom= models.CharField(max_length=20)
@@ -59,7 +63,7 @@ class Employe(models.Model):
     
 
     
-
+# Modèle pour les salaires
 class Salaire(models.Model):
     mois_annee= models.DateField(default=timezone.now)
     salaire_base= models.FloatField(max_length=15)
@@ -73,7 +77,7 @@ class Salaire(models.Model):
         return f"Salaire pour {self.employe.nom} - {self.mois}"
 
 
-
+# Modèle pour les évaluations
 class Evaluation(models.Model):
     date_Evaluation= models.DateField(default=timezone.now)
     criteres= models.CharField(max_length=200)
@@ -86,7 +90,7 @@ class Evaluation(models.Model):
 
 
 
-
+# Modèle pour les congés
 class Conge(models.Model):
     date_deb= models.DateField(default=timezone.now)
     date_fin= models.DateField(default=timezone.now)
@@ -103,7 +107,7 @@ class Conge(models.Model):
         return f"Congé de {self.employe.nom} - {self.type_conge}"
 
 
-
+# Modèle pour les contrats
 class Contrat(models.Model):
      date_deb= models.DateField(default=timezone.now)
      date_fin= models.DateField(default=timezone.now)
@@ -121,8 +125,8 @@ class Contrat(models.Model):
         return f"Contrat de {self.employe.nom} - {self.type_contrat}"
 
 
-
-class Condidat (models.Model):
+# Modèle pour les condidats
+class Candidat (models.Model):
     Nom= models.CharField(max_length= 20)
     Prenom= models.CharField(max_length= 20)
     Email= models.CharField(max_length= 30, unique=True)
@@ -135,18 +139,17 @@ class Condidat (models.Model):
         return f"{self.prenom} {self.nom}"
     
 
-
+# Modèle pour les recrutements
 class Recrutement(models.Model):
     offre_emploi= models.CharField(max_length=40)
     description= models.CharField(max_length= 500)
     status= models.CharField(max_length=100)
     date_debut= models.DateField(default=timezone.now)
-    Condidat_Recrutement= models.ManyToManyField(Condidat, related_name="Rcrt_cond")
+    Condidat_Recrutement= models.ManyToManyField(Candidat, related_name="Rcrt_cond")
 
     def __str__(self):
         return self.offre_emploi
     
-
 
 
 

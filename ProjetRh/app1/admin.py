@@ -6,8 +6,8 @@ from .models import Contrat
 from .models import Salaire
 from .models import Service
 from .models import Competances
-from .models import  Formations
-from .models import Condidat
+from .models import Formations
+from .models import Candidat
 from .models import Recrutement
 from .models import Utilisateur
 
@@ -20,7 +20,7 @@ admin.site.register(Salaire)
 admin.site.register(Service)
 admin.site.register(Competances)
 admin.site.register(Formations)
-admin.site.register(Condidat)
+admin.site.register(Candidat)
 admin.site.register(Recrutement)
 admin.site.register(Utilisateur)
 
