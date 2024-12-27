@@ -7,26 +7,6 @@ from .models import Utilisateur, Candidat, Employe, Service, Competances, Format
 def home_candidat(request):
     return render(request, 'home_candidat.html')
 
-def authentifier(request):
-    if request.method == "POST":
-        form = loginForm(request.POST)
-        if form.is_valid():
-            login = form.cleaned_data["login"]
-            mot_de_passe = form.cleaned_data["mot_de_passe"]
-            try:
-                utilisateur = Utilisateur.objects.get(Login=login)
-                if check_password(mot_de_passe, utilisateur.mot_de_passe):
-                    # Stocker l'utilisateur dans la session
-                    request.session["utilisateur_id"] = utilisateur.id
-                    return redirect("services")  # Redirection après connexion réussie
-                else:
-                    form.add_error('login', "Login ou mot de passe incorrect !")
-            except Utilisateur.DoesNotExist:
-                form.add_error('login', "Login ou mot de passe incorrect !")
-    else:
-        form = loginForm()
-        return render(request, "login.html", {"form": form})
-
 
 # Vue pour l'inscription
 def signup(request):
@@ -60,33 +40,33 @@ def signup(request):
 #Function to load rh agent page 
 def RedirectionVersPage(request):
     if request.method == 'POST':
-        form = loginForm(request.POST)
+        form = loginForm(request.POST) # Récupérer les données du formulaire
         if form.is_valid():
             Login = form.cleaned_data["login"]
             Mot_de_passe = form.cleaned_data["mot_de_passe"]
             try:
                 utilisateur = Utilisateur.objects.get(Login=Login)
-                if Login == utilisateur.Login and Mot_de_passe == utilisateur.mot_de_passe and utilisateur.role == 'admin':
+                if Login == utilisateur.Login and Mot_de_passe == utilisateur.mot_de_passe and utilisateur.role == 'admin': # Si le login et le mot de passe sont corrects et le rôle est "admin"
                   return render(request, 'AgentRH.html')
                 else:
-                     if Login == utilisateur.Login and Mot_de_passe == utilisateur.mot_de_passe and utilisateur.role == 'manager':
+                     if Login == utilisateur.Login and Mot_de_passe == utilisateur.mot_de_passe and utilisateur.role == 'manager': # Si le login et le mot de passe sont corrects et le rôle est "manager"
                        return render(request, 'Manager.html')
                      else:
-                         if Login == utilisateur.Login and Mot_de_passe == utilisateur.mot_de_passe and utilisateur.role == 'employee':
+                         if Login == utilisateur.Login and Mot_de_passe == utilisateur.mot_de_passe and utilisateur.role == 'employee': # Si le login et le mot de passe sont corrects et le rôle est "employee"
                             return render(request, 'Employe.html')
                          else:
-                              if Login == utilisateur.Login and Mot_de_passe == utilisateur.mot_de_passe and utilisateur.role == 'candidate':
+                              if Login == utilisateur.Login and Mot_de_passe == utilisateur.mot_de_passe and utilisateur.role == 'candidate': # Si le login et le mot de passe sont corrects et le rôle est "candidate"
                                  return render(request, 'Candidat.html')
-                              else:
+                              else: # Si le mot de passe est incorrect
                                     form.add_error('login', "Login ou mot de passe incorrect !")
                                     msg = "Login ou mot de passe incorrect !"
                                     return render(request, "login.html", {"form": form, "msg": msg})
-            except Utilisateur.DoesNotExist:
+            except Utilisateur.DoesNotExist: # Si l'utilisateur n'existe pas
                 form.add_error('login', "Login ou mot de passe incorrect !")
                 msg = "Login ou mot de passe incorrect !"
                 return render(request, "login.html", {"form": form, "msg": msg})
     else:
-        form = loginForm()
+        form = loginForm() # Créer un formulaire vide si c'est une requête GET
         return render(request, "login.html", {"form": form})
     
         
