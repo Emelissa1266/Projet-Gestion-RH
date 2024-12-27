@@ -18,22 +18,30 @@
                     <div class="card-body">
                         <form method="post">
                             {% csrf_token %}
+                           <p>
                             <div class="form-group">
                                 <label for="id_Login">Nom d'utilisateur</label>
                                 {{ form.Login }}
                             </div>
+                           </p>
+                           <p> 
                             <div class="form-group">
                                 <label for="id_mot_de_passe">Mot de passe</label>
                                 {{ form.mot_de_passe }}
                             </div>
+                        </p>
+                        <p>
                             <div class="form-group">
                                 <label for="id_nom">Nom</label>
                                 {{ form.nom }}
                             </div>
+                        </p>
+                        <p>
                             <div class="form-group">
                                 <label for="id_prenom">Prénom</label>
                                 {{ form.prenom }}
                             </div>
+                        </p>
                             <button type="submit" class="btn btn-primary btn-block">S'inscrire</button>
                         </form>
                     </div>

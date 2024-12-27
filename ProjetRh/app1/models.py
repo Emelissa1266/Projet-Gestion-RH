@@ -7,7 +7,7 @@ class Service(models.Model):
     Nom= models.CharField(max_length=20)
     description= models.CharField(max_length=200)
     def __str__(self):
-        return self.nom
+        return self.Nom
 
 
 # Modèle pour les utilisateurs
@@ -25,7 +25,7 @@ class Utilisateur(models.Model):
     role = models.CharField(max_length=30, choices=ROLE_CHOICES, default='candidate')
 
     def __str__(self):
-        return self.login
+        return self.Login
 
 # Modèle pour les compétences
 class Competances(models.Model):
@@ -33,7 +33,7 @@ class Competances(models.Model):
 
 
     def __str__(self):
-        return self.description
+        return self.descripton
 
 # Modèle pour les formations
 class Formations(models.Model):
@@ -74,7 +74,7 @@ class Salaire(models.Model):
     Employe_salaire= models.ForeignKey(Employe, on_delete=models.CASCADE, related_name="salaires")
 
     def __str__(self):
-        return f"Salaire pour {self.employe.nom} - {self.mois}"
+        return f"Salaire pour {self.Employe_salaire} - {self.mois_annee}"
 
 
 # Modèle pour les évaluations
@@ -86,7 +86,7 @@ class Evaluation(models.Model):
     Employe_Evaluation= models.ForeignKey(Employe, on_delete=models.CASCADE, related_name="evaluations")
 
     def __str__(self):
-        return f"Évaluation de {self.employe.nom} - {self.date_evaluation}"
+        return f"Évaluation de {self.Employe_Evaluation} - {self.date_Evaluation}"
 
 
 
@@ -104,7 +104,7 @@ class Conge(models.Model):
     Employe_Conge= models.ForeignKey(Employe, on_delete=models.CASCADE, related_name="conges")
 
     def __str__(self):
-        return f"Congé de {self.employe.nom} - {self.type_conge}"
+        return f"Congé de {self.Employe_Conge} - {self.type_conge}"
 
 
 # Modèle pour les contrats
@@ -122,7 +122,7 @@ class Contrat(models.Model):
      Employe_Contrat= models.ForeignKey(Employe, on_delete=models.CASCADE, related_name="contrats")
 
      def __str__(self):
-        return f"Contrat de {self.employe.nom} - {self.type_contrat}"
+        return f"Contrat de {self.Employe_Contrat} - {self.type_contrat}"
 
 
 # Modèle pour les condidats
@@ -136,7 +136,7 @@ class Candidat (models.Model):
     Etat_condidature= models.CharField(max_length=30)
 
     def __str__(self):
-        return f"{self.prenom} {self.nom}"
+        return f"{self.Prenom} {self.Nom}"
     
 
 # Modèle pour les recrutements

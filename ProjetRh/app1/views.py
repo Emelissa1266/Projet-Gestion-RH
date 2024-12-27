@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.hashers import make_password, check_password
 from .forms import loginForm, SignupForm  
-from .models import Utilisateur, Candidat
+from .models import Utilisateur, Candidat, Employe, Service, Competances, Formations, Recrutement, Salaire, Evaluation
 
 
 def home_candidat(request):
@@ -33,20 +33,22 @@ def signup(request):
     if request.method == 'POST':
         form = SignupForm(request.POST)
         if form.is_valid():
-            # Sauvegarder l'utilisateur sans le valider pour ajouter le rôle
-            utilisateur = form.save(commit=False)
-            utilisateur.mot_de_passe = make_password(utilisateur.mot_de_passe)  # Hacher le mot de passe
-            utilisateur.role = 'candidate'  # Par défaut, le rôle est "candidate"
-            utilisateur.save()  # Sauvegarder l'utilisateur
+           # Sauvegarder l'utilisateur sans le valider pour ajouter le rôle
+            Utilisateur =  form.save(commit=False)
+            Utilisateur.Login = form.cleaned_data['Login']
+            Utilisateur.mot_de_passe = make_password(form.cleaned_data['mot_de_passe'])  # Hacher le mot de passe
+            Utilisateur.role = 'candidate'  # Par défaut, le rôle est "candidate"
+            
+            form.save()  # Sauvegarder l'utilisateur
 
             # Créer un candidat associé à l'utilisateur
             Candidat.objects.create(
-                Nom=utilisateur.nom,
-                Prenom=utilisateur.prenom,
-                Utilisateur_Condidat=utilisateur,
-                Email=form.cleaned_data['email'],  # Utiliser l'email fourni par l'utilisateur
-                Etat_condidature="en attente"  # Etat par défaut pour un candidat
-            )
+                 Nom=Utilisateur.nom,
+                 Prenom=Utilisateur.prenom,
+                 Utilisateur_Condidat=Utilisateur,
+                 Email=Utilisateur.Login,  # Utiliser l'email fourni par l'utilisateur
+                 Etat_condidature="en attente"  # Etat par défaut pour un candidat
+             )
 
             return redirect('connexion')  # Redirige vers la page de connexion après l'inscription
     else:

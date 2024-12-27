@@ -1,5 +1,5 @@
 from django import forms
-from .models import Utilisateur, Candidat
+from .models import Utilisateur, Candidat, Employe, Service, Competances, Formations, Recrutement, Salaire, Evaluation
 
 class loginForm(forms.Form):
     login = forms.CharField(label="Login", max_length=30, widget=forms.TextInput(attrs={"class": "form-control"}))
@@ -10,7 +10,7 @@ class SignupForm(forms.ModelForm):
         model = Utilisateur
         fields = ['Login', 'mot_de_passe', 'nom', 'prenom']
         widgets = {
-            'Login': forms.TextInput(attrs={'placeholder': 'Nom d\'utilisateur', 'class': 'form-control'}),
+            'Login': forms.EmailInput(attrs={'placeholder': 'Please enter your email', 'class': 'form-control'}),
             'mot_de_passe': forms.PasswordInput(attrs={'placeholder': 'Mot de passe', 'class': 'form-control'}),
             'nom': forms.TextInput(attrs={'placeholder': 'Nom', 'class': 'form-control'}),
             'prenom': forms.TextInput(attrs={'placeholder': 'Prénom', 'class': 'form-control'}),
