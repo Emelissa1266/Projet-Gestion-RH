@@ -55,3 +55,39 @@ def signup(request):
         form = SignupForm()  # Créer un formulaire vide si c'est une requête GET
 
     return render(request, 'signup.html', {'form': form})
+
+
+#Function to load rh agent page 
+def RedirectionVersPage(request):
+    if request.method == 'POST':
+        form = loginForm(request.POST)
+        if form.is_valid():
+            Login = form.cleaned_data["login"]
+            Mot_de_passe = form.cleaned_data["mot_de_passe"]
+            try:
+                utilisateur = Utilisateur.objects.get(Login=Login)
+                if Login == utilisateur.Login and Mot_de_passe == utilisateur.mot_de_passe and utilisateur.role == 'admin':
+                  return render(request, 'AgentRH.html')
+                else:
+                     if Login == utilisateur.Login and Mot_de_passe == utilisateur.mot_de_passe and utilisateur.role == 'manager':
+                       return render(request, 'Manager.html')
+                     else:
+                         if Login == utilisateur.Login and Mot_de_passe == utilisateur.mot_de_passe and utilisateur.role == 'employee':
+                            return render(request, 'Employe.html')
+                         else:
+                              if Login == utilisateur.Login and Mot_de_passe == utilisateur.mot_de_passe and utilisateur.role == 'candidate':
+                                 return render(request, 'Candidat.html')
+                              else:
+                                    form.add_error('login', "Login ou mot de passe incorrect !")
+                                    msg = "Login ou mot de passe incorrect !"
+                                    return render(request, "login.html", {"form": form, "msg": msg})
+            except Utilisateur.DoesNotExist:
+                form.add_error('login', "Login ou mot de passe incorrect !")
+                msg = "Login ou mot de passe incorrect !"
+                return render(request, "login.html", {"form": form, "msg": msg})
+    else:
+        form = loginForm()
+        return render(request, "login.html", {"form": form})
+    
+        
+    
