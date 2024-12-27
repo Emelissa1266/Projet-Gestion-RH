@@ -37,7 +37,7 @@ def signup(request):
     return render(request, 'signup.html', {'form': form})
 
 
-#Function to load rh agent page 
+#Fonction pour l'authentification
 def RedirectionVersPage(request):
     if request.method == 'POST':
         form = loginForm(request.POST) # Récupérer les données du formulaire
