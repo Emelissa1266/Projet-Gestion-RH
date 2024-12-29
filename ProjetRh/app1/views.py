@@ -1,12 +1,13 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect,get_object_or_404
 from django.contrib.auth.hashers import make_password, check_password
-from .forms import loginForm, SignupForm  
+from .forms import loginForm, SignupForm  ,EmployeForm ,UtilisateurForm
 from .models import Utilisateur, Candidat, Employe, Service, Competances, Formations, Recrutement, Salaire, Evaluation
-
+from django.contrib import messages
+from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
 
 def home_candidat(request):
     return render(request, 'home_candidat.html')
-
 
 # Vue pour l'inscription
 def signup(request):
@@ -47,16 +48,16 @@ def RedirectionVersPage(request):
             try:
                 utilisateur = Utilisateur.objects.get(Login=Login)
                 if Login == utilisateur.Login and Mot_de_passe == utilisateur.mot_de_passe and utilisateur.role == 'admin': # Si le login et le mot de passe sont corrects et le rôle est "admin"
-                  return render(request, 'AgentRH.html')
+                  return render(request, 'AcceuilARH.html')
                 else:
                      if Login == utilisateur.Login and Mot_de_passe == utilisateur.mot_de_passe and utilisateur.role == 'manager': # Si le login et le mot de passe sont corrects et le rôle est "manager"
-                       return render(request, 'Manager.html')
+                       return render(request, 'AcceuilMan.html')
                      else:
                          if Login == utilisateur.Login and Mot_de_passe == utilisateur.mot_de_passe and utilisateur.role == 'employee': # Si le login et le mot de passe sont corrects et le rôle est "employee"
-                            return render(request, 'Employe.html')
+                            return render(request, 'AcceuilEmp.html')
                          else:
                               if Login == utilisateur.Login and Mot_de_passe == utilisateur.mot_de_passe and utilisateur.role == 'candidate': # Si le login et le mot de passe sont corrects et le rôle est "candidate"
-                                 return render(request, 'Candidat.html')
+                                 return render(request, 'AcceuilCond.html')
                               else: # Si le mot de passe est incorrect
                                     form.add_error('login', "Login ou mot de passe incorrect !")
                                     msg = "Login ou mot de passe incorrect !"
@@ -69,5 +70,73 @@ def RedirectionVersPage(request):
         form = loginForm() # Créer un formulaire vide si c'est une requête GET
         return render(request, "login.html", {"form": form})
     
-        
     
+def acceuil_arh(request):
+    return render(request, 'AcceuilARH.html')
+
+
+def liste_employes(request):
+    employes = Employe.objects.select_related('Employe_Utilisateur').all()
+    return render(request, 'liste_employes.html', {'employes': employes})
+
+def ajouter_employe(request):
+    if request.method == "POST":
+        utilisateur_form = UtilisateurForm(request.POST)
+        employe_form = EmployeForm(request.POST)
+
+        if utilisateur_form.is_valid() and employe_form.is_valid():
+            # Sauvegarde les informations utilisateur
+            utilisateur = utilisateur_form.save()
+
+            # Associe l'utilisateur à l'employé et sauvegarde les informations employé
+            employe = employe_form.save(commit=False)
+            employe.Employe_Utilisateur = utilisateur
+            employe.save()
+            employe_form.save_m2m()  # Sauvegarde les relations ManyToMany
+
+            messages.success(request, "Employé ajouté avec succès !")
+            return redirect('liste_employes')  # Redirige vers la liste des employés
+    else:
+        utilisateur_form = UtilisateurForm()
+        employe_form = EmployeForm()
+
+    return render(request, 'ajouter_employe.html', {
+        'utilisateur_form': utilisateur_form,
+        'employe_form': employe_form,
+    })
+
+
+def modifier_employe(request, employe_id):
+    employe = get_object_or_404(Employe, id=employe_id)
+    utilisateur = employe.Employe_Utilisateur  # Récupère l'utilisateur lié à l'employé
+
+    if request.method == 'POST':
+        employe_form = EmployeForm(request.POST, instance=employe)
+        utilisateur_form = UtilisateurForm(request.POST, instance=utilisateur)
+
+        if employe_form.is_valid() and utilisateur_form.is_valid():
+            employe_form.save()
+            utilisateur_form.save()
+            messages.success(request, "Les informations de l'employé ont été mises à jour avec succès.")
+            return redirect('liste_employes')
+    else:
+        employe_form = EmployeForm(instance=employe)
+        utilisateur_form = UtilisateurForm(instance=utilisateur)
+
+    return render(request, 'modifier_employe.html', {
+        'employe_form': employe_form,
+        'utilisateur_form': utilisateur_form,
+        'employe': employe,
+    })
+
+def supprimer_employe(request, employe_id):
+    if request.method == "POST":
+        employe = get_object_or_404(Employe, id=employe_id)
+        utilisateur = employe.Employe_Utilisateur  # Get the associated user
+        employe.delete()  # Delete the employee
+        
+        # Now delete the associated user
+        utilisateur.delete()
+        
+        return redirect('liste_employes')  # Redirect to the list of employees
+    return redirect('liste_employes')  # If the request is not POST, just redirect back to the list

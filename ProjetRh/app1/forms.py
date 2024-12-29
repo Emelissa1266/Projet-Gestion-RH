@@ -4,7 +4,9 @@ from .models import Utilisateur, Candidat, Employe, Service, Competances, Format
 class loginForm(forms.Form):
     login = forms.CharField(label="Login", max_length=30, widget=forms.TextInput(attrs={"class": "form-control"}))
     mot_de_passe = forms.CharField(label="Mot de passe", widget=forms.PasswordInput(attrs={"class": "form-control"}))
+    mot_de_passe = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
 
+    
 class SignupForm(forms.ModelForm):
     class Meta:
         model = Utilisateur
@@ -21,9 +23,30 @@ class SignupForm(forms.ModelForm):
             'nom': 'Nom',
             'prenom': 'Prénom',
         }
-
+        mot_de_passe = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
     def clean_mot_de_passe(self):
         mot_de_passe = self.cleaned_data.get('mot_de_passe')
         if len(mot_de_passe) < 8:
             raise forms.ValidationError("Le mot de passe doit contenir au moins 8 caractères.")
         return mot_de_passe
+
+from django import forms
+from .models import Utilisateur, Employe
+
+class UtilisateurForm(forms.ModelForm):
+    class Meta:
+        model = Utilisateur
+        fields = ['Login', 'mot_de_passe', 'nom', 'prenom', 'role']
+        
+        mot_de_passe = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+
+class EmployeForm(forms.ModelForm):
+    class Meta:
+        model = Employe
+        fields = ['nom', 'prenom', 'date_de_naissance', 'date_aumbauche', 'adresse', 
+                  'Historique_professionnel', 'Service_Employe', 'Competance_Employe', 
+                  'Employe_Formation']
+        widgets = {
+            'Competance_Employe': forms.CheckboxSelectMultiple(),
+            'Employe_Formation': forms.CheckboxSelectMultiple(),
+        }

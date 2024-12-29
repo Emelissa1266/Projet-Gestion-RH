@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils import timezone
-
+from django.contrib.auth.hashers import make_password,check_password
 # Modèle pour les services
 
 class Service(models.Model):
@@ -26,6 +26,12 @@ class Utilisateur(models.Model):
 
     def __str__(self):
         return self.Login
+    
+    def set_password(self, password):
+        self.mot_de_passe = make_password(password)
+
+    def check_password(self, password):
+        return check_password(password, self.mot_de_passe)
 
 # Modèle pour les compétences
 class Competances(models.Model):

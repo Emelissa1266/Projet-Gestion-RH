@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajouter un employé</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Ajouter un employé</h1>
+        <form method="POST">
+            {% csrf_token %}
+            <fieldset>
+                <legend>Informations Utilisateur</legend>
+                {{ utilisateur_form.as_p }}
+            </fieldset>
+            <fieldset>
+                <legend>Informations Employé</legend>
+                {{ employe_form.as_p }}
+            </fieldset>
+            <button type="submit" class="btn btn-primary">Ajouter</button>
+        </form>
+        <a href="{% url 'liste_employes' %}" class="btn btn-secondary mt-3">Retour</a>
+    </div>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>

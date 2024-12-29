@@ -1,0 +1,52 @@
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des Employés</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <header class="header bg-dark text-white text-center py-3">
+        <h1>Gestion des Employés</h1>
+    </header>
+    <main class="container mt-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2>Liste des Employés</h2>
+            <a href="{% url 'ajouter_employe' %}" class="btn btn-primary">Ajouter un Employé</a>
+        </div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Service</th>
+                    <th>Date d'embauche</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for employe in employes %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ employe.nom }}</td>
+                    <td>{{ employe.prenom }}</td>
+                    <td>{{ employe.Service_Employe.Nom }}</td>
+                    <td>{{ employe.date_aumbauche }}</td>
+                    <td>
+                        <a href="{% url 'modifier_employe' employe.id %}" class="btn btn-warning btn-sm">Modifier</a>
+                        <form method="POST" action="{% url 'supprimer_employe' employe.id %}" style="display:inline-block;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </main>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>

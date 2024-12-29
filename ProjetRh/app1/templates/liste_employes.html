@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des employés</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">Liste des employés</h1>
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Utilisateur</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for employe in employes %}
+                <tr>
+                    <td>{{ employe.id }}</td>
+                    <td>{{ employe.nom }}</td>
+                    <td>{{ employe.prenom }}</td>
+                    <td>{{ employe.Employe_Utilisateur.Login }}</td>
+                    <td>
+                        <a href="{% url 'modifier_employe' employe.id %}" class="btn btn-warning btn-sm">Modifier</a>
+                        <button class="btn btn-danger btn-sm" onclick="confirmDelete({{ employe.id }})">Supprimer</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{% url 'ajouter_employe' %}" class="btn btn-primary mt-3">Ajouter un employé</a>
+    </div>
+
+    <!-- Modal de confirmation de suppression -->
+    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmation de suppression</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Êtes-vous sûr de vouloir supprimer cet employé ?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                    <form id="deleteForm" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Supprimer</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- link to compiled js file -->
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"> </script>
+
+    <script>
+        // Fonction pour afficher la modale de confirmation de suppression
+        function confirmDelete(employeId) {
+            const deleteForm = document.getElementById('deleteForm');
+            const actionUrl = `/employes/supprimer/${employeId}/`; // Remplacez par l'URL de votre suppression spécifique
+
+            // Met à jour l'action du formulaire avec l'URL spécifique pour cet employé
+            deleteForm.action = actionUrl;
+
+            // Affiche la modale
+            new bootstrap.Modal(document.getElementById('confirmDeleteModal')).show();
+        }
+    </script>
+</body>
+</html>
