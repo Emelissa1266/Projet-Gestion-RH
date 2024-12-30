@@ -4,7 +4,7 @@ from . import views
 
 urlpatterns = [
     path('login/', views.RedirectionVersPage, name='connexion'),
-    path('signup/', views.signup, name='inscription'),  # Ajoute une vue pour l'inscription
+    path('home/signup/', views.signup, name='inscription'),  # Ajoute une vue pour l'inscription
     path('home/', views.home_candidat, name='homecandidat'),  # Page d'accueil 
      path('acceuil-arh/', views.acceuil_arh, name='acceuil_arh'),  # URL pour la page d'accueil ARH
     path('employes/', views.liste_employes, name='liste_employes'),

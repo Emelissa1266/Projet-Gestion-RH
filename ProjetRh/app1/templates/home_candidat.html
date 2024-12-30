@@ -7,30 +7,87 @@
     <title>Accueil Candidat</title>
     <!-- Lien vers Bootstrap CSS -->
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        body {
-            background-color: #f8f9fa;
-            font-family: Arial, sans-serif;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            text-decoration: none;
+            list-style: none;
+        }
+        :root {
+            --bg-color: #222327;
+            --text-color: #000000;
+            --main-color: #1ad2ada6;
+        }
+            body {
+            background-image: url('../static/images/photobackground.png');; /* Path to your image */
+            background-size: cover;
+           }
+        header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            right: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: transparent;
+            padding: 15px 12%;
+            transition: all .05s ease;
+        }
+        .navbar a {
+            color: var(--text-color);
+            font-size: 1.1rem;
+            font-weight: 500;
+            padding: 5px 0;
+            margin: 0 30px;
+            transition: all .50s ease;
+        }
+        .navbar a:hover {
+            color: var(--main-color);
         }
         .home-container {
-            text-align: center;
+            text-align: left;
             margin-top: 15%;
+            padding: 20px;
+    
         }
         .btn-custom {
             margin: 10px;
             width: 150px;
             padding: 10px 20px;
             font-size: 16px;
+            background-color: var(--main-color);
+            border: none;
+            color: #000;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        .btn-custom:hover {
+            background-color: #22c843;
         }
     </style>
 </head>
 <body>
+    <header>
+        <ul class="navbar"></ul>
+        <div class="navbar">
+            <a href="{% url 'connexion' %}" class="user"><i class="ri-user-fill"></i>Connexion</a>
+        </div>
+    </header>
     <div class="container home-container">
         <h1>Bienvenue, Candidat</h1>
         <p>Commencez votre parcours avec nous dès maintenant !</p>
         <div>
-            <a href="{% url 'inscription' %}" class="btn btn-primary btn-custom">Commencer</a>
-            <a href="{% url 'connexion' %}" class="btn btn-success btn-custom">Connexion</a>
+            <a href="{% url 'inscription' %}" class="btn btn-custom">Commencer</a>
         </div>
     </div>
 

@@ -4,6 +4,84 @@
 <head>
     <title>Authentification</title>
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            text-decoration: none;
+            list-style: none;
+        }
+        :root {
+            --bg-color: #222327;
+            --text-color: #fff;
+            --main-color: #4bffdb;
+        }
+        body {
+            min-height: 50vh;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+        header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            right: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: transparent;
+            padding: 15px 12%;
+            transition: all .05s ease;
+        }
+        .btn-primary {
+            background-color: var(--main-color);
+            border: none;
+            color: #000;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: #5ac4af;
+        }
+        .btn-secondary {
+            background-color: #555;
+            border: none;
+            color: var(--text-color);
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        .btn-secondary:hover {
+            background-color: #444;
+        }
+        .card {
+            background-color: #333;
+            border: none;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .card-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .card-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--main-color);
+        }
+
+
+
+    </style>
 </head>
 <body>
     <div class="container">
@@ -17,7 +95,10 @@
                         <form method="post">
                             {% csrf_token %}
                             {{ form.as_p }}
-                            <button type="submit" class="btn btn-primary btn-block">Se connecter</button>
+                            <div class="d-flex justify-content-between">
+                                <button type="submit" class="btn btn-primary">Se connecter</button>
+                                <a href="{% url 'homecandidat' %}" class="btn btn-secondary">Annuler</a>
+                            </div>
                         </form>
                     </div>
                 </div>
