@@ -42,8 +42,8 @@
 
 
 --> Employes: ** S'authentifier
-              ** consulter les conges
-              ** consulter les salaires
+              ** consulter leur conges
+              ** consulter leur salaires
               ** envoyer demendes conges
               ** demende avance sur le salaire
               ** consulter leur contrat
