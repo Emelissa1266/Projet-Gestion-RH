@@ -41,7 +41,11 @@
         </table>
         <!-- Bouton pour ajouter un nouveau congé -->
         <a href="{% url 'ajouter_conge' %}" class="btn btn-primary mt-3">Ajouter un congé</a>
-                                <!-- Bouton Terminer -->
+        
+        <!-- Bouton pour afficher la liste des demandes -->
+        <a href="{% url 'liste_demande_conge' %}" class="btn btn-info mt-3">Voir les demandes de congé</a>
+
+        <!-- Bouton Terminer -->
         <a href="{% url 'acceuil_arh' %}" class="btn btn-secondary mt-3">Terminer</a>
     </div>
 

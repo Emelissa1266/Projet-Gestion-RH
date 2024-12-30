@@ -12,6 +12,7 @@ urlpatterns = [
     path('employes/modifier/<int:employe_id>/', views.modifier_employe, name='modifier_employe'),
     path('employes/supprimer/<int:employe_id>/', views.supprimer_employe, name='supprimer_employe'),
     path('acceuil-arh/conges/',views.liste_conges, name='liste_conges'),
-     path('acceuil-arh/conges/ajouter/', views.ajouter_conge, name='ajouter_conge'),
+    path('acceuil-arh/conges/ajouter/', views.ajouter_conge, name='ajouter_conge'),
+    path('acceuil-arh/conges/Liste_dmconge/', views.liste_demandes_conges, name='liste_demande_conge'),
 ]
 

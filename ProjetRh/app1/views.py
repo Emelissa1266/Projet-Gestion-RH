@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect,get_object_or_404
 from django.contrib.auth.hashers import make_password, check_password
 from .forms import loginForm, SignupForm  ,EmployeForm ,UtilisateurForm ,CongeForm
-from .models import Utilisateur, Candidat, Employe, Service, Competances, Formations, Recrutement, Salaire, Evaluation ,Conge
+from .models import Utilisateur, Candidat, Employe, Service, Competances, Formations, Recrutement, Salaire, Evaluation ,Conge ,DemandeConge
 from django.contrib import messages
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
@@ -157,3 +157,7 @@ def ajouter_conge(request):
         form = CongeForm()
 
     return render(request, 'ajouter_conge.html', {'form': form})
+
+def liste_demandes_conges(request):
+    demandes_conges = DemandeConge.objects.all()
+    return render(request, 'liste_demande.html', {'demandes_conges': demandes_conges})
