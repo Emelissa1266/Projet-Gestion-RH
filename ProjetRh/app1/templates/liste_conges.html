@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des congés</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">Liste des congés</h1>
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Employé</th>
+                    <th>Date début</th>
+                    <th>Date fin</th>
+                    <th>Type de congé</th>
+                    <th>Solde</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for conge in conges %}
+                <tr>
+                    <td>{{ conge.id }}</td>
+                    <td>{{ conge.Employe_Conge }}</td>
+                    <td>{{ conge.date_deb }}</td>
+                    <td>{{ conge.date_fin }}</td>
+                    <td>{{ conge.get_type_conge_display }}</td>
+                    <td>{{ conge.solde_conge }}</td>
+                    <td>
+                        <!-- Bouton Supprimer -->
+                        <button class="btn btn-danger btn-sm" onclick="confirmDelete({{ conge.id }})">Supprimer</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <!-- Bouton pour ajouter un nouveau congé -->
+        <a href="{% url 'ajouter_conge' %}" class="btn btn-primary mt-3">Ajouter un congé</a>
+                                <!-- Bouton Terminer -->
+        <a href="{% url 'acceuil_arh' %}" class="btn btn-secondary mt-3">Terminer</a>
+    </div>
+
+    <!-- Modal de confirmation de suppression -->
+    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmation de suppression</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Êtes-vous sûr de vouloir supprimer ce congé ?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                    <form id="deleteForm" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Supprimer</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Liens pour les fichiers JS -->
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+
+    <script>
+        // Fonction pour afficher la modale de confirmation de suppression
+        function confirmDelete(congeId) {
+            const deleteForm = document.getElementById('deleteForm');
+            const actionUrl = `/conges/supprimer/${congeId}/`; // Remplacez par l'URL de suppression spécifique pour un congé
+
+            // Met à jour l'action du formulaire avec l'URL spécifique pour ce congé
+            deleteForm.action = actionUrl;
+
+            // Affiche la modale
+            new bootstrap.Modal(document.getElementById('confirmDeleteModal')).show();
+        }
+    </script>
+</body>
+</html>

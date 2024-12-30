@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect,get_object_or_404
 from django.contrib.auth.hashers import make_password, check_password
-from .forms import loginForm, SignupForm  ,EmployeForm ,UtilisateurForm
-from .models import Utilisateur, Candidat, Employe, Service, Competances, Formations, Recrutement, Salaire, Evaluation
+from .forms import loginForm, SignupForm  ,EmployeForm ,UtilisateurForm ,CongeForm
+from .models import Utilisateur, Candidat, Employe, Service, Competances, Formations, Recrutement, Salaire, Evaluation ,Conge
 from django.contrib import messages
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
@@ -140,3 +140,20 @@ def supprimer_employe(request, employe_id):
         
         return redirect('liste_employes')  # Redirect to the list of employees
     return redirect('liste_employes')  # If the request is not POST, just redirect back to the list
+
+# Vue pour la liste des congés
+def liste_conges(request):
+    conges = Conge.objects.all()
+    return render(request, 'liste_conges.html', {'conges': conges})
+
+# Vue pour ajouter un nouveau congé
+def ajouter_conge(request):
+    if request.method == 'POST':
+        form = CongeForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('liste_conges')  # Redirection vers la liste des congés après ajout
+    else:
+        form = CongeForm()
+
+    return render(request, 'ajouter_conge.html', {'form': form})

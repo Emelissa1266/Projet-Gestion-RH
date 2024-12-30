@@ -1,5 +1,5 @@
 from django import forms
-from .models import Utilisateur, Candidat, Employe, Service, Competances, Formations, Recrutement, Salaire, Evaluation
+from .models import Utilisateur, Candidat, Employe, Service, Competances, Formations, Recrutement, Salaire, Evaluation, Conge
 
 class loginForm(forms.Form):
     login = forms.CharField(label="Login", max_length=30, widget=forms.TextInput(attrs={"class": "form-control"}))
@@ -49,4 +49,16 @@ class EmployeForm(forms.ModelForm):
         widgets = {
             'Competance_Employe': forms.CheckboxSelectMultiple(),
             'Employe_Formation': forms.CheckboxSelectMultiple(),
+        }
+
+class CongeForm(forms.ModelForm):
+    class Meta:
+        model = Conge
+        fields = ['date_deb', 'date_fin', 'type_conge', 'solde_conge', 'Employe_Conge']
+        widgets = {
+            'date_deb': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+            'date_fin': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+            'type_conge': forms.Select(attrs={'class': 'form-control'}),
+            'solde_conge': forms.NumberInput(attrs={'class': 'form-control'}),
+            'Employe_Conge': forms.Select(attrs={'class': 'form-control'}),
         }

@@ -156,7 +156,23 @@ class Recrutement(models.Model):
     def __str__(self):
         return self.offre_emploi
     
+# Modèle pour les demandes de congé
+class DemandeConge(models.Model):
+    employe = models.ForeignKey(Employe, on_delete=models.CASCADE, related_name="demandes")
+    TYPE_CHOICES = [
+        ('paid', 'Paid Leave'),
+        ('sick', 'Sick Leave'),
+        ('unpaid', 'Unpaid Leave'),
+        ('maternity', 'Maternity Leave'),]
+    type_conge = models.CharField(max_length=15, choices=TYPE_CHOICES)
+    date_deb = models.DateField()
+    date_fin = models.DateField()
+    raison = models.TextField(null=True, blank=True)
+    statut = models.CharField(max_length=10, choices=[('en_attente', 'En attente'), ('approuve', 'Approuvé'), ('rejete', 'Rejeté')], default='en_attente')
+    commentaire = models.TextField(null=True, blank=True)
 
+    def jours_demandes(self):
+        return (self.date_fin - self.date_deb).days + 1
 
 
 
