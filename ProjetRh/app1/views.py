@@ -5,6 +5,10 @@ from .models import Utilisateur, Candidat, Employe, Service, Competances, Format
 from django.contrib import messages
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
+from django.conf import settings
+from django.core.mail import send_mail
+import uuid
+
 
 def home_candidat(request):
     return render(request, 'home_candidat.html')
@@ -14,26 +18,41 @@ def signup(request):
     if request.method == 'POST':
         form = SignupForm(request.POST)
         if form.is_valid():
-           # Sauvegarder l'utilisateur sans le valider pour ajouter le rôle
-            Utilisateur =  form.save(commit=False)
-            Utilisateur.Login = form.cleaned_data['Login']
-            Utilisateur.mot_de_passe = make_password(form.cleaned_data['mot_de_passe'])  # Hacher le mot de passe
-            Utilisateur.role = 'candidate'  # Par défaut, le rôle est "candidate"
-            
-            form.save()  # Sauvegarder l'utilisateur
+            # Sauvegarder l'utilisateur sans le valider
+            utilisateur = form.save(commit=False)
+            utilisateur.Login = form.cleaned_data['Login']
+            utilisateur.mot_de_passe = make_password(form.cleaned_data['mot_de_passe'])  # Hacher le mot de passe
+            utilisateur.role = 'candidate'  # Rôle par défaut
 
-            # Créer un candidat associé à l'utilisateur
+            # Générer un code de confirmation
+            confirmation_code = str(uuid.uuid4())
+            utilisateur.confirmation_code = confirmation_code  # Ajouter un champ `confirmation_code` au modèle utilisateur
+            utilisateur.email_verified = False  # Champ dans le modèle pour vérifier l'e-mail
+            utilisateur.save()  # Sauvegarder l'utilisateur
+
+            # Créer un candidat associé
             Candidat.objects.create(
-                 Nom=Utilisateur.nom,
-                 Prenom=Utilisateur.prenom,
-                 Utilisateur_Condidat=Utilisateur,
-                 Email=Utilisateur.Login,  # Utiliser l'email fourni par l'utilisateur
-                 Etat_condidature="en attente"  # Etat par défaut pour un candidat
-             )
+                Nom=utilisateur.nom,
+                Prenom=utilisateur.prenom,
+                Utilisateur_Condidat=utilisateur,
+                Email=utilisateur.Login,
+                Etat_condidature="en attente"
+            )
 
-            return redirect('connexion')  # Redirige vers la page de connexion après l'inscription
+            # Envoyer un e-mail avec le lien de confirmation
+            confirmation_link = request.build_absolute_uri(f"/confirmer-email/{confirmation_code}/")
+            send_mail(
+                'Confirmez votre adresse e-mail',
+                f'Bonjour {utilisateur.nom},\n\nVeuillez confirmer votre e-mail en cliquant sur ce lien : {confirmation_link}',
+                settings.DEFAULT_FROM_EMAIL,
+                [utilisateur.Login],
+                fail_silently=False,
+            )
+
+            messages.success(request, "Un e-mail de confirmation a été envoyé. Veuillez vérifier votre boîte de réception.")
+            return redirect('connexion')
     else:
-        form = SignupForm()  # Créer un formulaire vide si c'est une requête GET
+        form = SignupForm()
 
     return render(request, 'signup.html', {'form': form})
 
@@ -161,3 +180,20 @@ def ajouter_conge(request):
 def liste_demandes_conges(request):
     demandes_conges = DemandeConge.objects.all()
     return render(request, 'liste_demande.html', {'demandes_conges': demandes_conges})
+
+
+def motdepasseoublie(request):
+    return render(request, 'password_reset.html')
+
+def confirmer_email(request, confirmation_code):
+    utilisateur = get_object_or_404(Utilisateur, confirmation_code=confirmation_code)
+    
+    if utilisateur.email_verified:
+        messages.info(request, "Votre e-mail a déjà été confirmé.")
+    else:
+        utilisateur.email_verified = True
+        utilisateur.confirmation_code = ""  # Supprimer le code après confirmation
+        utilisateur.save()
+        messages.success(request, "Votre e-mail a été confirmé avec succès !")
+
+    return redirect('connexion')
