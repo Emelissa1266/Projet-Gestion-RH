@@ -65,7 +65,7 @@
         .card {
             background-color: #333;
             border: none;
-            border-radius: 10px;
+            border-radius: 50px;
             padding: 20px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
@@ -78,9 +78,19 @@
             font-weight: 600;
             color: var(--main-color);
         }
-
-
-
+        .extra-links {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+        .extra-links a {
+            color: var(--main-color);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        .extra-links a:hover {
+            color: #5ac4af;
+        }
     </style>
 </head>
 <body>
@@ -100,6 +110,12 @@
                                 <a href="{% url 'homecandidat' %}" class="btn btn-secondary">Annuler</a>
                             </div>
                         </form>
+                        <div class="extra-links">
+                            <p>
+                                Vous n'avez pas de compte ? <a href="{% url 'inscription' %}">Créez-en un !</a><br>
+                                <a href="#"> Mot de passe oublié ?</a>
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
