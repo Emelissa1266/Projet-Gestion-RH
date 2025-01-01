@@ -1,10 +1,6 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.hashers import make_password,check_password
-from django.contrib.auth.models import AbstractUser
-import uuid
-from django.core.mail import send_mail
-from django.conf import settings
 # Modèle pour les services
 
 class Service(models.Model):
@@ -27,8 +23,7 @@ class Utilisateur(models.Model):
         ('candidate', 'Candidate'),
     ]
     role = models.CharField(max_length=30, choices=ROLE_CHOICES, default='candidate')
-    confirmation_code = models.CharField(max_length=255, blank=True, null=True)
-    email_verified = models.BooleanField(default=False)
+
     def __str__(self):
         return self.Login
     
@@ -178,6 +173,7 @@ class DemandeConge(models.Model):
 
     def jours_demandes(self):
         return (self.date_fin - self.date_deb).days + 1
+
 
 
 
