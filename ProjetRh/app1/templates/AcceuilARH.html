@@ -27,8 +27,7 @@
             --main-color: #1ad2ada6;
         }
         body {
-            font-family: 'Roboto', Arial, sans-serif;
-            background-color : var(--bg-color);
+            background-color: var(--bg-color);
             margin: 0;
             padding: 0;
         }
@@ -36,32 +35,96 @@
             position: fixed;
             width: 100%;
             top: 0;
-            right: 0;
             z-index: 1000;
             display: flex;
             align-items: center;
             justify-content: space-between;
             background: transparent;
             padding: 15px 12%;
-            transition: all .05s ease;
+            transition: all 0.2s ease;
         }
-
+        .navbar {
+            display: flex;
+        }
         .navbar a {
             color: var(--text-color);
             font-size: 1.1rem;
             font-weight: 500;
             padding: 5px 0;
             margin: 0 30px;
-            transition: all .50s ease;
+            transition: all 0.5s ease;
         }
         .navbar a:hover {
             color: var(--main-color);
         }
-
+        .navbar a.active {
+            color: var(--main-color);
+        }
+        .main {
+            display: flex;
+            align-items: center;
+        }
+        .main a {
+            margin-right: 25px;
+            margin-left: 10px;
+            color: var(--text-color);
+            font-size: 1.1rem;
+            font-weight: 500;
+            transition: all 0.5s ease;
+        }
+        .main a:hover {
+            color: var(--main-color);
+        }
+        #menu-icon {
+            font-size: 35px;
+            color: var(--text-color);
+            cursor: pointer;
+            display: none;
+        }
+        @media (max-width: 1280px) {
+            header {
+                padding: 14px 2%;
+            }
+            .navbar a {
+                margin: 0 20px;
+                padding: 5px 0;
+            }
+        }
+        @media (max-width: 1090px) {
+            #menu-icon {
+                display: block;
+            }
+            .navbar {
+                position: absolute;
+                top: 100%;
+                right: -100%;
+                width: 270px;
+                height: auto;
+                background: var(--main-color);
+                display: flex;
+                flex-direction: column;
+                border-radius: 10px;
+                transition: all 0.5s ease;
+            }
+            .navbar a {
+                display: block;
+                margin: 12px 0;
+                padding: 0 25px;
+                color: var(--text-color);
+            }
+            .navbar a:hover {
+                color: var(--text-color);
+            }
+            .navbar a.active {
+                color: var(--text-color);
+            }
+            .navbar.open {
+                right: 2%;
+            }
+        }
         .features {
             margin-top: 40px;
         }
-
         .feature-card {
             background-color: #ffffff;
             border-radius: 10px;
@@ -70,22 +133,18 @@
             text-align: center;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-
         .feature-card:hover {
             transform: translateY(-8px);
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
         }
-
         .btn-primary {
             background-color: #1ad2ada6;
             border-color: #1ad267a6;
         }
-
         .btn-primary:hover {
             background-color: #32a895;
             border-color: #32a895;
         }
-
         .footer {
             background-color: #343a40;
             color: white;
@@ -93,12 +152,10 @@
             padding: 15px;
             margin-top: 120px;
         }
-
         .footer a {
             color: #ffffff;
             text-decoration: underline;
         }
-
         .footer a:hover {
             color: #d4d4d4;
         }
@@ -106,16 +163,21 @@
             margin-top: 120px;
         }
     </style>
+
 </head>
 <body>
     <header>
-<ul class="navbar">
-<li><a href="{% url 'acceuil_arh' %}" class="active"><i class='bx bx-home-alt-2'></i>home</a></li>
-<li><a href="{% url 'liste_employes' %}">Employé</a></li>
-<li><a href="{% url 'liste_conges' %}" >Congé</a></li>
-<li><a href="#">Rapport</a></li>
-<li><a href="{% url 'homecandidat' %}" ><i class='bx bx-log-out'></i></a></li>
-</ul>
+        <ul class="navbar">
+            <li><a href="{% url 'acceuil_arh' %}" class="active"><i class='bx bx-home-alt-2'></i>Home</a></li>
+            <li><a href="{% url 'liste_employes' %}">Employé</a></li>
+            <li><a href="{% url 'liste_conges' %}">Congé</a></li>
+            <li><a href="#">Salaire</a></li>
+            <li><a href="#">Rapport</a></li>
+        </ul>
+        <div class="main">
+            <a href="{% url 'homecandidat' %}"><i class='bx bx-log-out'></i></a>
+            <div class="bx bx-menu" id="menu-icon"></div>
+        </div>
     </header>
 
     <main class="container">
@@ -136,8 +198,8 @@
             </div>
             <div class="col-md-4 mb-4">
                 <div class="feature-card">
-                    <h3>Rapports Avancés</h3>
-                    <p>Générez des rapports précis pour une meilleure analyse et prise de décision.</p>
+                    <h3>Suivi des Salaires</h3>
+                    <p>Suivez les salaires des employés et gérez les paiements en temps réel.</p>
                     <a href="#" class="btn btn-primary mt-3">Voir plus</a>
                 </div>
             </div>
@@ -147,7 +209,14 @@
     <footer class="footer">
         <p>&copy; 2024 Gestion des Ressources Humaines. Tous droits réservés. | <a href="#">Conditions d'utilisation</a></p>
     </footer>
-
+    <script>
+        let menu = document.querySelector('#menu-icon');
+        let navbar = document.querySelector('.navbar');
+        menu.onclick = () => {
+            menu.classList.toggle('bx-x');
+            navbar.classList.toggle('open');
+        }
+    </script>
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
 </body>
 </html>
