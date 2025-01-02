@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fiche de Paie</title>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.company-info {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.employee-info, .salary-info {
+    margin-bottom: 20px;
+}
+
+.employee-info h2, .salary-info h2 {
+    font-size: 20px;
+    border-bottom: 2px solid #333;
+    padding-bottom: 5px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #f4f4f4;
+}
+
+footer {
+    text-align: center;
+    margin-top: 20px;
+}
+
+footer p {
+    margin: 5px 0;
+}
+button {
+    text-decoration: none;
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+/* Styles pour l'impression */
+@media print {
+    button {
+        display: none;
+    }
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Fiche de Paie</h1>
+            <div class="company-info">
+                <p>Nom de l'entreprise</p>
+                <p>Adresse de l'entreprise</p>
+                <p>Téléphone de l'entreprise</p>
+            </div>
+        </header>
+        <section class="employee-info">
+            <h2>Informations de l'employé</h2>
+            <p>Nom et Prenom: {{ salaire.Employe_salaire }}</p>
+        </section>
+        <section class="salary-info">
+            <h2>Détails du Salaire</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Description</th>
+                        <th>Montant</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Salaire de base</td>
+                        <td>{{ salaire.salaire_base }}</td>
+                    </tr>
+                    <tr>
+                        <td>Primes</td>
+                        <td>{{ salaire.primes }}</td>
+                    </tr>
+                    <tr>
+                        <td>Heures supplémentaires</td>
+                        <td>{{ salaire.heures_supplementaires }}</td>
+                    </tr>
+                    <tr>
+                        <td>Retenues</td>
+                        <td>{{ salaire.retenus }}</td>
+                    </tr>
+                    <tr>
+                        <td>Salaire net</td>
+                        <td>{{ salaire.salaire_net }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        <footer>
+            <p>Date: {{ date }}</p>
+            <p>Signature de l'employeur</p>
+        </footer>
+        <button onclick="window.print()">Imprimer</button>
+    </div>
+</body>
+</html>

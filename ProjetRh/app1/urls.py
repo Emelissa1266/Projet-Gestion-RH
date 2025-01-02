@@ -19,5 +19,6 @@ urlpatterns = [
     path('acceuil-arh/salaires/', views.liste_salaires, name='liste_salaires'),
     path('acceuil-arh/salaires/ajouter_salaire/', views.ajouter_salaire, name='ajouter_salaire'),
     path('acceuil-arh/salaires/supprimer_salaire/<int:salaire_id>/', views.supprimer_salaire, name='supprimer_salaire'),
+    path('acceuil-arh/salaires/Fiche_paie/<int:salaire_id>/', views.fiche_paie, name='fiche_paie'),
 ]
 

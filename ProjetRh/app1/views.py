@@ -212,3 +212,8 @@ def supprimer_salaire(request, salaire_id):
         salaire.delete()  # supprimer le salaire
         return redirect('liste_salaires')  # Rediriger vers la liste des salaires
     return redirect('liste_salaires') # If the request is not POST, just redirect back to the list
+
+def fiche_paie(request, salaire_id):
+    salaire = get_object_or_404(Salaire, id=salaire_id)
+    # Rechercher l'employé correspondant
+    return render(request, 'Fiche_paie_ARH.html', {'salaire': salaire, 'date': salaire.mois_annee})
