@@ -1,10 +1,12 @@
 from django.shortcuts import render, redirect,get_object_or_404
 from django.contrib.auth.hashers import make_password, check_password
-from .forms import loginForm, SignupForm  ,EmployeForm ,UtilisateurForm ,CongeForm
+from .forms import loginForm, SignupForm  ,EmployeForm ,UtilisateurForm ,CongeForm, SalaireForm
 from .models import Utilisateur, Candidat, Employe, Service, Competances, Formations, Recrutement, Salaire, Evaluation ,Conge ,DemandeConge
 from django.contrib import messages
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
+
 
 def home_candidat(request):
     return render(request, 'home_candidat.html')
@@ -161,3 +163,52 @@ def ajouter_conge(request):
 def liste_demandes_conges(request):
     demandes_conges = DemandeConge.objects.all()
     return render(request, 'liste_demande.html', {'demandes_conges': demandes_conges})
+
+
+@csrf_exempt
+def accepter_demande_conge(request, demande_id):
+            demande = DemandeConge.objects.get(id=demande_id)
+            # Create a new Conge object
+            Conge.objects.create(
+                Employe_Conge=demande.employe,
+                date_deb=demande.date_deb,
+                date_fin=demande.date_fin,
+                type_conge=demande.type_conge,
+                solde_conge=1000,
+            )
+            # Delete the DemandeConge object
+            demande.delete()
+            return redirect('liste_demande_conge')
+
+# Vue pour refuser une demande de congé
+@csrf_exempt
+def refuser_demande_conge(request, demande_id):
+    if request.method == 'POST':
+            demande = DemandeConge.objects.get(id=demande_id)
+            demande.statut = "Refusé",
+            demande.save()
+    return redirect('liste_demande_conge')
+
+
+def liste_salaires(request):
+    salaires = Salaire.objects.all()
+    return render(request, 'liste_salaires_ARH.html', {'salaires': salaires})
+
+
+def ajouter_salaire(request):
+    if request.method == 'POST':
+        form = SalaireForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('liste_salaires')  # Redirection vers la liste des salaires après ajout
+    else:
+        form = SalaireForm()
+
+    return render(request, 'ajouter_salaire.html', {'form': form})
+
+def supprimer_salaire(request, salaire_id):
+    if request.method == "POST":
+        salaire = get_object_or_404(Salaire, id=salaire_id)
+        salaire.delete()  # supprimer le salaire
+        return redirect('liste_salaires')  # Rediriger vers la liste des salaires
+    return redirect('liste_salaires') # If the request is not POST, just redirect back to the list

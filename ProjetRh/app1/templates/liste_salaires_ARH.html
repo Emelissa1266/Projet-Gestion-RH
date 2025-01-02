@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des congés et employés</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            text-decoration: none;
+            list-style: none;
+        }
+        :root {
+            --bg-color: #222327;
+            --text-color: #fcf8f8;
+            --main-color: #1ad2ada6;
+            --hover-color: #32a895;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+        header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            background: transparent;
+            padding: 15px 12%;
+        }
+        h1 {
+            color: var(--main-color);
+            font-weight: 700;
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        .table {
+            background-color: #333;
+            color: var(--text-color);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .table th {
+            background-color: #444;
+            color: var(--text-color);
+            text-transform: uppercase;
+        }
+        .table td {
+            background-color: #555;
+        }
+        .table-striped tbody tr:nth-of-type(odd) {
+            background-color: #666;
+        }
+        .btn {
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        .btn-primary {
+            background-color: var(--main-color);
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color: var(--hover-color);
+        }
+        .btn-warning {
+            background-color: var(--warning-color);
+            border: none;
+        }
+        .btn-warning:hover {
+            background-color: #e0a800;
+        }
+        .btn-danger {
+            background-color: var(--danger-color);
+            border: none;
+        }
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+        .btn-secondary {
+            background-color: #6c757d;
+        }
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+        .modal-content {
+            background-color: #333;
+            color: var(--text-color);
+        }
+        .modal-header, .modal-footer {
+            border-color: #444;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        .dm_salaire {
+            color: var(--text-color);
+            font-size: 1.1rem;
+            font-weight: 500;
+            padding: 5px 0;
+            margin: 0 30px;
+            transition: all .50s ease;
+        }
+        .dm_salaire:hover {
+            color: var(--main-color);
+        }
+        
+    </style>
+</head>
+<body>
+    <header>
+        <a href="#" class="dm_salaire">les demandes d'avance</a>
+    </header>
+    <div class="container">
+        <h1>Liste des salaires</h1>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Employé</th>
+                    <th>MOIS-ANNEE</th>
+                    <th>Salaire_base</th>
+                    <th>Primes</th>
+                    <th>Heures_supplementaires</th>
+                    <th>Retenus</th>
+                    <th>Montant</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for salaire in salaires %}
+                <tr>
+                    <td>{{ salaire.id }}</td>
+                    <td>{{ salaire.Employe_salaire}}</td>
+                    <td>{{ salaire.mois_annee }}</td>
+                    <td>{{ salaire.salaire_base }}</td>
+                    <td>{{ salaire.primes }}</td>
+                    <td>{{ salaire.heures_supplementaires }}</td>
+                    <td>{{ salaire.retenus }}</td>
+                    <td>{{ salaire.salaire_net }}</td>
+                    <td><a href="#" class="btn btn-success" >fiche de paie</a>
+                        <button class="btn btn-danger btn-sm" onclick="confirmDelete({{salaire.id}})">Supprimer</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="d-flex justify-content-between mt-4">
+            <a href="{% url 'ajouter_salaire' %}" class="btn btn-primary">Ajouter un salaire</a>
+            <a href="{% url 'acceuil_arh' %}" class="btn btn-secondary">Terminer</a>
+        </div>
+    </div>
+
+    <!-- Modal de confirmation de suppression -->
+    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmation de suppression</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Êtes-vous sûr de vouloir supprimer cet élément ?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                    <form id="deleteForm" method="post">
+                        {% csrf_token %}
+                        <button class="btn btn-danger">Supprimer</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script>
+        function confirmDelete(id) {
+            const deleteForm = document.getElementById('deleteForm');
+            const actionUrl  = `supprimer_salaire/${id}/`; // Remplacez par l'URL de votre suppression spécifique
+            // Met à jour l'action du formulaire avec l'URL spécifique pour cet employé
+            deleteForm.action = actionUrl;
+
+            // Affiche la modale
+            new bootstrap.Modal(document.getElementById('confirmDeleteModal')).show();
+        }
+    </script>
+</body>
+</html>

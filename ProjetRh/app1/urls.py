@@ -14,5 +14,10 @@ urlpatterns = [
     path('acceuil-arh/conges/',views.liste_conges, name='liste_conges'),
     path('acceuil-arh/conges/ajouter/', views.ajouter_conge, name='ajouter_conge'),
     path('acceuil-arh/conges/Liste_dmconge/', views.liste_demandes_conges, name='liste_demande_conge'),
+    path('accepter_demande/<int:demande_id>/', views.accepter_demande_conge, name='accepter_demande'),
+    path('refuser_demande/<int:demande_id>/', views.refuser_demande_conge, name='refuser_demande'),
+    path('acceuil-arh/salaires/', views.liste_salaires, name='liste_salaires'),
+    path('acceuil-arh/salaires/ajouter_salaire/', views.ajouter_salaire, name='ajouter_salaire'),
+    path('acceuil-arh/salaires/supprimer_salaire/<int:salaire_id>/', views.supprimer_salaire, name='supprimer_salaire'),
 ]
 

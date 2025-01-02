@@ -28,9 +28,9 @@
                     <td>{{ demande.date_deb }}</td>
                     <td>{{ demande.date_fin }}</td>
                     <td>{{ demande.get_type_conge_display }}</td>
-                    <td><a   class="btn btn-success" href="{% url 'accepter_demande' demande.id %}">Accepter</a></td>
-                    <td><a   class="btn btn-outline-danger" href="{% url 'refuser_demande' demande.id %}">Refuser</a></td>
-                </tr>
+                    <td><a  class="btn btn-success" href="{% url 'accepter_demande' demande.id %}">Accepter</a></td>
+                    <td><a  class="btn btn-outline-danger" href="{% url 'refuser_demande' demande.id %}">Refuser</a></td>
+                    </tr>
                 {% endfor %}
             </tbody>
         </table>

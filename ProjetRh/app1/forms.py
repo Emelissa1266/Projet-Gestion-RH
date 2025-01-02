@@ -62,3 +62,20 @@ class CongeForm(forms.ModelForm):
             'solde_conge': forms.NumberInput(attrs={'class': 'form-control'}),
             'Employe_Conge': forms.Select(attrs={'class': 'form-control'}),
         }
+
+
+
+class SalaireForm(forms.ModelForm):
+    class Meta:
+        model = Salaire
+        fields = ['Employe_salaire', 'mois_annee', 'salaire_base', 'primes', 'heures_supplementaires', 'retenus', 'salaire_net']
+        widgets = {
+            'Employe_salaire': forms.Select(attrs={'class': 'form-control'}),
+            'mois_annee': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+            'salaire_base': forms.NumberInput(attrs={'class': 'form-control'}),
+            'primes': forms.NumberInput(attrs={'class': 'form-control'}),
+            'heures_supplementaires': forms.NumberInput(attrs={'class': 'form-control'}),
+            'retenus': forms.NumberInput(attrs={'class': 'form-control'}),
+            'salaire_net': forms.NumberInput(attrs={'class': 'form-control'}),
+        }
+       
