@@ -1,7 +1,7 @@
---> Agent RH:  ** s'authentifier
+--> Agent RH:  ** s'authentifier .....................:)
 
-               ** Gestion des employes:
-                   -ajout, mod, supp
+               ** Gestion des employes: 
+                   -ajout, mod, supp ................... :)
 
                ** Gestion des conges:
                    -ajout, mod, supp
