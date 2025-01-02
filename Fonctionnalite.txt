@@ -4,15 +4,15 @@
                    -ajout, mod, supp ................... :)
 
                ** Gestion des conges:
-                   -ajout, mod, supp
-                   -suivi du solde du conge
-                   -notification pour les employes
-                   -date fin > date_deb
+                   -ajout, mod, supp ..........:)
+                   -suivi du solde du conge.......:(
+                   -notification pour les employes.......:(
+                   -date fin > date_deb .......:)
 
                 ** gestion des salaires:
-                   - ajout, mod, supp
-                   -Calcul automatique des salaires
-                   - Generation automatique d'une fiche de paie 
+                   - ajout, mod, supp ...........:)
+                   -Calcul automatique des salaires.......:(  // apres le traitement des absences 
+                   - Generation automatique d'une fiche de paie ............. :)
                    -Gestion des primes et des avantages 
                 
                 ** Gestion des contrats:
@@ -38,10 +38,10 @@
 
 --> Manager :  ** consulter les fiches des employes
                ** evaluer les employes
-               ** S'authentifier
+               ** S'authentifier ...........:)
 
 
---> Employes: ** S'authentifier
+--> Employes: ** S'authentifier ...........:)
               ** consulter leur conges
               ** consulter leur salaires
               ** envoyer demendes conges
@@ -50,7 +50,7 @@
               ** demende/accepte/refuse les renouvllements
 
 
---> Condidats: ** S'authentifier
+--> Condidats: ** S'authentifier ............:)
                ** S'inscrire(creer un compte)
                ** demande de recrutement
                ** Consulter etat de condidature 
