@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des evaluations des employés</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            text-decoration: none;
+            list-style: none;
+        }
+        :root {
+            --bg-color: #222327;
+            --text-color: #fcf8f8;
+            --main-color: #1ad2ada6;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+        h1 {
+            color: var(--main-color);
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .table {
+            background-color: #333;
+            color: var(--text-color);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .table th {
+            background-color: #444;
+            color: var(--text-color);
+            text-transform: uppercase;
+        }
+        .table td {
+            background-color: #555;
+        }
+        .table-striped tbody tr:nth-of-type(odd) {
+            background-color: #666;
+        }
+        .btn-primary {
+            background-color: var(--main-color);
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color: #32a895;
+        }
+        .btn-warning {
+            background-color: #ffc107;
+            border: none;
+        }
+        .btn-warning:hover {
+            background-color: #e0a800;
+        }
+        .btn-danger {
+            background-color: #dc3545;
+            border: none;
+        }
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+        .modal-content {
+            background-color: #333;
+            color: var(--text-color);
+        }
+        .modal-header {
+            border-bottom: 1px solid #444;
+        }
+        .modal-footer {
+            border-top: 1px solid #444;
+        }
+        .btn-secondary {
+            background-color: #6c757d;
+        }
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+        .container {
+            margin-top: 120px;
+        }
+        .btn {
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">Liste des evaluations des employés</h1>
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>ID </th>
+                    <th>Nom Employé</th>
+                    <th>Prenom Employé</th>
+                    <th>Evaluation</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for evaluation in evaluations %}
+                <tr>
+                    <td>{{ evaluation.id }}</td>
+                    <td>{{ evaluation.Employe_Evaluation.nom }}</td>
+                    <td>{{ evaluation.Employe_Evaluation.prenom }}</td>
+                    <td><a href="{% url 'rapport_evaluation' evaluation.id %}" class="btn btn-success">Rapport Evaluation</a></td>
+                    <td><a href="{% url 'evaluer_employe' evaluation.Employe_Evaluation.id  %}"  class="btn btn-success"> Evaluer </a></td>
+                </tr>
+                {% empty %}
+                <tr>
+                  <td colspan="8">Aucune evaluation trouve.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+         <!-- Bouton Terminer qui redirige vers AcceuilRH.html -->
+         <a href="{% url 'acceuil-man' %}" class="btn btn-secondary mt-3">Terminer</a>
+    </div>
+    
+
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    
+</body>
+</html>

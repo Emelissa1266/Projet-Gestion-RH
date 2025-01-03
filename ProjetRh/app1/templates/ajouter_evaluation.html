@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ajouter un recrutement</title>
+    <title>Ajouter une evaluation</title>
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
@@ -122,16 +122,16 @@
 </head>
 <body>
     <div class="container">
-        <h1>Ajouter un recrutement</h1>
+        <h1>Ajouter une evaluation</h1>
         <form method="POST">
             {% csrf_token %}
             <fieldset>
-                <legend>Informations Recrutement</legend>
-                {{ recrutement_form.as_p }}
+                <legend>Informations Evaluation</legend>
+                {{ form.as_p }}
             </fieldset>
             <div class="button-container">
             <button type="submit" class="btn btn-primary">Ajouter</button>
-            <a href="{% url 'liste_recrutements' %}" class="btn btn-secondary mt-3">Retour</a>
+            <a href="{% url 'liste_employes_Evaluations' %}" class="btn btn-secondary mt-3">Retour</a>
         </div>
         </form>
         

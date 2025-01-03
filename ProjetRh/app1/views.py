@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect,get_object_or_404
 from django.contrib.auth.hashers import make_password, check_password
-from .forms import loginForm, SignupForm  ,EmployeForm ,UtilisateurForm ,CongeForm, SalaireForm, ContratForm, RecrutementForm
+from .forms import loginForm, SignupForm  ,EmployeForm ,UtilisateurForm ,CongeForm, SalaireForm, ContratForm, RecrutementForm, EvaluationForm
 from .models import Utilisateur, Candidat, Employe, Service, Competances, Formations, Recrutement, Salaire, Evaluation ,Conge ,DemandeConge, DemandeAvanceSalaire, Contrat, ArchiveContrat
 from django.contrib import messages
 from django.http import JsonResponse
@@ -152,7 +152,7 @@ def detail_employe(request, employe_id):
     return render(request, 'Fiche_employe.html', {'employe': employe})
 
 
-# Vue pour la liste des évaluations
+# Vue pour la liste des évaluations pour l'accès ARH
 def liste_evaluations(request):
     evaluations = Evaluation.objects.all()
     return render(request, 'liste_evaluations.html', {'evaluations': evaluations})
@@ -418,3 +418,33 @@ def accepter_candidat(request, candidat_id):
     id_recrutement = candidat.Rcrt_cond.first().id
     candidat.save()
     return redirect('liste_candidats', id_recrutement)
+
+# Vue pour la page d'accueil du manager
+def acceuil_man(request):
+    return render(request, 'AcceuilMan.html')
+
+
+
+# Vue pour la liste des évaluations pour l'accès manager
+def liste_evaluations_Manager(request):
+    evaluations = Evaluation.objects.all()
+    return render(request, 'liste_Evaluation.html', {'evaluations': evaluations})
+
+
+# vue pour une nouvelle evaluation
+def evaluer_employe(request, employe_id):
+    if request.method == 'POST':
+        form = EvaluationForm(request.POST)
+        if form.is_valid():
+            evaluation = form.save(commit=False)
+            evaluation.Employe_Evaluation = Employe.objects.get(id=employe_id)
+            evaluation.save()
+            return redirect('liste_employes_Evaluations')  # Redirection vers la liste des evaluations après ajout
+    else:
+        form = EvaluationForm()
+        return render(request, 'ajouter_evaluation.html', {'form': form})
+    
+# Vue pour la liste des employés pour le manager
+def liste_employes_Manager(request):
+    employes = Employe.objects.all()
+    return render(request, 'liste_Employe.html', {'employes': employes})

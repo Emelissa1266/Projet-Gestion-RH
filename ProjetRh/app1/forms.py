@@ -104,3 +104,16 @@ class RecrutementForm(forms.ModelForm):
             'date_debut': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
             'Condidat_Recrutement': forms.SelectMultiple(attrs={'class': 'form-control'}),
         }
+
+
+class EvaluationForm(forms.ModelForm):
+    class Meta:
+        model = Evaluation
+        fields = ['date_Evaluation', 'criteres', 'Resultat', 'Commentaire', 'Employe_Evaluation']
+        widgets = {
+            'date_Evaluation': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+            'criteres': forms.TextInput(attrs={'class': 'form-control'}),
+            'Resultat': forms.TextInput(attrs={'class': 'form-control'}),
+            'Commentaire': forms.Textarea(attrs={'class': 'form-control'}),
+            'Employe_Evaluation': forms.Select(attrs={'class': 'form-control'}),
+        }

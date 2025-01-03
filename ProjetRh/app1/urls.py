@@ -43,5 +43,9 @@ urlpatterns = [
     path('acceuil-arh/recrutements/details_candidat/<int:candidat_id>/', views.details_candidat, name='details_candidat'),
     path('acceuil-arh/recrutements/refuser_candidat/<int:candidat_id>/', views.refuser_candidat, name='refuser_candidat'),
     path('acceuil-arh/recrutements/accepter_candidat/<int:candidat_id>/', views.accepter_candidat, name='accepter_candidat'),
+    path('acceuil-man/', views.acceuil_man, name='acceuil-man'),
+    path('acceuil-man/evaluer_employe/<int:employe_id>/', views.evaluer_employe, name='evaluer_employe'),
+    path('acceuil-man/evaluations/', views.liste_evaluations_Manager, name='liste_employes_Evaluations'),
+    path('acceuil-man/liste_employee/', views.liste_employes_Manager, name='liste_Employes'),
 ]
 
