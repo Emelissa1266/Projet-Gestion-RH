@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect,get_object_or_404
 from django.contrib.auth.hashers import make_password, check_password
-from .forms import loginForm, SignupForm  ,EmployeForm ,UtilisateurForm ,CongeForm, SalaireForm
+from .forms import loginForm, SignupForm  ,EmployeForm ,UtilisateurForm ,CongeForm, SalaireForm, ContratForm
 from .models import Utilisateur, Candidat, Employe, Service, Competances, Formations, Recrutement, Salaire, Evaluation ,Conge ,DemandeConge, DemandeAvanceSalaire, Contrat
 from django.contrib import messages
 from django.http import JsonResponse
@@ -293,3 +293,34 @@ def refuser_demande_avance_salaire(request, demande_id):
 def liste_contrats(request):
     contrats = Contrat.objects.all()
     return render(request, 'liste_contrats.html', {'contrats': contrats})
+
+# Vue pour ajouter un nouveau contrat
+def ajouter_contrat(request):
+    if request.method == 'POST':
+        form = ContratForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('liste_contrats')  # Redirection vers la liste des contrats après ajout
+    else:
+        form = ContratForm()
+
+    return render(request, 'ajouter_contrat.html', {'form': form})
+
+def modifier_contrat(request, contrat_id):
+    contrat = get_object_or_404(Contrat, id=contrat_id)
+
+    if request.method == 'POST': # Si la requête est de type POST
+        # Récupérer les données du formulaire et les associer à l'instance du contrat
+        form = ContratForm(request.POST, instance=contrat)
+        if form.is_valid():
+            form.save()
+            return redirect('liste_contrats')  # Redirection vers la liste des contrats après modification
+    else: # Si la requête est de type GET
+        # Créer un formulaire pré-rempli avec les données du contrat
+        form = ContratForm(instance=contrat)
+
+    return render(request, 'modifier_contrat.html', {'contrat_form': form, 'contrat': contrat})
+
+def consulter_contrat(request, contrat_id):
+    contrat = get_object_or_404(Contrat, id=contrat_id)
+    return render(request, 'consulter_contrat.html', {'contrat': contrat, 'date': contrat.date_deb})

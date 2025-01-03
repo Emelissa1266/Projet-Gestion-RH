@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fiche de Contrat</title>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.company-info {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.employee-info, .contract-details {
+    margin-bottom: 20px;
+}
+
+.employee-info h2, .contract-details h2 {
+    font-size: 20px;
+    border-bottom: 2px solid #333;
+    padding-bottom: 5px;
+}
+
+footer {
+    text-align: center;
+    margin-top: 20px;
+}
+
+footer p {
+    margin: 5px 0;
+}
+
+footer button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+footer button:hover {
+    background-color: #45a049;
+}
+
+/* Styles pour l'impression */
+@media print {
+    footer button {
+        display: none;
+    }
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Fiche de Contrat</h1>
+            <div class="company-info">
+                <p>Nom de l'entreprise</p>
+                <p>Adresse de l'entreprise</p>
+                <p>Téléphone de l'entreprise</p>
+            </div>
+        </header>
+        <section class="employee-info">
+            <h2>Informations de l'employé</h2>
+            <p><strong>Nom:</strong> {{ contrat.Employe_Contrat.nom }}</p>
+            <p><strong>Prénom:</strong> {{ contrat.Employe_Contrat.prenom }}</p>
+            <p><strong>Service:</strong> {{ contrat.Employe_Contrat.Service_Employe.Nom }}</p>
+        </section>
+        <section class="contract-details">
+            <h2>Détails du Contrat</h2>
+            <p><strong>Date de début:</strong> {{ contrat.date_deb }}</p>
+            <p><strong>Date de fin:</strong> {{ contrat.date_fin }}</p>
+            <p><strong>Type de contrat:</strong> {{ contrat.type_contrat }}</p>
+            <p><strong>Salaire mensuel:</strong> {{ contrat.salaire_mensuel }}</p>
+            <p><strong>Salaire quotidien:</strong> {{ contrat.salaire_quotidien }}</p>
+        </section>
+        <footer>
+            <p>Date: {{ date }}</p>
+            <p>Signature de l'employeur</p>
+            <button onclick="window.print()">Imprimer</button>
+        </footer>
+    </div>
+</body>
+</html>

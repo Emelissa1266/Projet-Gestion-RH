@@ -1,5 +1,5 @@
 from django import forms
-from .models import Utilisateur, Candidat, Employe, Service, Competances, Formations, Recrutement, Salaire, Evaluation, Conge
+from .models import Utilisateur, Candidat, Employe, Service, Competances, Formations, Recrutement, Salaire, Evaluation, Conge, Contrat
 
 class loginForm(forms.Form):
     login = forms.CharField(label="Login", max_length=30, widget=forms.TextInput(attrs={"class": "form-control"}))
@@ -79,3 +79,16 @@ class SalaireForm(forms.ModelForm):
             'salaire_net': forms.NumberInput(attrs={'class': 'form-control'}),
         }
        
+class ContratForm(forms.ModelForm):
+    class Meta:
+        model = Contrat
+        fields = ['Employe_Contrat', 'date_deb', 'date_fin', 'type_contrat', 'salaire_monsuel', 'salaire_quotidien', 'Employe_Contrat']
+        widgets = {
+            'Employe_Contrat': forms.Select(attrs={'class': 'form-control'}),
+            'date_deb': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+            'date_fin': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+            'type_contrat': forms.Select(attrs={'class': 'form-control'}),
+            'salaire_monsuel': forms.NumberInput(attrs={'class': 'form-control'}),
+            'salaire_quotidien': forms.NumberInput(attrs={'class': 'form-control'}),
+            'Employe_Contrat': forms.Select(attrs={'class': 'form-control'}),
+        }

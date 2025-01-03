@@ -30,10 +30,21 @@
             background-color: var(--bg-color);
             color: var(--text-color);
         }
+        header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            background: transparent;
+            padding: 15px 12%;
+        }
         h1 {
             color: var(--main-color);
             font-weight: 700;
-            text-align: center;
+            text-align: left;
             margin-bottom: 20px;
         }
         
@@ -98,10 +109,23 @@
             font-weight: bold;
             transition: all 0.3s ease;
         }
-        
+        .archives {
+            color: var(--text-color);
+            font-size: 1.1rem;
+            font-weight: 500;
+            padding: 5px 0;
+            margin: 0 30px;
+            transition: all .50s ease;
+        }
+        .archives:hover {
+            color: var(--main-color);
+        }
     </style>
 </head>
 <body>
+    <header>
+        <a href="#" class="archives">Archives des contrats</a>
+    </header>
     <div class="container mt-5">
         <h1 class="mb-4">Liste des contrats </h1>
         <table class="table table-bordered table-striped">
@@ -122,15 +146,15 @@
                     <td>{{ contrat.Employe_Contrat.prenom }}</td>
                     <td>{{ contrat.date_deb }}</td>
                     <td>
-                        <a href="#" class="btn btn-warning btn-sm">Modifier</a>
-                        <a href="#" class="btn btn-success btn-sm">Voir detail</a>
+                        <a href="{% url 'modifier_contrat' contrat.id %}" class="btn btn-warning btn-sm">Modifier</a>
+                        <a href="{% url 'consulter_contrat' contrat.id %}" class="btn btn-success btn-sm">Voir detail</a>
                         <button class="btn btn-danger btn-sm" onclick="confirmDelete({{ employe.id }})">Supprimer</button>
                     </td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
-        <a href="#" class="btn btn-primary mt-3">Ajouter contrat</a>
+        <a href="{% url 'ajouter_contrat' %}" class="btn btn-primary mt-3">Ajouter contrat</a>
 
         <!-- Bouton Terminer qui redirige vers AcceuilRH.html -->
         <a href="{% url 'acceuil_arh' %}" class="btn btn-secondary mt-3">Terminer</a>

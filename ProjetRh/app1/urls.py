@@ -29,5 +29,8 @@ urlpatterns = [
     path('acceuil-arh/salaires/demande_avance_salaire/accepter/<int:demande_id>/', views.accepter_demande_avance_salaire, name='accepter_demande_avance_salaire'),
     path('acceuil-arh/salaires/demande_avance_salaire/refuser/<int:demande_id>/', views.refuser_demande_avance_salaire, name='refuser_demande_avance_salaire'),
     path('acceuil-arh/contrats/', views.liste_contrats, name='liste_contrats'),
+    path('acceuil-arh/contrats/ajouter/', views.ajouter_contrat, name='ajouter_contrat'),
+    path('acceuil-arh/contrats/modifier/<int:contrat_id>/', views.modifier_contrat, name='modifier_contrat'),
+    path('acceuil-arh/contrats/consulter/<int:contrat_id>/', views.consulter_contrat, name='consulter_contrat'),
 ]
 
