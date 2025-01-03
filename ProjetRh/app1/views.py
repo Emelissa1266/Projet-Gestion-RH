@@ -1,11 +1,13 @@
 from django.shortcuts import render, redirect,get_object_or_404
 from django.contrib.auth.hashers import make_password, check_password
 from .forms import loginForm, SignupForm  ,EmployeForm ,UtilisateurForm ,CongeForm, SalaireForm
-from .models import Utilisateur, Candidat, Employe, Service, Competances, Formations, Recrutement, Salaire, Evaluation ,Conge ,DemandeConge, DemandeAvanceSalaire
+from .models import Utilisateur, Candidat, Employe, Service, Competances, Formations, Recrutement, Salaire, Evaluation ,Conge ,DemandeConge, DemandeAvanceSalaire, Contrat
 from django.contrib import messages
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
+from django.utils import timezone
+from django.core.mail import send_mail
 
 
 def home_candidat(request):
@@ -149,9 +151,38 @@ def detail_employe(request, employe_id):
     employe = get_object_or_404(Employe, id=employe_id)
     return render(request, 'Fiche_employe.html', {'employe': employe})
 
+
+# Vue pour la liste des évaluations
+def liste_evaluations(request):
+    evaluations = Evaluation.objects.all()
+    return render(request, 'liste_evaluations.html', {'evaluations': evaluations})
+
+# Vue pour afficher le rapport d'une évaluation
+def rapport_evaluation(request, evaluation_id):
+    evaluation = get_object_or_404(Evaluation, id=evaluation_id)
+    return render(request, 'rapport_evaluation.html', {'evaluation': evaluation , 'date': evaluation.date_Evaluation})
+
+# Vue pour supprimer une évaluation
+def supprimer_evaluation(request, evaluation_id):
+    if request.method == "POST":
+        evaluation = get_object_or_404(Evaluation, id=evaluation_id)
+        evaluation.delete()  # Delete the evaluation
+        return redirect('liste_evaluations')  # Redirect to the list of evaluations
+    return redirect('liste_evaluations')  # If the request is not POST, just redirect back to the list
+
 # Vue pour la liste des congés
 def liste_conges(request):
     conges = Conge.objects.all()
+
+    # Récupérer les congés dont la date de fin est égale à la date d'aujourd'hui
+    today = timezone.now().date()
+    conges_fin_aujourdhui = conges.filter(date_fin=today)
+
+    # Envoyer une notification à chaque employé concerné
+    for conge in conges_fin_aujourdhui:
+        employe = conge.Employe_Conge
+        messages.info(request, f'Bonjour {employe.prenom}, votre congé se termine aujourd\'hui. Nous vous attendons demain au travail.')
+
     return render(request, 'liste_conges.html', {'conges': conges})
 
 # Vue pour ajouter un nouveau congé
@@ -165,6 +196,15 @@ def ajouter_conge(request):
         form = CongeForm()
 
     return render(request, 'ajouter_conge.html', {'form': form})
+
+def supprimer_conge(request, conge_id):
+    if request.method == "POST":
+        conge = get_object_or_404(Conge, id=conge_id)
+        conge.delete()  # supprimer le congé
+        return redirect('liste_conges')  # Rediriger vers la liste des congés
+    return redirect('liste_conges') # If the request is not POST, just redirect back to the list
+
+
 
 def liste_demandes_conges(request):
     demandes_conges = DemandeConge.objects.all()
@@ -249,3 +289,7 @@ def refuser_demande_avance_salaire(request, demande_id):
     demande.statut = "Rejeté"
     demande.save()  
     return redirect('avance_salaire')
+
+def liste_contrats(request):
+    contrats = Contrat.objects.all()
+    return render(request, 'liste_contrats.html', {'contrats': contrats})

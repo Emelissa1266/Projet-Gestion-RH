@@ -172,7 +172,8 @@
             <li><a href="{% url 'liste_employes' %}">Employé</a></li>
             <li><a href="{% url 'liste_conges' %}">Congé</a></li>
             <li><a href="{% url 'liste_salaires' %}">Salaire</a></li>
-            <li><a href="#">Rapport</a></li>
+            <li><a href="{% url 'liste_evaluations' %}">Rapport</a></li>
+            <li><a href="{% url 'liste_contrats' %}">Contrat</a></li>
         </ul>
         <div class="main">
             <a href="{% url 'homecandidat' %}"><i class='bx bx-log-out'></i></a>
@@ -201,6 +202,13 @@
                     <h3>Suivi des Salaires</h3>
                     <p>Suivez les salaires des employés et gérez les paiements en temps réel.</p>
                     <a href="{% url 'liste_salaires' %}" class="btn btn-primary mt-3">Voir plus</a>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="feature-card">
+                    <h3>Gestion des contrats</h3>
+                    <p>Ajoutez, modifiez et gérez les contrats.</p>
+                    <a href="{% url 'liste_contrats' %}" class="btn btn-primary mt-3">Voir plus</a>
                 </div>
             </div>
         </section>

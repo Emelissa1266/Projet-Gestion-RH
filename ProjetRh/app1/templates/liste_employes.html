@@ -33,7 +33,19 @@
         h1 {
             color: var(--main-color);
             font-weight: 700;
-            text-align: center;
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            background: transparent;
+            padding: 15px 12%;
         }
         .table {
             background-color: #333;
@@ -96,9 +108,23 @@
             font-weight: bold;
             transition: all 0.3s ease;
         }
+        .evaluations {
+            color: var(--text-color);
+            font-size: 1.1rem;
+            font-weight: 500;
+            padding: 5px 0;
+            margin: 0 30px;
+            transition: all .50s ease;
+        }
+        .evaluations:hover {
+            color: var(--main-color);
+        }
     </style>
 </head>
 <body>
+    <header>
+        <a href="{% url 'liste_evaluations' %}" class="evaluations">les evaluations</a>
+    </header>
     <div class="container mt-5">
         <h1 class="mb-4">Liste des employés</h1>
         <table class="table table-bordered table-striped">

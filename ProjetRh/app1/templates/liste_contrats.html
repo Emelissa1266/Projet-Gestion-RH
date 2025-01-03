@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
     {% load static %}
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestion des congés et employés</title>
+    <title>Liste des contrats</title>
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
@@ -24,31 +25,18 @@
             --bg-color: #222327;
             --text-color: #fcf8f8;
             --main-color: #1ad2ada6;
-            --hover-color: #32a895;
-            --warning-color: #ffc107;
-            --danger-color: #dc3545;
         }
         body {
             background-color: var(--bg-color);
             color: var(--text-color);
         }
-        header {
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            background: transparent;
-            padding: 15px 12%;
-        }
         h1 {
             color: var(--main-color);
             font-weight: 700;
-            text-align: left;
+            text-align: center;
             margin-bottom: 20px;
         }
+        
         .table {
             background-color: #333;
             color: var(--text-color);
@@ -66,30 +54,36 @@
         .table-striped tbody tr:nth-of-type(odd) {
             background-color: #666;
         }
-        .btn {
-            font-weight: bold;
-            transition: all 0.3s ease;
-        }
         .btn-primary {
             background-color: var(--main-color);
             border: none;
         }
         .btn-primary:hover {
-            background-color: var(--hover-color);
+            background-color: #32a895;
         }
         .btn-warning {
-            background-color: var(--warning-color);
+            background-color: #ffc107;
             border: none;
         }
         .btn-warning:hover {
             background-color: #e0a800;
         }
         .btn-danger {
-            background-color: var(--danger-color);
+            background-color: #dc3545;
             border: none;
         }
         .btn-danger:hover {
             background-color: #c82333;
+        }
+        .modal-content {
+            background-color: #333;
+            color: var(--text-color);
+        }
+        .modal-header {
+            border-bottom: 1px solid #444;
+        }
+        .modal-footer {
+            border-top: 1px solid #444;
         }
         .btn-secondary {
             background-color: #6c757d;
@@ -97,72 +91,49 @@
         .btn-secondary:hover {
             background-color: #5a6268;
         }
-        .modal-content {
-            background-color: #333;
-            color: var(--text-color);
-        }
-        .modal-header, .modal-footer {
-            border-color: #444;
-        }
         .container {
-            margin-top: 50px;
+            margin-top: 120px;
         }
-        .action-buttons {
-            display: flex;
-            gap: 10px;
-        }
-        .dm_conge {
-            color: var(--text-color);
-            font-size: 1.1rem;
-            font-weight: 500;
-            padding: 5px 0;
-            margin: 0 30px;
-            transition: all .50s ease;
-        }
-        .dm_conge:hover {
-            color: var(--main-color);
+        .btn {
+            font-weight: bold;
+            transition: all 0.3s ease;
         }
         
     </style>
 </head>
 <body>
-    <header>
-        <a href="{% url 'liste_demande_conge' %}" class="dm_conge">les demandes congés</a>
-    </header>
-    <div class="container">
-        <h1>Liste des congés</h1>
+    <div class="container mt-5">
+        <h1 class="mb-4">Liste des contrats </h1>
         <table class="table table-bordered table-striped">
-            <thead>
+            <thead class="thead-dark">
                 <tr>
                     <th>ID</th>
-                    <th>Employé</th>
-                    <th>Date début</th>
-                    <th>Date fin</th>
-                    <th>Type de congé</th>
-                    <th>Solde</th>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Date Debut</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
-                {% for conge in conges %}
+                {% for contrat in contrats %}
                 <tr>
-                    <td>{{ conge.id }}</td>
-                    <td>{{ conge.Employe_Conge }}</td>
-                    <td>{{ conge.date_deb }}</td>
-                    <td>{{ conge.date_fin }}</td>
-                    <td>{{ conge.get_type_conge_display }}</td>
-                    <td>{{ conge.solde_conge }}</td>
-                    <td class="action-buttons">
-                        <button class="btn btn-danger btn-sm" onclick="confirmDelete({{ conge.id }})">Supprimer</button>
+                    <td>{{ contrat.id }}</td>
+                    <td>{{ contrat.Employe_Contrat.nom }}</td>
+                    <td>{{ contrat.Employe_Contrat.prenom }}</td>
+                    <td>{{ contrat.date_deb }}</td>
+                    <td>
+                        <a href="#" class="btn btn-warning btn-sm">Modifier</a>
+                        <a href="#" class="btn btn-success btn-sm">Voir detail</a>
+                        <button class="btn btn-danger btn-sm" onclick="confirmDelete({{ employe.id }})">Supprimer</button>
                     </td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
-        <div class="d-flex justify-content-between mt-4">
-            <a href="{% url 'ajouter_conge' %}" class="btn btn-primary">Ajouter un congé</a>
-            <a href="{% url 'acceuil_arh' %}" class="btn btn-secondary">Terminer</a>
-        </div>
+        <a href="#" class="btn btn-primary mt-3">Ajouter contrat</a>
+
+        <!-- Bouton Terminer qui redirige vers AcceuilRH.html -->
+        <a href="{% url 'acceuil_arh' %}" class="btn btn-secondary mt-3">Terminer</a>
     </div>
 
     <!-- Modal de confirmation de suppression -->
@@ -174,7 +145,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Êtes-vous sûr de vouloir supprimer cet élément ?
+                    Êtes-vous sûr de vouloir supprimer cet employé ?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
@@ -188,10 +159,17 @@
     </div>
 
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+
     <script>
-        function confirmDelete(id) {
+        // Fonction pour afficher la modale de confirmation de suppression
+        function confirmDelete(employeId) {
             const deleteForm = document.getElementById('deleteForm');
-            deleteForm.action = `supprimer_conge/${id}/`;
+            const actionUrl = `/contrats/supprimer/${employeId}/`; // Remplacez par l'URL de votre suppression spécifique
+
+            // Met à jour l'action du formulaire avec l'URL spécifique pour cet employé
+            deleteForm.action = actionUrl;
+
+            // Affiche la modale
             new bootstrap.Modal(document.getElementById('confirmDeleteModal')).show();
         }
     </script>
