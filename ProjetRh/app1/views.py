@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect,get_object_or_404
 from django.contrib.auth.hashers import make_password, check_password
 from .forms import loginForm, SignupForm  ,EmployeForm ,UtilisateurForm ,CongeForm, SalaireForm
-from .models import Utilisateur, Candidat, Employe, Service, Competances, Formations, Recrutement, Salaire, Evaluation ,Conge ,DemandeConge
+from .models import Utilisateur, Candidat, Employe, Service, Competances, Formations, Recrutement, Salaire, Evaluation ,Conge ,DemandeConge, DemandeAvanceSalaire
 from django.contrib import messages
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
@@ -176,8 +176,8 @@ def accepter_demande_conge(request, demande_id):
                 type_conge=demande.type_conge,
                 solde_conge=1000,
             )
-            # Delete the DemandeConge object
-            demande.delete()
+            demande.statut = "Approuvé"
+            demande.save()
             return redirect('liste_demande_conge')
 
 # Vue pour refuser une demande de congé
@@ -185,7 +185,7 @@ def accepter_demande_conge(request, demande_id):
 def refuser_demande_conge(request, demande_id):
     if request.method == 'POST':
             demande = DemandeConge.objects.get(id=demande_id)
-            demande.statut = "Refusé",
+            demande.statut = "Rejeté",
             demande.save()
     return redirect('liste_demande_conge')
 
@@ -217,3 +217,29 @@ def fiche_paie(request, salaire_id):
     salaire = get_object_or_404(Salaire, id=salaire_id)
     # Rechercher l'employé correspondant
     return render(request, 'Fiche_paie_ARH.html', {'salaire': salaire, 'date': salaire.mois_annee})
+
+def liste_demande_avance_salaire(request):
+    demandes_avance = DemandeAvanceSalaire.objects.all()
+    return render(request, 'liste_demande_avance_salaire.html', { 'demandes_avance': demandes_avance})
+
+def accepter_demande_avance_salaire(request, demande_id):
+    demande = DemandeAvanceSalaire.objects.get(id=demande_id)
+    Salaire.objects.create(
+        Employe_salaire=demande.Employe_demande,
+        mois_annee=demande.Date_demande,
+        salaire_base=demande.Somme,
+        primes=0,
+        heures_supplementaires=0,
+        retenus=0,
+        salaire_net=demande.Somme,
+    )
+    # Update the status of the request
+    demande.statut = "Approuvé"
+    demande.save()  
+    return redirect('avance_salaire')
+
+def refuser_demande_avance_salaire(request, demande_id):
+    demande = DemandeAvanceSalaire.objects.get(id=demande_id)
+    demande.statut = "Rejeté"
+    demande.save()  
+    return redirect('avance_salaire')

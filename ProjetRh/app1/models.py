@@ -176,5 +176,15 @@ class DemandeConge(models.Model):
 
 
 
-
+# Modele demande avance du salaire:
+class DemandeAvanceSalaire(models.Model):
+    Somme = models.FloatField()
+    Date_demande = models.DateField(default=timezone.now)
+    Employe_demande = models.ForeignKey(Employe, on_delete=models.CASCADE, related_name="demandes_avance")
+    num_demande = models.IntegerField()
+    statut = models.CharField(max_length=10, choices=[('en_attente', 'En attente'), ('approuve', 'Approuvé'), ('rejete', 'Rejeté')], default='en_attente')
+    commentaire = models.TextField(null=True, blank=True)
+    def __str__(self):
+        return f"Demande d'avance de salaire de {self.Employe_demande} - {self.Somme}"
+    
 

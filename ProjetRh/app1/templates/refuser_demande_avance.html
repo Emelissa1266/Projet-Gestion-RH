@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des Demandes de Congés</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">Liste des Demandes d'avance du salaire</h1>
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Employé</th>
+                    <th>Date demande</th>
+                    <th>Somme demande</th>
+                    <th>Numero demande</th>
+                    <th>Statut demande</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for demande in demandes_avance %}
+                <tr>
+                    <td>{{ demande.id }}</td>
+                    <td>{{ demande.Employe_demande }}</td>
+                    <td>{{ demande.Date_demande }}</td>
+                    <td>{{ demande.Somme }}</td>
+                    <td>{{ demande.num_demande }}</td>
+                    <td>{{ demande.statut}}</td>
+                    <td><a   class="btn btn-success" href="{% url 'liste_demande_avance_salaire' demande.id %}">Accepter</a></td>
+                    <td><a   class="btn btn-outline-danger" href="{% url 'liste_demande_avance_salaire' demande.id %}">Refuser</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>

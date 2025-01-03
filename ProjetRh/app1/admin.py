@@ -11,6 +11,7 @@ from .models import Candidat
 from .models import Recrutement
 from .models import Utilisateur
 from .models import DemandeConge
+from .models import DemandeAvanceSalaire
 # Register your models here.
 admin.site.register(Employe)
 admin.site.register(Evaluation)
@@ -24,3 +25,4 @@ admin.site.register(Candidat)
 admin.site.register(Recrutement)
 admin.site.register(Utilisateur)
 admin.site.register(DemandeConge)
+admin.site.register(DemandeAvanceSalaire)

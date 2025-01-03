@@ -20,5 +20,8 @@ urlpatterns = [
     path('acceuil-arh/salaires/ajouter_salaire/', views.ajouter_salaire, name='ajouter_salaire'),
     path('acceuil-arh/salaires/supprimer_salaire/<int:salaire_id>/', views.supprimer_salaire, name='supprimer_salaire'),
     path('acceuil-arh/salaires/Fiche_paie/<int:salaire_id>/', views.fiche_paie, name='fiche_paie'),
+    path('acceuil-arh/salaires/demande_avance_salaire/', views.liste_demande_avance_salaire, name='avance_salaire'),
+    path('acceuil-arh/salaires/demande_avance_salaire/accepter/<int:demande_id>/', views.accepter_demande_avance_salaire, name='accepter_demande_avance_salaire'),
+    path('acceuil-arh/salaires/demande_avance_salaire/refuser/<int:demande_id>/', views.refuser_demande_avance_salaire, name='refuser_demande_avance_salaire'),
 ]
 
