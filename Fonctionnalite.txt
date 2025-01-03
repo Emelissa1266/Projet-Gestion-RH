@@ -13,7 +13,7 @@
                    - ajout, mod, supp ...........:)
                    -Calcul automatique des salaires.......:(  // apres le traitement des absences 
                    - Generation automatique d'une fiche de paie ............. :)
-                   -Gestion des primes et des avantages 
+                   -Gestion des primes et des avantages ...........:)
                 
                 ** Gestion des contrats:
                    -ajout, mod, supp
@@ -51,6 +51,6 @@
 
 
 --> Condidats: ** S'authentifier ............:)
-               ** S'inscrire(creer un compte)
+               ** S'inscrire(creer un compte) .......:)
                ** demande de recrutement
                ** Consulter etat de condidature 
