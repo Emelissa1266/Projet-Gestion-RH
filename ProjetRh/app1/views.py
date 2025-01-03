@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect,get_object_or_404
 from django.contrib.auth.hashers import make_password, check_password
-from .forms import loginForm, SignupForm  ,EmployeForm ,UtilisateurForm ,CongeForm, SalaireForm, ContratForm
+from .forms import loginForm, SignupForm  ,EmployeForm ,UtilisateurForm ,CongeForm, SalaireForm, ContratForm, RecrutementForm
 from .models import Utilisateur, Candidat, Employe, Service, Competances, Formations, Recrutement, Salaire, Evaluation ,Conge ,DemandeConge, DemandeAvanceSalaire, Contrat, ArchiveContrat
 from django.contrib import messages
 from django.http import JsonResponse
@@ -347,3 +347,74 @@ def supprimer_contrat(request, contrat_id):
         contrat.delete()  # Supprimer le contrat
         return redirect('liste_contrats')  # Rediriger vers la liste des contrats
     return redirect('liste_contrats')  # Si la requête n'est pas POST, rediriger vers la liste
+
+
+# Vue pour la liste des recrutements
+def liste_recrutements(request):
+    recrutements = Recrutement.objects.all()
+    return render(request, 'liste_recrutements.html', {'recrutements': recrutements})
+
+# Vue pour modifier un recrutement
+def modifier_recrutement(request, recrutement_id):
+    recrutement = get_object_or_404(Recrutement, id=recrutement_id)
+    if request.method == 'POST':
+        form = RecrutementForm(request.POST, instance=recrutement)
+        if form.is_valid():
+            form.save()
+            return redirect('liste_recrutements')  # Redirection vers la liste des recrutements après modification
+    else:
+        form = RecrutementForm(instance=recrutement)
+
+    return render(request, 'modifier_recrutement.html', {'recrutement_form': form, 'recrutement': recrutement})
+
+# Vue pour afficher les détails d'un recrutement
+def details_recrutement(request, recrutement_id):
+    recrutement = get_object_or_404(Recrutement, id=recrutement_id)
+    return render(request, 'details_recrutement.html', {'recrutement': recrutement})
+
+# Vue pour supprimer un recrutement
+def supprimer_recrutement(request, recrutement_id):
+    if request.method == "POST":
+        recrutement = get_object_or_404(Recrutement, id=recrutement_id)
+        recrutement.delete()  # Supprimer le recrutement
+        return redirect('liste_recrutements')  # Rediriger vers la liste des recrutements
+    return redirect('liste_recrutements')  # Si la requête n'est pas POST, rediriger vers la liste
+
+# Vue pour ajouter un nouveau recrutement
+def ajouter_recrutement(request):
+    if request.method == 'POST':
+        form = RecrutementForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('liste_recrutements')  # Redirection vers la liste des recrutements après ajout
+    else:
+        form = RecrutementForm()
+
+    return render(request, 'ajouter_recrutement.html', {'recrutement_form': form})
+
+# Vue pour afficher la liste des candidats pour un recrutement
+def liste_candidats(request, recrutement_id):
+    recrutement = get_object_or_404(Recrutement, id=recrutement_id)
+    candidats = recrutement.Condidat_Recrutement.all()
+    return render(request, 'liste_candidats.html', {'candidats': candidats, 'recrutement': recrutement})
+
+# Vue pour afficher les détails d'un candidat
+def details_candidat(request, candidat_id):
+    candidat = get_object_or_404(Candidat, id=candidat_id)
+    return render(request, 'details_candidat.html', {'candidat': candidat})
+
+# Vue pour refuser un candidat
+def refuser_candidat(request, candidat_id):
+    candidat = get_object_or_404(Candidat, id=candidat_id)
+    candidat.Etat_condidature = "Rejeté"
+    id_recrutement = candidat.Rcrt_cond.first().id
+    candidat.save()
+    return redirect('liste_candidats', id_recrutement)
+
+# Vue pour accepter un candidat
+def accepter_candidat(request, candidat_id):
+    candidat = get_object_or_404(Candidat, id=candidat_id)
+    candidat.Etat_condidature = "Accepté"
+    id_recrutement = candidat.Rcrt_cond.first().id
+    candidat.save()
+    return redirect('liste_candidats', id_recrutement)

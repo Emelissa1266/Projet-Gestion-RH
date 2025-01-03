@@ -4,11 +4,235 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Employé</title>
+    <title>Accueil - Gestion des Ressources Humaines</title>
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-    <title>Page Manager</title>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            text-decoration: none;
+            list-style: none;
+        }
+        :root {
+            --bg-color: #222327;
+            --text-color: #fcf8f8;
+            --main-color: #1ad2ada6;
+        }
+        body {
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: transparent;
+            padding: 15px 12%;
+            transition: all 0.2s ease;
+        }
+        .navbar {
+            display: flex;
+        }
+        .navbar a {
+            color: var(--text-color);
+            font-size: 1.1rem;
+            font-weight: 500;
+            padding: 5px 0;
+            margin: 0 30px;
+            transition: all 0.5s ease;
+        }
+        .navbar a:hover {
+            color: var(--main-color);
+        }
+        .navbar a.active {
+            color: var(--main-color);
+        }
+        .main {
+            display: flex;
+            align-items: center;
+        }
+        .main a {
+            margin-right: 25px;
+            margin-left: 10px;
+            color: var(--text-color);
+            font-size: 1.1rem;
+            font-weight: 500;
+            transition: all 0.5s ease;
+        }
+        .main a:hover {
+            color: var(--main-color);
+        }
+        #menu-icon {
+            font-size: 35px;
+            color: var(--text-color);
+            cursor: pointer;
+            display: none;
+        }
+        @media (max-width: 1280px) {
+            header {
+                padding: 14px 2%;
+            }
+            .navbar a {
+                margin: 0 20px;
+                padding: 5px 0;
+            }
+        }
+        @media (max-width: 1090px) {
+            #menu-icon {
+                display: block;
+            }
+            .navbar {
+                position: absolute;
+                top: 100%;
+                right: -100%;
+                width: 270px;
+                height: auto;
+                background: var(--main-color);
+                display: flex;
+                flex-direction: column;
+                border-radius: 10px;
+                transition: all 0.5s ease;
+            }
+            .navbar a {
+                display: block;
+                margin: 12px 0;
+                padding: 0 25px;
+                color: var(--text-color);
+            }
+            .navbar a:hover {
+                color: var(--text-color);
+            }
+            .navbar a.active {
+                color: var(--text-color);
+            }
+            .navbar.open {
+                right: 2%;
+            }
+        }
+        .features {
+            margin-top: 40px;
+        }
+        .feature-card {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        .btn-primary {
+            background-color: #1ad2ada6;
+            border-color: #1ad267a6;
+        }
+        .btn-primary:hover {
+            background-color: #32a895;
+            border-color: #32a895;
+        }
+        .footer {
+            background-color: #343a40;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            margin-top: 120px;
+        }
+        .footer a {
+            color: #ffffff;
+            text-decoration: underline;
+        }
+        .footer a:hover {
+            color: #d4d4d4;
+        }
+        .container {
+            margin-top: 120px;
+        }
+    </style>
+
 </head>
 <body>
-    <h1>Tu es un Manager </h1>
+    <header>
+        <ul class="navbar">
+            <li><a href="{% url 'acceuil_arh' %}" class="active"><i class='bx bx-home-alt-2'></i>Home</a></li>
+            <li><a href="{% url 'liste_employes' %}">Employé</a></li>
+            <li><a href="{% url 'liste_conges' %}">Congé</a></li>
+            <li><a href="{% url 'liste_salaires' %}">Salaire</a></li>
+            <li><a href="{% url 'liste_evaluations' %}">Rapport</a></li>
+            <li><a href="{% url 'liste_contrats' %}">Contrat</a></li>
+            <li><a href="{% url 'liste_recrutements' %}">Recrutement</a></li>
+        </ul>
+        <div class="main">
+            <a href="{% url 'homecandidat' %}"><i class='bx bx-log-out'></i></a>
+            <div class="bx bx-menu" id="menu-icon"></div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="features row mt-5">
+            <div class="col-md-4 mb-4">
+                <div class="feature-card">
+                    <h3>Gestion des Employés</h3>
+                    <p>Ajoutez, modifiez et gérez les informations des employés.</p>
+                    <a href="{% url 'liste_employes' %}" class="btn btn-primary mt-3">Voir plus</a>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="feature-card">
+                    <h3>Suivi des Congés</h3>
+                    <p>Approuvez les congés en quelques clics et suivez leur solde en temps réel.</p>
+                    <a href="{% url 'liste_conges' %}" class="btn btn-primary mt-3">Voir plus</a>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="feature-card">
+                    <h3>Suivi des Salaires</h3>
+                    <p>Suivez les salaires des employés et gérez les paiements en temps réel.</p>
+                    <a href="{% url 'liste_salaires' %}" class="btn btn-primary mt-3">Voir plus</a>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="feature-card">
+                    <h3>Gestion des contrats</h3>
+                    <p>Ajoutez, modifiez et gérez les contrats.</p>
+                    <a href="{% url 'liste_contrats' %}" class="btn btn-primary mt-3">Voir plus</a>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="feature-card">
+                    <h3>Suivi des Recrutements</h3>
+                    <p>Consultez les candidatures et gérez les recrutements.</p>
+                    <a href="{% url 'liste_recrutements' %}" class="btn btn-primary mt-3">Voir plus</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2024 Gestion des Ressources Humaines. Tous droits réservés. | <a href="#">Conditions d'utilisation</a></p>
+    </footer>
+    <script>
+        let menu = document.querySelector('#menu-icon');
+        let navbar = document.querySelector('.navbar');
+        menu.onclick = () => {
+            menu.classList.toggle('bx-x');
+            navbar.classList.toggle('open');
+        }
+    </script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
 </body>
+</html>

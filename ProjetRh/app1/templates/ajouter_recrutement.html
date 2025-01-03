@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajouter un employé</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            text-decoration: none;
+            list-style: none;
+        }
+        :root {
+            --bg-color: #222327;
+            --text-color: #fcf8f8;
+            --main-color: #83dbd3;
+            --secondary-color: #555;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            background-color: #333;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin-top: 80px;
+            max-width: 700px;
+            
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: var(--main-color);
+        }
+        fieldset {
+            border: 1px solid var(--main-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        legend {
+            color: var(--main-color);
+            padding: 0 10px;
+            font-weight: 500;
+        }
+        .btn-primary {
+        width: 100%;
+        padding: 10px 15px;
+        background-color: #32a895;
+        color: rgb(255, 255, 255);
+        border-radius: 20px;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: bold;
+        text-align: center;
+    }
+    .btn-primary:hover {
+        background-color: var(--main-color);
+    }
+
+
+        button:hover {
+       text-decoration: underline;
+    }
+
+        .btn-secondary{
+        width: 100%;
+        padding: 10px 15px;
+        background-color: var(--secondary-color);
+        border: none;
+        color: rgb(255, 255, 255);
+        border-radius: 20px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: bold;
+        }
+        input{
+            width: 97%;
+            height: 60%;
+            background-color: transparent;
+            border: none;
+            outline: none;
+            border-radius: 30px;
+            border: 1px solid rgba(167, 219, 225, 0.626);
+            margin-left: 1px;
+            color: white;
+            padding: 5px 5px 5PX 5PX;
+        }
+        select{
+            width: 30%;
+            height: 60%;
+            background-color: transparent;
+            border: none;
+            outline: none;
+            border-radius: 30px;
+            border: 1px solid rgba(167, 219, 225, 0.626);
+            margin-left: 1px;
+            color: white;
+            padding: 5px 5px 5PX 5PX;
+        }
+        option{
+            background-color: #333;
+            color: white;
+        }
+        a {
+            text-align: center;
+            display: block;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Ajouter un recrutement</h1>
+        <form method="POST">
+            {% csrf_token %}
+            <fieldset>
+                <legend>Informations Recrutement</legend>
+                {{ recrutement_form.as_p }}
+            </fieldset>
+            <div class="button-container">
+            <button type="submit" class="btn btn-primary">Ajouter</button>
+            <a href="{% url 'liste_recrutements' %}" class="btn btn-secondary mt-3">Retour</a>
+        </div>
+        </form>
+        
+    </div>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>

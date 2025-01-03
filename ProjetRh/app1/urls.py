@@ -34,5 +34,14 @@ urlpatterns = [
     path('acceuil-arh/contrats/consulter/<int:contrat_id>/', views.consulter_contrat, name='consulter_contrat'),
     path('acceuil-arh/contrats/supprimer/<int:contrat_id>/', views.supprimer_contrat, name='supprimer_contrat'),
     path('acceuil-arh/contrats/liste_archive/', views.liste_archives_contrats, name='liste_archive_contrat'),
+    path('acceuil-arh/recrutements/', views.liste_recrutements, name='liste_recrutements'),
+    path('acceuil-arh/recrutements/modifier/<int:recrutement_id>/', views.modifier_recrutement, name='modifier_recrutement'),
+    path('acceuil-arh/recrutements/details_recrutement/<int:recrutement_id>/', views.details_recrutement, name='details_recrutement'),
+    path('acceuil-arh/recrutements/supprimer_recrutement/<int:recrutement_id>/', views.supprimer_recrutement, name='supprimer_recrutement'),
+    path('acceuil-arh/recrutements/ajouter_recrutement/', views.ajouter_recrutement, name='ajouter_recrutement'),
+    path('acceuil-arh/recrutements/liste_candidats/<int:recrutement_id>/', views.liste_candidats, name='liste_candidats'),
+    path('acceuil-arh/recrutements/details_candidat/<int:candidat_id>/', views.details_candidat, name='details_candidat'),
+    path('acceuil-arh/recrutements/refuser_candidat/<int:candidat_id>/', views.refuser_candidat, name='refuser_candidat'),
+    path('acceuil-arh/recrutements/accepter_candidat/<int:candidat_id>/', views.accepter_candidat, name='accepter_candidat'),
 ]
 

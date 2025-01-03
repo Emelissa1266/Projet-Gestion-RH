@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Détails du Recrutement</title>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.company-info {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.recruitment-info, .candidates-info {
+    margin-bottom: 20px;
+}
+
+.recruitment-info h2, .candidates-info h2 {
+    font-size: 20px;
+    border-bottom: 2px solid #333;
+    padding-bottom: 5px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul li {
+    padding: 5px 0;
+}
+
+footer {
+    text-align: center;
+    margin-top: 20px;
+}
+
+footer button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+footer button:hover {
+    background-color: #45a049;
+}
+
+/* Styles pour l'impression */
+@media print {
+    footer button {
+        display: none;
+    }
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Détails du Recrutement</h1>
+            <div class="company-info">
+                <p>Nom de l'entreprise</p>
+                <p>Adresse de l'entreprise</p>
+                <p>Téléphone de l'entreprise</p>
+            </div>
+        </header>
+        <section class="recruitment-info">
+            <h2>Informations du Recrutement</h2>
+            <p><strong>Poste:</strong> {{ recrutement.offre_emploi }}</p>
+            <p><strong>Date de début:</strong> {{ recrutement.date_debut }}</p>
+            <p><strong>Statut:</strong> {{ recrutement.status }}</p>
+            <p><strong>Description:</strong> {{ recrutement.description }}</p>
+        </section>
+        <section class="candidates-info">
+            <h2>Candidats</h2>
+            <ul>
+                {% for candidat in recrutement.Condidat_Recrutement.all %}
+                <li>{{ candidat.Nom }} {{ candidat.Prenom }} - {{ candidat.Email }}</li>
+                {% endfor %}
+            </ul>
+        </section>
+        <footer>
+            <button onclick="window.print()">Imprimer</button>
+        </footer>
+    </div>
+</body>
+</html>
