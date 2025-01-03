@@ -188,3 +188,21 @@ class DemandeAvanceSalaire(models.Model):
         return f"Demande d'avance de salaire de {self.Employe_demande} - {self.Somme}"
     
 
+# Modèle pour les archives des contrats
+class ArchiveContrat(models.Model):
+     date_deb= models.DateField(default=timezone.now)
+     date_fin= models.DateField(default=timezone.now)
+     date_archive= models.DateField(default=timezone.now)
+     TYPE_CHOICES = [
+        ('permanent', 'Permanent'),
+        ('temporary', 'Temporary'),
+        ('internship', 'Internship'),
+    ]
+     type_contrat= models.CharField(max_length=15, choices=TYPE_CHOICES)
+     salaire_monsuel= models.FloatField(max_length=20)
+     salaire_quotidien= models.FloatField(max_length=20)
+     Employe= models.ForeignKey(Employe, on_delete=models.CASCADE, related_name="contrat")
+
+     def __str__(self):
+        return f"Contrat de {self.Employe} - {self.type_contrat}"
+

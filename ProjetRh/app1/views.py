@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect,get_object_or_404
 from django.contrib.auth.hashers import make_password, check_password
 from .forms import loginForm, SignupForm  ,EmployeForm ,UtilisateurForm ,CongeForm, SalaireForm, ContratForm
-from .models import Utilisateur, Candidat, Employe, Service, Competances, Formations, Recrutement, Salaire, Evaluation ,Conge ,DemandeConge, DemandeAvanceSalaire, Contrat
+from .models import Utilisateur, Candidat, Employe, Service, Competances, Formations, Recrutement, Salaire, Evaluation ,Conge ,DemandeConge, DemandeAvanceSalaire, Contrat, ArchiveContrat
 from django.contrib import messages
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
@@ -324,3 +324,26 @@ def modifier_contrat(request, contrat_id):
 def consulter_contrat(request, contrat_id):
     contrat = get_object_or_404(Contrat, id=contrat_id)
     return render(request, 'consulter_contrat.html', {'contrat': contrat, 'date': contrat.date_deb})
+
+
+def liste_archives_contrats(request):
+    contrats = ArchiveContrat.objects.all()
+    return render(request, 'Archives_contrat.html', {'contrats': contrats})
+
+
+def supprimer_contrat(request, contrat_id):
+    if request.method == "POST":
+        contrat = get_object_or_404(Contrat, id=contrat_id)
+        # Archiver le contrat
+        ArchiveContrat.objects.create(
+            Employe =contrat.Employe_Contrat,
+            date_deb=contrat.date_deb,
+            date_fin=contrat.date_fin,
+            type_contrat=contrat.type_contrat,
+            salaire_monsuel=contrat.salaire_monsuel,
+            salaire_quotidien=contrat.salaire_quotidien,
+            date_archive=timezone.now()
+        )
+        contrat.delete()  # Supprimer le contrat
+        return redirect('liste_contrats')  # Rediriger vers la liste des contrats
+    return redirect('liste_contrats')  # Si la requête n'est pas POST, rediriger vers la liste
