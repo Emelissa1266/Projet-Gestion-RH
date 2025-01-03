@@ -47,5 +47,9 @@ urlpatterns = [
     path('acceuil-man/evaluer_employe/<int:employe_id>/', views.evaluer_employe, name='evaluer_employe'),
     path('acceuil-man/evaluations/', views.liste_evaluations_Manager, name='liste_employes_Evaluations'),
     path('acceuil-man/liste_employee/', views.liste_employes_Manager, name='liste_Employes'),
+    path('acceuil-emp/<int:utilisateur_id>/', views.acceuil_emp, name='acceuil-emp'),
+    path('acceuil-emp/Mes_conges/<int:utilisateur_id>/', views.Mes_conges, name='Mes_conges'),
+    path('acceuil-emp/Mes_salaires/<int:utilisateur_id>/', views.Mes_salaires, name='Mes_salaires'),
+    path('acceuil-emp/Mes_contrats/<int:utilisateur_id>/', views.Mes_contrats, name='Mes_contrats'),
 ]
 
