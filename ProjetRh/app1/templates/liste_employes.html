@@ -120,6 +120,7 @@
                     <td>{{ employe.Employe_Utilisateur.Login }}</td>
                     <td>
                         <a href="{% url 'modifier_employe' employe.id %}" class="btn btn-warning btn-sm">Modifier</a>
+                        <a href="{% url 'Fiche_employe' employe.id %}" class="btn btn-success btn-sm">Fiche_employe</a>
                         <button class="btn btn-danger btn-sm" onclick="confirmDelete({{ employe.id }})">Supprimer</button>
                     </td>
                 </tr>

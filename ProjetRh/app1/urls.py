@@ -11,6 +11,7 @@ urlpatterns = [
     path('employes/ajouter/', views.ajouter_employe, name='ajouter_employe'),
     path('employes/modifier/<int:employe_id>/', views.modifier_employe, name='modifier_employe'),
     path('employes/supprimer/<int:employe_id>/', views.supprimer_employe, name='supprimer_employe'),
+    path('employes/detail/<int:employe_id>/', views.detail_employe, name='Fiche_employe'),
     path('acceuil-arh/conges/',views.liste_conges, name='liste_conges'),
     path('acceuil-arh/conges/ajouter/', views.ajouter_conge, name='ajouter_conge'),
     path('acceuil-arh/conges/Liste_dmconge/', views.liste_demandes_conges, name='liste_demande_conge'),
@@ -23,5 +24,6 @@ urlpatterns = [
     path('acceuil-arh/salaires/demande_avance_salaire/', views.liste_demande_avance_salaire, name='avance_salaire'),
     path('acceuil-arh/salaires/demande_avance_salaire/accepter/<int:demande_id>/', views.accepter_demande_avance_salaire, name='accepter_demande_avance_salaire'),
     path('acceuil-arh/salaires/demande_avance_salaire/refuser/<int:demande_id>/', views.refuser_demande_avance_salaire, name='refuser_demande_avance_salaire'),
+   
 ]
 

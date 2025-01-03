@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fiche Employé</title>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.company-info {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.employee-info, .professional-history, .competences, .formations {
+    margin-bottom: 20px;
+}
+
+.employee-info h2, .professional-history h2, .competences h2, .formations h2 {
+    font-size: 20px;
+    border-bottom: 2px solid #333;
+    padding-bottom: 5px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul li {
+    padding: 5px 0;
+}
+
+footer {
+    text-align: center;
+    margin-top: 20px;
+}
+
+footer button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+footer button:hover {
+    background-color: #45a049;
+}
+
+/* Styles pour l'impression */
+@media print {
+    footer button {
+        display: none;
+    }
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Fiche Employé</h1>
+            <div class="company-info">
+                <p>Nom de l'entreprise</p>
+                <p>Adresse de l'entreprise</p>
+                <p>Téléphone de l'entreprise</p>
+            </div>
+        </header>
+        <section class="employee-info">
+            <h2>Informations de l'employé</h2>
+            <p><strong>Nom:</strong> {{ employe.nom }}</p>
+            <p><strong>Prénom:</strong> {{ employe.prenom }}</p>
+            <p><strong>Date de naissance:</strong> {{ employe.date_de_naissance }}</p>
+            <p><strong>Date d'embauche:</strong> {{ employe.date_aumbauche }}</p>
+            <p><strong>Adresse:</strong> {{ employe.adresse }}</p>
+            <p><strong>Service:</strong> {{ employe.Service_Employe }}</p>
+            <p><strong>Email:</strong> {{ employe.Employe_Utilisateur }}</p>
+        </section>
+        <section class="professional-history">
+            <h2>Historique Professionnel</h2>
+            <p>{{ employe.Historique_professionnel }}</p>
+        </section>
+        <section class="competences">
+            <h2>Compétences</h2>
+            <ul>
+                {% for competence in employe.Competence_Employe.all %}
+                <li>{{ competence.description }}</li>
+                {% endfor %}
+            </ul>
+        </section>
+        <section class="formations">
+            <h2>Formations</h2>
+            <ul>
+                {% for formation in employe.Employe_Formation.all %}
+                <li>{{ formation.nom_formation }} - {{ formation.date_obtention }}</li>
+                {% endfor %}
+            </ul>
+        </section>
+        <footer>
+            <button onclick="window.print()">Imprimer</button>
+        </footer>
+    </div>
+</body>
+</html>

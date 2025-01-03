@@ -143,6 +143,12 @@ def supprimer_employe(request, employe_id):
         return redirect('liste_employes')  # Redirect to the list of employees
     return redirect('liste_employes')  # If the request is not POST, just redirect back to the list
 
+
+# Vue pour afficher les détails d'un employé
+def detail_employe(request, employe_id):
+    employe = get_object_or_404(Employe, id=employe_id)
+    return render(request, 'Fiche_employe.html', {'employe': employe})
+
 # Vue pour la liste des congés
 def liste_conges(request):
     conges = Conge.objects.all()
