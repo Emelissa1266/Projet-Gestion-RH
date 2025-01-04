@@ -42,15 +42,22 @@
 
 
 --> Employes: ** S'authentifier ...........:)
-              ** consulter leur conges
-              ** consulter leur salaires
-              ** envoyer demendes conges
-              ** demende avance sur le salaire
-              ** consulter leur contrat
-              ** demende/accepte/refuse les renouvllements
+              ** consulter leur conges..........:)
+              ** consulter leur salaires..........:)
+              ** envoyer demendes conges ..........:)
+              ** Supprimer la demande du conge ........:(  a faire prochainement :| *** 
+              ** demende avance sur le salaire ...........:)
+              ** consulter leur contrat...........:)
+              ** demende/accepte/refuse les renouvllements......:( // Ajouter table renouvellement 
+              ** Editer le profil .....:( // Melissa 
 
 
 --> Condidats: ** S'authentifier ............:)
                ** S'inscrire(creer un compte) .......:)
-               ** demande de recrutement
-               ** Consulter etat de condidature 
+               ** demande de recrutement ........ :)
+               ** Consulter etat de condidature .......:( // a faire prochainement :| *** 
+               ** Editer le profil .......:( // Melissa 
+
+----> Systeme de notifications ...........:(  // derniere tache 
+----> Code de confirmation ...........:( // derniere tache
+---->Tableau de bord ...............:( // Melissa 
