@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect,get_object_or_404
 from django.contrib.auth.hashers import make_password, check_password
-from .forms import loginForm, SignupForm  ,EmployeForm ,UtilisateurForm ,CongeForm, SalaireForm, ContratForm, RecrutementForm, EvaluationForm, DemandeCongeForm
+from .forms import loginForm, SignupForm  ,EmployeForm ,UtilisateurForm ,CongeForm, SalaireForm, ContratForm, RecrutementForm, EvaluationForm, DemandeCongeForm, DemandeAvanceSalaireForm
 from .models import Utilisateur, Candidat, Employe, Service, Competances, Formations, Recrutement, Salaire, Evaluation ,Conge ,DemandeConge, DemandeAvanceSalaire, Contrat, ArchiveContrat
 from django.contrib import messages
 from django.http import JsonResponse
@@ -491,9 +491,38 @@ def Demande_conge(request, utilisateur_id):
         form = DemandeCongeForm()
         return render(request, 'Demande_conge.html', {'form': form, 'utilisateur': utilisateur_id})
     
-    
+
 # Vue pour afficher les demandes de congé d'un employé
 def Mes_Demandes_conges(request, utilisateur_id):
     employe = get_object_or_404(Employe, Employe_Utilisateur=utilisateur_id)
     demandes = DemandeConge.objects.filter(employe=employe)
     return render(request, 'Mes_Demandes_conges.html', {'demandes': demandes, 'utilisateur': utilisateur_id})
+
+
+# Vue pour demander une avance de salaire
+def Demande_avance_salaire(request, utilisateur_id):
+    if request.method == 'POST':
+        form = DemandeAvanceSalaireForm(request.POST)
+        if form.is_valid():
+            demande = form.save(commit=False)
+            demande.Employe_demande = Employe.objects.get(Employe_Utilisateur=utilisateur_id)
+            demande.statut = "En attente"
+
+           # Récupérer l'année de la date de la demande
+            demandeS = DemandeAvanceSalaire.objects.filter(Employe_demande=demande.Employe_demande).order_by('-Date_demande').first()
+            if demandeS and demandeS.Date_demande.year == demande.Date_demande.year:
+                demande.num_demande = demandeS.num_demande + 1
+                if demande.num_demande > 2: # Vérifier si l'employé a déjà fait 2 demandes d'avance de salaire pour la même année
+                    messages = "Vous avez atteint le nombre maximum de demandes d'avance de salaire pour cette année."
+                    return render(request, 'Mes_salaires.html', { 'utilisateur': utilisateur_id, 'messages': messages})
+                else:
+                   demande.save()
+            else:
+                if demandeS.Date_demande.year == demande.Date_demande.year: # Si l'employé n'a pas encore fait de demande d'avance de salaire pour l'année en cours
+                   demande.num_demande = 1
+                   demande.save()
+            
+            return redirect('Mes_salaires', utilisateur_id)  # Redirection vers la liste des salaires après ajout
+    else:
+        form = DemandeAvanceSalaireForm() # Créer un formulaire vide si c'est une requête GET
+        return render(request, 'Demande_avance_salaire.html', {'form': form, 'utilisateur': utilisateur_id})

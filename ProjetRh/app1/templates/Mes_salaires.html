@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestion des congés et employés</title>
+    <title>Mes Salaires</title>
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
@@ -127,10 +127,18 @@
 </head>
 <body>
     <header>
-        <a href="#" class="dm_salaire">Demander avance sur le salaire</a>
+        <a href="{% url 'Demande_avance_salaire' utilisateur %}" class="dm_salaire">Demander avance sur le salaire</a>
     </header>
     <div class="container">
         <h1>Liste des salaires</h1>
+
+         <!-- Afficher les messages -->
+         {% if messages %}
+         <div class="alert alert-info" role="alert">
+             <p class="alert alert-{{ message.tags }}">{{ messages }}</p>
+         </div>
+            {% endif %}
+
         <table class="table table-bordered table-striped">
             <thead>
                 <tr>

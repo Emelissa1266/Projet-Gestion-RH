@@ -1,5 +1,5 @@
 from django import forms
-from .models import Utilisateur, Candidat, Employe, Service, Competances, Formations, Recrutement, Salaire, Evaluation, Conge, Contrat, DemandeConge
+from .models import Utilisateur, Candidat, Employe, Service, Competances, Formations, Recrutement, Salaire, Evaluation, Conge, Contrat, DemandeConge, DemandeAvanceSalaire
 
 class loginForm(forms.Form):
     login = forms.CharField(label="Login", max_length=30, widget=forms.TextInput(attrs={"class": "form-control"}))
@@ -127,6 +127,18 @@ class DemandeCongeForm(forms.ModelForm):
             'date_fin': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
             'type_conge': forms.Select(attrs={'class': 'form-control'}),
             'raison': forms.TextInput(attrs={'class': 'form-control'}),
+            'commentaire': forms.Textarea(attrs={'class': 'form-control'}),
+            
+        }
+
+
+class DemandeAvanceSalaireForm(forms.ModelForm):
+    class Meta:
+        model = DemandeAvanceSalaire
+        fields = ['Date_demande', 'Somme', 'commentaire']
+        widgets = {
+            'Date_demande': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+            'Sommet': forms.NumberInput(attrs={'class': 'form-control'}),
             'commentaire': forms.Textarea(attrs={'class': 'form-control'}),
             
         }
