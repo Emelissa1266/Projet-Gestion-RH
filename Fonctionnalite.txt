@@ -5,8 +5,8 @@
 
                ** Gestion des conges:
                    -ajout, mod, supp ..........:)
-                   -suivi du solde du conge.......:( //il y a le solde du conge mais pas suivi 
-                   -notification pour les employes.......:)
+                   -suivi du solde du conge.......:(  // il y a le solde du conge mais pas suivi 
+                   -notification pour les employes........:)
                    -date fin > date_deb .......:)
 
                 ** gestion des salaires:
@@ -32,7 +32,7 @@
                     -Gestion des entretiens ........... :( // ajouter une classe entretien 
 
                 ** Suivi des taches des employes et des managers .............:( // pas encore
-                ** Suivi des horaires de travail des employeset des managers y compris les absences ....... :( //pas encore
+                ** Suivi des horaires de travail des employeset des managers y compris les absences .........:( //pas encore
 
 
 
@@ -55,7 +55,7 @@
 --> Condidats: ** S'authentifier ............:)
                ** S'inscrire(creer un compte) .......:)
                ** demande de recrutement ........ :)
-               ** Consulter etat de condidature .......:( // a faire prochainement :| *** 
+               ** Consulter etat de condidature ...........:)
                ** Editer le profil .......:( // Melissa 
 
 ----> Systeme de notifications ...........:(  // derniere tache 
