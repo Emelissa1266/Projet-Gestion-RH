@@ -127,7 +127,8 @@
 </head>
 <body>
     <header>
-        <a href="#" class="dm_conge">Demander un conge</a>
+        <a href="{% url 'Demande_conge' utilisateur %}" class="dm_conge">Demander un conge</a>
+        <a href="{% url 'Mes_Demandes_conges' utilisateur %}" class="dm_conge">Mes demandes de conges</a>
     </header>
     <div class="container">
         <h1>Liste des congés</h1>
@@ -157,7 +158,7 @@
             </tbody>
         </table>
         <div class="d-flex justify-content-between mt-4">
-            <a href="{% url 'acceuil-emp' %}" class="btn btn-secondary">Terminer</a>
+            <a href="{% url 'acceuil-emp' utilisateur %}" class="btn btn-secondary">Terminer</a>
         </div>
     </div>
 

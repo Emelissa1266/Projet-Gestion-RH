@@ -1,5 +1,5 @@
 from django import forms
-from .models import Utilisateur, Candidat, Employe, Service, Competances, Formations, Recrutement, Salaire, Evaluation, Conge, Contrat
+from .models import Utilisateur, Candidat, Employe, Service, Competances, Formations, Recrutement, Salaire, Evaluation, Conge, Contrat, DemandeConge
 
 class loginForm(forms.Form):
     login = forms.CharField(label="Login", max_length=30, widget=forms.TextInput(attrs={"class": "form-control"}))
@@ -109,11 +109,24 @@ class RecrutementForm(forms.ModelForm):
 class EvaluationForm(forms.ModelForm):
     class Meta:
         model = Evaluation
-        fields = ['date_Evaluation', 'criteres', 'Resultat', 'Commentaire', 'Employe_Evaluation']
+        fields = ['date_Evaluation', 'criteres', 'Resultat', 'Commentaire']
         widgets = {
             'date_Evaluation': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
             'criteres': forms.TextInput(attrs={'class': 'form-control'}),
             'Resultat': forms.TextInput(attrs={'class': 'form-control'}),
             'Commentaire': forms.Textarea(attrs={'class': 'form-control'}),
-            'Employe_Evaluation': forms.Select(attrs={'class': 'form-control'}),
+            
+        }
+
+class DemandeCongeForm(forms.ModelForm):
+    class Meta:
+        model = DemandeConge
+        fields = ['date_deb', 'date_fin', 'type_conge', 'raison', 'commentaire']
+        widgets = {
+            'date_deb': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+            'date_fin': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+            'type_conge': forms.Select(attrs={'class': 'form-control'}),
+            'raison': forms.TextInput(attrs={'class': 'form-control'}),
+            'commentaire': forms.Textarea(attrs={'class': 'form-control'}),
+            
         }

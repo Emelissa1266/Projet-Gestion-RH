@@ -169,10 +169,11 @@
 <body>
     <header>
         <ul class="navbar">
-            <li><a href="{% url 'acceuil-emp'  utilisateur.id %}" class="active"><i class='bx bx-home-alt-2'></i>Home</a></li>
-            <li><a href="{% url 'Mes_conges' utilisateur.id %}">Conges</a></li>
-            <li><a href="{% url 'Mes_salaires' utilisateur.id %}">Salaires</a></li>
-            <li><a href="{% url 'Mes_contrats' utilisateur.id %}">Contrats</a></li>
+            <li><a href="{% url 'acceuil-emp'  utilisateur %}" class="active"><i class='bx bx-home-alt-2'></i>Home</a></li>
+            <li><a href="{% url 'Mes_conges' utilisateur %}">Conges</a></li>
+            <li><a href="{% url 'Mes_salaires' utilisateur %}">Salaires</a></li>
+            <li><a href="{% url 'Mes_contrats' utilisateur %}">Contrats</a></li>
+            <li><a href="#">Mon Profil</a></li>
         </ul>
         <div class="main">
             <a href="{% url 'homecandidat' %}"><i class='bx bx-log-out'></i></a>
@@ -187,21 +188,21 @@
                 <div class="feature-card">
                     <h3>Mes conges</h3>
                     <p>Consultez vos conges ou demandez des conges.</p>
-                    <a href="{% url 'Mes_conges' utilisateur.id %}" class="btn btn-primary mt-3">Voir plus</a>
+                    <a href="{% url 'Mes_conges' utilisateur %}" class="btn btn-primary mt-3">Voir plus</a>
                 </div>
             </div>
             <div class="col-md-4 mb-4">
                 <div class="feature-card">
                     <h3>Mes salaires</h3>
                     <p>Consultez vos salairs ou demandez des avances du salaire.</p>
-                    <a href="{% url 'Mes_salaires' utilisateur.id %}" class="btn btn-primary mt-3">Voir plus</a>
+                    <a href="{% url 'Mes_salaires' utilisateur %}" class="btn btn-primary mt-3">Voir plus</a>
                 </div>
             </div>
             <div class="col-md-4 mb-4">
                 <div class="feature-card">
                     <h3>Mes contrats</h3>
                     <p>Consultez vos contrats.</p>
-                    <a href="{% url 'Mes_contrats' utilisateur.id %}" class="btn btn-primary mt-3">Voir plus</a>
+                    <a href="{% url 'Mes_contrats' utilisateur %}" class="btn btn-primary mt-3">Voir plus</a>
                 </div>
             </div>
         </section>

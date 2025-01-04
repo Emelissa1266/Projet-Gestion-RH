@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect,get_object_or_404
 from django.contrib.auth.hashers import make_password, check_password
-from .forms import loginForm, SignupForm  ,EmployeForm ,UtilisateurForm ,CongeForm, SalaireForm, ContratForm, RecrutementForm, EvaluationForm
+from .forms import loginForm, SignupForm  ,EmployeForm ,UtilisateurForm ,CongeForm, SalaireForm, ContratForm, RecrutementForm, EvaluationForm, DemandeCongeForm
 from .models import Utilisateur, Candidat, Employe, Service, Competances, Formations, Recrutement, Salaire, Evaluation ,Conge ,DemandeConge, DemandeAvanceSalaire, Contrat, ArchiveContrat
 from django.contrib import messages
 from django.http import JsonResponse
@@ -59,7 +59,7 @@ def RedirectionVersPage(request):
                        return render(request, 'AcceuilMan.html')
                      else:
                          if Login == utilisateur.Login and Mot_de_passe == utilisateur.mot_de_passe and utilisateur.role == 'employee': # Si le login et le mot de passe sont corrects et le rôle est "employee"
-                            return render(request, 'AcceuilEmp.html', {'utilisateur': utilisateur})
+                            return render(request, 'AcceuilEmp.html', {'utilisateur': utilisateur.id})
                          else:
                               if Login == utilisateur.Login and Mot_de_passe == utilisateur.mot_de_passe and utilisateur.role == 'candidate': # Si le login et le mot de passe sont corrects et le rôle est "candidate"
                                  return render(request, 'AcceuilCond.html')
@@ -80,7 +80,7 @@ def RedirectionVersPage(request):
     
     
 def acceuil_arh(request):
-    return render(request, 'AcceuilARH.html', {'utilisateur': utilisateur})
+    return render(request, 'AcceuilARH.html')
 
 
 def liste_employes(request):
@@ -454,14 +454,14 @@ def liste_employes_Manager(request):
     return render(request, 'liste_Employe.html', {'employes': employes})
 
 # Vue pour la page d'accueil de l'employé
-def acceuil_emp(request):
-    return render(request, 'AcceuilEmp.html')
+def acceuil_emp(request, utilisateur_id):
+    return render(request, 'AcceuilEmp.html', {'utilisateur': utilisateur_id})
 
 # Vue pour afficher les congés d'un employé
 def Mes_conges(request, utilisateur_id):
     employe = get_object_or_404(Employe, Employe_Utilisateur=utilisateur_id)
     conges = Conge.objects.filter(Employe_Conge=employe)
-    return render(request, 'Mes_conges.html', {'conges': conges})
+    return render(request, 'Mes_conges.html', {'conges': conges, 'utilisateur': utilisateur_id})
     
 # Vue pour afficher les salaires d'un employé
 def Mes_salaires(request, utilisateur_id):
@@ -469,10 +469,31 @@ def Mes_salaires(request, utilisateur_id):
     employee_id= employee.id
     employe = get_object_or_404(Employe, id=employee_id)
     salaires = Salaire.objects.filter(Employe_salaire=employe)
-    return render(request, 'Mes_salaires.html', {'salaires': salaires})
+    return render(request, 'Mes_salaires.html', {'salaires': salaires, 'utilisateur': utilisateur_id})
 
 # Vue pour afficher les contrats d'un employé
 def Mes_contrats(request, utilisateur_id):
     employe = get_object_or_404(Employe, Employe_Utilisateur=utilisateur_id)
     contrats = Contrat.objects.filter(Employe_Contrat=employe)
-    return render(request, 'Mes_contrats.html', {'contrats': contrats})
+    return render(request, 'Mes_contrats.html', {'contrats': contrats, 'utilisateur': utilisateur_id})
+
+# Vue pour demander un congé pour un employé
+def Demande_conge(request, utilisateur_id):
+    if request.method == 'POST':
+        form = DemandeCongeForm(request.POST)
+        if form.is_valid():
+            demande = form.save(commit=False)
+            demande.employe = Employe.objects.get(Employe_Utilisateur=utilisateur_id)
+            demande.statut = "En attente"
+            demande.save()
+            return redirect('Mes_conges', utilisateur_id)  # Redirection vers la liste des congés après ajout
+    else:
+        form = DemandeCongeForm()
+        return render(request, 'Demande_conge.html', {'form': form, 'utilisateur': utilisateur_id})
+    
+    
+# Vue pour afficher les demandes de congé d'un employé
+def Mes_Demandes_conges(request, utilisateur_id):
+    employe = get_object_or_404(Employe, Employe_Utilisateur=utilisateur_id)
+    demandes = DemandeConge.objects.filter(employe=employe)
+    return render(request, 'Mes_Demandes_conges.html', {'demandes': demandes, 'utilisateur': utilisateur_id})
