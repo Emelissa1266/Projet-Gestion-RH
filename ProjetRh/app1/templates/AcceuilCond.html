@@ -171,7 +171,7 @@
         <ul class="navbar">
             <li><a href="{% url 'acceuil-cand' utilisateur %}" class="active"><i class='bx bx-home-alt-2'></i>Home</a></li>
             <li><a href="{% url 'demande_emploi' utilisateur %}">Demande Emploi</a></li>
-            <li><a href="#">Consulter Etat Candidature</a></li>
+            <li><a href="{% url 'etat_candidature' utilisateur %}">Consulter Etat Candidature</a></li>
             <li><a href="#">Mon Profil</a></li>
         </ul>
         <div class="main">
@@ -194,7 +194,7 @@
                 <div class="feature-card">
                     <h3>Consulter Etat Candidature</h3>
                     <p>Consultez l'état de votre candidature.</p>
-                    <a href="#" class="btn btn-primary mt-3">Voir plus</a>
+                    <a href="{% url 'etat_candidature' utilisateur %}" class="btn btn-primary mt-3">Voir plus</a>
                 </div>
             </div>
         </section>

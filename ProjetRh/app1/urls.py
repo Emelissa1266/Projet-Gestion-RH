@@ -57,5 +57,6 @@ urlpatterns = [
     path('acceuil-cand/<int:utilisateur_id>/', views.acceuil_candidat, name='acceuil-cand'),
     path('acceuil-cand/Demande_Emploi/<int:utilisateur_id>/', views.liste_recrutements_Candidat, name='demande_emploi'),
     path('acceuil-cand/Demande_Emploi/<int:utilisateur_id>/<int:recrutement_id>', views.Demande_Emploi, name='demande_emploi'),
+    path('acceuil-cand/Etat_candidature/<int:utilisateur_id>/', views.Etat_candidature, name='etat_candidature'),
 ]
 

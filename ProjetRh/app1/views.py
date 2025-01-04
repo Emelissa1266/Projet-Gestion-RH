@@ -546,3 +546,8 @@ def Demande_Emploi(request, recrutement_id, utilisateur_id):
     messages = "Votre candidature a été envoyée avec succès."
     recrutements = Recrutement.objects.all()
     return render(request, 'demande_Emploi.html', {'utilisateur': utilisateur_id, 'recrutements' : recrutements , 'messages': messages})
+
+# Vue pour afficher la fiche candidature  pour un candidat
+def Etat_candidature(request, utilisateur_id):
+    candidat = Candidat.objects.get(Utilisateur_Condidat=utilisateur_id)
+    return render(request, 'details_candidat.html', {'candidat': candidat, 'utilisateur': utilisateur_id})
