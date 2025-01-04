@@ -54,5 +54,8 @@ urlpatterns = [
     path('acceuil-emp/Demande_conge/<int:utilisateur_id>/', views.Demande_conge, name='Demande_conge'),
     path('acceuil-emp/Mes_Demandes_conges/<int:utilisateur_id>', views.Mes_Demandes_conges, name='Mes_Demandes_conges'),
     path('acceuil-emp/Demande_avance_salaire/<int:utilisateur_id>/', views.Demande_avance_salaire, name='Demande_avance_salaire'),
+    path('acceuil-cand/<int:utilisateur_id>/', views.acceuil_candidat, name='acceuil-cand'),
+    path('acceuil-cand/Demande_Emploi/<int:utilisateur_id>/', views.liste_recrutements_Candidat, name='demande_emploi'),
+    path('acceuil-cand/Demande_Emploi/<int:utilisateur_id>/<int:recrutement_id>', views.Demande_Emploi, name='demande_emploi'),
 ]
 

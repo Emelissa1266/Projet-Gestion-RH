@@ -62,7 +62,7 @@ def RedirectionVersPage(request):
                             return render(request, 'AcceuilEmp.html', {'utilisateur': utilisateur.id})
                          else:
                               if Login == utilisateur.Login and Mot_de_passe == utilisateur.mot_de_passe and utilisateur.role == 'candidate': # Si le login et le mot de passe sont corrects et le rôle est "candidate"
-                                 return render(request, 'AcceuilCond.html')
+                                 return render(request, 'AcceuilCond.html', {'utilisateur': utilisateur.id})
                               else: # Si le mot de passe est incorrect
                                     form.add_error('login', "Login ou mot de passe incorrect !")
                                     msg = "Login ou mot de passe incorrect !"
@@ -526,3 +526,23 @@ def Demande_avance_salaire(request, utilisateur_id):
     else:
         form = DemandeAvanceSalaireForm() # Créer un formulaire vide si c'est une requête GET
         return render(request, 'Demande_avance_salaire.html', {'form': form, 'utilisateur': utilisateur_id})
+    
+
+# vue pour la page d'acceuil du candidat 
+def acceuil_candidat(request, utilisateur_id):
+    return render(request, 'AcceuilCond.html', {'utilisateur': utilisateur_id})
+
+# Vue pour afficher les recrutements pour un candidat
+def liste_recrutements_Candidat(request, utilisateur_id):
+    recrutements = Recrutement.objects.all()
+    return render(request, 'demande_Emploi.html', {'recrutements': recrutements, 'utilisateur': utilisateur_id})
+
+
+# Vue pour postuler à un recrutement
+def Demande_Emploi(request, recrutement_id, utilisateur_id):
+    recrutement = get_object_or_404(Recrutement, id=recrutement_id)
+    candidat = Candidat.objects.get(Utilisateur_Condidat=utilisateur_id)
+    recrutement.Condidat_Recrutement.add(candidat)
+    messages = "Votre candidature a été envoyée avec succès."
+    recrutements = Recrutement.objects.all()
+    return render(request, 'demande_Emploi.html', {'utilisateur': utilisateur_id, 'recrutements' : recrutements , 'messages': messages})
