@@ -1,6 +1,8 @@
 from django.contrib import admin
 from django.urls import path 
 from . import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('login/', views.RedirectionVersPage, name='connexion'),
@@ -51,6 +53,7 @@ urlpatterns = [
     path('acceuil-emp/Mes_conges/<int:utilisateur_id>/', views.Mes_conges, name='Mes_conges'),
     path('acceuil-emp/Mes_salaires/<int:utilisateur_id>/', views.Mes_salaires, name='Mes_salaires'),
     path('acceuil-emp/Mes_contrats/<int:utilisateur_id>/', views.Mes_contrats, name='Mes_contrats'),
+    path('acceuil-emp/profil/<int:utilisateur_id>/', views.profil_employe, name='profil_employe'),
     path('acceuil-emp/Demande_conge/<int:utilisateur_id>/', views.Demande_conge, name='Demande_conge'),
     path('acceuil-emp/Mes_Demandes_conges/<int:utilisateur_id>', views.Mes_Demandes_conges, name='Mes_Demandes_conges'),
     path('acceuil-emp/Demande_avance_salaire/<int:utilisateur_id>/', views.Demande_avance_salaire, name='Demande_avance_salaire'),
@@ -58,4 +61,6 @@ urlpatterns = [
     path('acceuil-cand/Demande_Emploi/<int:utilisateur_id>/', views.liste_recrutements_Candidat, name='demande_emploi'),
     path('acceuil-cand/Demande_Emploi/<int:utilisateur_id>/<int:recrutement_id>', views.Demande_Emploi, name='demande_emploi'),
 ]
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

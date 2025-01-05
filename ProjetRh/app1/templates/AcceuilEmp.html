@@ -173,10 +173,10 @@
             <li><a href="{% url 'Mes_conges' utilisateur %}">Conges</a></li>
             <li><a href="{% url 'Mes_salaires' utilisateur %}">Salaires</a></li>
             <li><a href="{% url 'Mes_contrats' utilisateur %}">Contrats</a></li>
-            <li><a href="#">Mon Profil</a></li>
         </ul>
         <div class="main">
             <a href="{% url 'homecandidat' %}"><i class='bx bx-log-out'></i></a>
+            <a href="{% url 'profil_employe' utilisateur %}"><i class='bx bx-user-circle'></i></a>
             <div class="bx bx-menu" id="menu-icon"></div>
         </div>
     </header>

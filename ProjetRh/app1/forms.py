@@ -142,3 +142,25 @@ class DemandeAvanceSalaireForm(forms.ModelForm):
             'commentaire': forms.Textarea(attrs={'class': 'form-control'}),
             
         }
+
+class EmployeProfileForm(forms.ModelForm):
+    class Meta:
+        model = Employe
+        fields = [
+            'nom', 
+            'prenom', 
+            'date_de_naissance', 
+            'date_aumbauche', 
+            'adresse', 
+            'Historique_professionnel', 
+            'Service_Employe', 
+            'Competance_Employe', 
+            'Employe_Formation',
+            'photo_profil'
+        ]
+        widgets = {
+            'date_de_naissance': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+            'date_aumbauche': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+            'adresse': forms.TextInput(attrs={'class': 'form-control'}),
+            'Historique_professionnel': forms.Textarea(attrs={'class': 'form-control'}),
+        }

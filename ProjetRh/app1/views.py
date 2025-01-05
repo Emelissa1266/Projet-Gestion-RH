@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect,get_object_or_404
 from django.contrib.auth.hashers import make_password, check_password
-from .forms import loginForm, SignupForm  ,EmployeForm ,UtilisateurForm ,CongeForm, SalaireForm, ContratForm, RecrutementForm, EvaluationForm, DemandeCongeForm, DemandeAvanceSalaireForm
+from .forms import loginForm, SignupForm,EmployeProfileForm  ,EmployeForm ,UtilisateurForm ,CongeForm, SalaireForm, ContratForm, RecrutementForm, EvaluationForm, DemandeCongeForm, DemandeAvanceSalaireForm
 from .models import Utilisateur, Candidat, Employe, Service, Competances, Formations, Recrutement, Salaire, Evaluation ,Conge ,DemandeConge, DemandeAvanceSalaire, Contrat, ArchiveContrat
 from django.contrib import messages
 from django.http import JsonResponse
@@ -546,3 +546,25 @@ def Demande_Emploi(request, recrutement_id, utilisateur_id):
     messages = "Votre candidature a été envoyée avec succès."
     recrutements = Recrutement.objects.all()
     return render(request, 'demande_Emploi.html', {'utilisateur': utilisateur_id, 'recrutements' : recrutements , 'messages': messages})
+
+def profil_employe(request, utilisateur_id):
+    # Récupérer l'utilisateur et l'employé via l'ID de l'utilisateur
+    utilisateur = get_object_or_404(Utilisateur, id=utilisateur_id)
+    try:
+        employe = utilisateur.employe  # Employé lié à l'utilisateur
+    except Employe.DoesNotExist:
+        return redirect('error_page')  # Si l'utilisateur n'a pas d'employé, redirige vers une page d'erreur
+
+
+    # Si l'utilisateur soumet un formulaire pour modifier son profil
+    if request.method == 'POST':
+        form = EmployeProfileForm(request.POST,request.FILES, instance=employe)
+        if form.is_valid():
+            form.save()  # Sauvegarder les modifications
+            return redirect('acceuil-emp', utilisateur_id=utilisateur.id)  # Rediriger vers la même page
+    else:
+        # Sinon, afficher le formulaire avec les données actuelles
+        form = EmployeProfileForm(instance=employe)
+
+    # Affiche le template avec le formulaire et l'employé
+    return render(request, 'profil_employe.html', {'form': form, 'employe': employe, 'utilisateur': utilisateur})

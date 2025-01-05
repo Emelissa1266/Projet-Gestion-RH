@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil Employé</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            text-decoration: none;
+            list-style: none;
+        }
+        :root {
+            --bg-color: #222327;
+            --text-color: #fcf8f8;
+            --main-color: #83dbd3;
+            --secondary-color: #555;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+        .container {
+            background-color: #333;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin-top: 80px;
+            max-width: 700px;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: var(--main-color);
+        }
+        .profile-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--main-color);
+            cursor: pointer;
+            margin: 20px auto;
+            display: block;
+        }
+        fieldset {
+            border: 1px solid var(--main-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        legend {
+            color: var(--main-color);
+            padding: 0 10px;
+            font-weight: 500;
+        }
+        input, select {
+            width: 97%;
+            background-color: transparent;
+            border: none;
+            outline: none;
+            border-radius: 30px;
+            border: 1px solid rgba(167, 219, 225, 0.626);
+            margin-bottom: 10px;
+            color: white;
+            padding: 10px;
+        }
+        option {
+            background-color: #333;
+            color: white;
+        }
+        .btn-primary {
+            width: 100%;
+            padding: 10px 15px;
+            background-color: #32a895;
+            color: white;
+            border-radius: 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .btn-primary:hover {
+            background-color: var(--main-color);
+        }
+        a {
+            text-align: center;
+            display: block;
+            margin-top: 10px;
+            color: var(--main-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Mon Profil</h2>
+        <div>
+            {% if employe.photo_profil %}
+                <img src="{{ employe.photo_profil.url }}" alt="Photo de profil" class="profile-photo" id="profile-photo">
+            {% else %}
+                <img src="{% static 'images/default-avatar.jpg' %}" alt="Photo de profil par défaut" class="profile-photo" id="profile-photo">
+            {% endif %}
+            <input type="file" id="file-input" name="photo_profil" accept="image/*" style="display: none;">
+        </div>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <fieldset>
+                <legend>Modifier les Informations</legend>
+                {{ form.as_p }}
+            </fieldset>
+            <button type="submit" class="btn btn-primary">Terminer</button>
+            <a href="{% url 'liste_employes' %}" class="btn-secondary">Retour</a>
+        </form>
+    </div>
+    <script>
+        const profilePhoto = document.getElementById('profile-photo');
+        const fileInput = document.getElementById('file-input');
+
+        profilePhoto.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        fileInput.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    profilePhoto.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+</body>
+</html>

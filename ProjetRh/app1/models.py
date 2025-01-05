@@ -63,6 +63,7 @@ class Employe(models.Model):
     Competance_Employe=models.ManyToManyField(Competances, related_name="comp", blank=True)
     Employe_Formation= models.ManyToManyField(Formations, related_name="frm", blank=True)
     Employe_Utilisateur= models.OneToOneField(Utilisateur, on_delete=models.CASCADE, related_name="employe")
+    photo_profil = models.ImageField(upload_to='profile_photos/', null=True, blank=True)
 
     def __str__(self):
         return f"{self.prenom} {self.nom}"
