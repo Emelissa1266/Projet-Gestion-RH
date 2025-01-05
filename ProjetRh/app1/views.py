@@ -568,3 +568,7 @@ def profil_employe(request, utilisateur_id):
 
     # Affiche le template avec le formulaire et l'employé
     return render(request, 'profil_employe.html', {'form': form, 'employe': employe, 'utilisateur': utilisateur})
+# Vue pour afficher la fiche candidature  pour un candidat
+def Etat_candidature(request, utilisateur_id):
+    candidat = Candidat.objects.get(Utilisateur_Condidat=utilisateur_id)
+    return render(request, 'details_candidat.html', {'candidat': candidat, 'utilisateur': utilisateur_id})
