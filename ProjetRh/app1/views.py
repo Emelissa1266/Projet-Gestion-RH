@@ -22,7 +22,7 @@ def signup(request):
            # Sauvegarder l'utilisateur sans le valider pour ajouter le rôle
             Utilisateur =  form.save(commit=False)
             Utilisateur.Login = form.cleaned_data['Login']
-            Utilisateur.mot_de_passe = make_password(form.cleaned_data['mot_de_passe'])  # Hacher le mot de passe
+            Utilisateur.mot_de_passe = form.cleaned_data['mot_de_passe']  # Hacher le mot de passe
             Utilisateur.role = 'candidate'  # Par défaut, le rôle est "candidate"
             
             form.save()  # Sauvegarder l'utilisateur
