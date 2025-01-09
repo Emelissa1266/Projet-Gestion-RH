@@ -39,7 +39,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: transparent;
+            background: var(--bg-color);
             padding: 15px 12%;
             transition: all 0.2s ease;
         }
@@ -161,7 +161,12 @@
             color: #d4d4d4;
         }
         .container {
-            margin-top: 120px;
+            margin-top: 20px;
+        }
+        h2{
+            color: #ffffff;
+            text-align: center;
+            margin-bottom: 30px;
         }
     </style>
 
@@ -181,9 +186,27 @@
             <a href="{% url 'homecandidat' %}"><i class='bx bx-log-out'></i></a>
             <div class="bx bx-menu" id="menu-icon"></div>
         </div>
-    </header>
-
+    </header><br>
+    
     <main class="container">
+        
+        <!-- Graphique de répartition par sexe -->
+        <div>
+            <h3>Répartition par sexe</h3>
+            {{ gender_chart|safe }}
+        </div>
+
+        <!-- Graphique de répartition par âge -->
+        <div>
+            <h3>Répartition par âge</h3>
+            {{ age_chart|safe }}
+        </div>
+
+        <!-- Graphique de répartition par ancienneté -->
+        <div>
+            <h3>Répartition par ancienneté</h3>
+            {{ seniority_chart|safe }}
+        </div>
         <section class="features row mt-5">
             <div class="col-md-4 mb-4">
                 <div class="feature-card">

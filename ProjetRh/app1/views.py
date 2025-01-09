@@ -9,6 +9,12 @@ from django.views.decorators.csrf import csrf_exempt
 from django.utils import timezone
 from django.core.mail import send_mail
 from django.contrib.auth import authenticate, login
+import pandas as pd 
+import plotly.express as px
+from datetime import datetime
+from plotly.offline import plot
+from django.shortcuts import render
+
 
 
 def home_candidat(request):
@@ -77,12 +83,6 @@ def RedirectionVersPage(request):
     
 
 
-    
-    
-def acceuil_arh(request):
-    return render(request, 'AcceuilARH.html')
-
-
 def liste_employes(request):
     employes = Employe.objects.select_related('Employe_Utilisateur').all()
     return render(request, 'liste_employes.html', {'employes': employes})
@@ -127,7 +127,7 @@ def modifier_employe(request, employe_id):
             utilisateur_form.save()
             messages.success(request, "Les informations de l'employé ont été mises à jour avec succès.")
             return redirect('liste_employes')
-    else:
+    else:                           
         employe_form = EmployeForm(instance=employe)
         utilisateur_form = UtilisateurForm(instance=utilisateur)
 
@@ -572,3 +572,99 @@ def profil_employe(request, utilisateur_id):
 def Etat_candidature(request, utilisateur_id):
     candidat = Candidat.objects.get(Utilisateur_Condidat=utilisateur_id)
     return render(request, 'details_candidat.html', {'candidat': candidat, 'utilisateur': utilisateur_id})
+
+#retrieve data from Employe model and convert it into a Pandas DataFrame.
+def get_employe_data():
+    employes = Employe.objects.all().values(
+        'id', 'nom', 'prenom', 'sexe', 'date_de_naissance', 'date_aumbauche', 'Service_Employe'
+    )
+    df = pd.DataFrame(employes)
+    return df
+
+# Calcul de l'âge et de l'ancienneté
+def calculate_age_and_seniority(df):
+    today = datetime.today()
+    
+    # Assurez-vous que les colonnes 'date_de_naissance' et 'date_aumbauche' sont des dates
+    df['date_de_naissance'] = pd.to_datetime(df['date_de_naissance'], errors='coerce')
+    df['date_aumbauche'] = pd.to_datetime(df['date_aumbauche'], errors='coerce')
+    
+    # Calcul de l'âge
+    df['age'] = df['date_de_naissance'].apply(lambda x: today.year - x.year - ((today.month, today.day) < (x.month, x.day)))
+    
+    # Calcul de l'ancienneté
+    df['anciennete'] = df['date_aumbauche'].apply(lambda x: today.year - x.year - ((today.month, today.day) < (x.month, x.day)))
+    
+    return df
+
+# Fonction pour analyser la répartition par sexe
+def analyze_gender_distribution():
+    df = get_employe_data()
+    df = calculate_age_and_seniority(df)
+    gender_count = df['sexe'].value_counts()
+    return gender_count
+
+# Fonction pour analyser la répartition par âge
+def analyze_age_distribution():
+    df = get_employe_data()
+    df = calculate_age_and_seniority(df)
+    age_bins = [20, 30, 40, 50, 60, 70, 80]
+    df['age_group'] = pd.cut(df['age'], bins=age_bins, labels=['20-29', '30-39', '40-49', '50-59', '60-69', '70-79'])
+    age_distribution = df['age_group'].value_counts().sort_index()
+    return age_distribution
+
+# Fonction pour analyser la répartition par ancienneté
+def analyze_seniority_distribution():
+    df = get_employe_data()
+    df = calculate_age_and_seniority(df)
+    seniority_bins = [0, 2, 5, 10, 15, 20, 30]
+    df['seniority_group'] = pd.cut(df['anciennete'], bins=seniority_bins, labels=['0-2', '3-5', '6-10', '11-15', '16-20', '20+'])
+    seniority_distribution = df['seniority_group'].value_counts().sort_index()
+    return seniority_distribution
+
+# Fonction pour créer un graphique de la répartition par sexe
+def plot_gender_distribution():
+    gender_count = analyze_gender_distribution()
+    fig = px.bar(
+        x=gender_count.index, 
+        y=gender_count.values, 
+        labels={'x': 'Gender', 'y': 'Count'},
+        title="Gender Distribution of Employees"
+    )
+    return plot(fig, output_type="div")
+
+# Fonction pour créer un graphique de la répartition par âge
+def plot_age_distribution():
+    age_distribution = analyze_age_distribution()
+    fig = px.bar(
+        x=age_distribution.index, 
+        y=age_distribution.values, 
+        labels={'x': 'Age Group', 'y': 'Count'},
+        title="Age Distribution of Employees"
+    )
+    return plot(fig, output_type="div")
+
+# Fonction pour créer un graphique de la répartition par ancienneté
+def plot_seniority_distribution():
+    seniority_distribution = analyze_seniority_distribution()
+    fig = px.bar(
+        x=seniority_distribution.index, 
+        y=seniority_distribution.values, 
+        labels={'x': 'Seniority Group', 'y': 'Count'},
+        title="Seniority Distribution of Employees"
+    )
+    return plot(fig, output_type="div")
+
+# Vue pour la page d'accueil ARH
+def acceuil_arh(request):
+    # Création des graphiques
+    gender_chart = plot_gender_distribution()
+    age_chart = plot_age_distribution()
+    seniority_chart = plot_seniority_distribution()
+
+    # Rendu du template avec les graphiques
+    return render(request, 'AcceuilARH.html', {
+        'gender_chart': gender_chart,
+        'age_chart': age_chart,
+        'seniority_chart': seniority_chart,
+    })

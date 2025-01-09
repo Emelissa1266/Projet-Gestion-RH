@@ -55,6 +55,7 @@ class Formations(models.Model):
 class Employe(models.Model):
     nom= models.CharField(max_length=20)
     prenom= models.CharField(max_length=20)
+    sexe = models.CharField(max_length=10, choices=[('Homme', 'Homme'), ('Femme', 'Femme')], default=0)
     date_de_naissance= models.DateField(default=timezone.now)
     date_aumbauche= models.DateField(default=timezone.now)
     adresse= models.CharField(max_length=30)
