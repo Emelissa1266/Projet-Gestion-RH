@@ -59,7 +59,7 @@ def RedirectionVersPage(request):
             try:
                 utilisateur = Utilisateur.objects.get(Login=Login)
                 if Login == utilisateur.Login and Mot_de_passe == utilisateur.mot_de_passe and utilisateur.role == 'admin': # Si le login et le mot de passe sont corrects et le rôle est "admin"
-                  return render(request, 'AcceuilARH.html')
+                  return redirect('acceuil_arh')
                 else:
                      if Login == utilisateur.Login and Mot_de_passe == utilisateur.mot_de_passe and utilisateur.role == 'manager': # Si le login et le mot de passe sont corrects et le rôle est "manager"
                        return render(request, 'AcceuilMan.html')
