@@ -5,7 +5,7 @@
 
                ** Gestion des conges:
                    -ajout, mod, supp ..........:)
-                   -suivi du solde du conge.......:(  // il y a le solde du conge mais pas suivi 
+                   -suivi du solde du conge.......:) 
                    -notification pour les employes........:)
                    -date fin > date_deb .......:)
 
@@ -24,14 +24,14 @@
                 ** Gestion des evaluations:
                     -supprimer des evaluations....... :)
                     -imprimer les rapports des evaluations .......:)
-                    -ouvrir les evaluations pour les managers.....:( // avec le traitement du manager
+                    -Donner la possibilite a un manager pour evaluer les employes ........... :)
 
                 ** Gestions des recrutements :
                     -Publier les offres d'emploi (ajout, mod, supp) .......:)
                     -suivi des condidatures ..........:)
                     -Gestion des entretiens ........... :( // ajouter une classe entretien 
 
-                ** Suivi des taches des employes et des managers .............:( // pas encore
+              
                 ** Suivi des horaires de travail des employeset des managers y compris les absences .........:( //pas encore
 
 
@@ -45,19 +45,19 @@
               ** consulter leur conges..........:)
               ** consulter leur salaires..........:)
               ** envoyer demendes conges ..........:)
-              ** Supprimer la demande du conge ........:(  a faire prochainement :| *** 
+              ** Supprimer la demande du conge ........:) 
               ** demende avance sur le salaire ...........:)
               ** consulter leur contrat...........:)
               ** demende/accepte/refuse les renouvllements......:( // Ajouter table renouvellement 
-              ** Editer le profil .....:( // Melissa 
+              ** Editer le profil .......... :)  
 
 
 --> Condidats: ** S'authentifier ............:)
                ** S'inscrire(creer un compte) .......:)
                ** demande de recrutement ........ :)
                ** Consulter etat de condidature ...........:)
-               ** Editer le profil .......:( // Melissa 
+           
 
-----> Systeme de notifications ...........:(  // derniere tache 
+----> Systeme de notifications ...........:) // fait mais pas pour toute les taches 
 ----> Code de confirmation ...........:( // derniere tache
----->Tableau de bord ...............:( // Melissa 
+---->Tableau de bord ...............:) 
