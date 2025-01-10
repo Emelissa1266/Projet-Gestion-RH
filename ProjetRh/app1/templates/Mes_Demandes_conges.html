@@ -123,7 +123,7 @@
                     <td>{{ demande.date_fin }}</td>
                     <td>{{ demande.get_type_conge_display }}</td>
                     <td>{{ demande.statut}}</td>
-                    <td><button class="btn btn-danger btn-sm" onclick="confirmDelete({{ demande.id }})">Supprimer la demande</button></td>
+                    <td><button class="btn btn-danger btn-sm" onclick="confirmDelete({{ utilisateur }}, {{ demande.id}})">Supprimer la demande</button></td>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -159,9 +159,9 @@
 
     <script>
         // Fonction pour afficher la modale de confirmation de suppression
-        function confirmDelete(Id) {
+        function confirmDelete(Id, ID) {
             const deleteForm = document.getElementById('deleteForm');
-            const actionUrl = `supprimer_demande/${Id}/`; // Remplacez par l'URL de votre suppression spécifique
+            const actionUrl = `supprimer_demande_conge/${Id}/${ID}/`; // Remplacez par l'URL de votre suppression spécifique
 
             // Met à jour l'action du formulaire avec l'URL spécifique pour cet employé
             deleteForm.action = actionUrl;

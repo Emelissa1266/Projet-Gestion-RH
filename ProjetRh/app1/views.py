@@ -526,7 +526,15 @@ def Demande_avance_salaire(request, utilisateur_id):
     else:
         form = DemandeAvanceSalaireForm() # Créer un formulaire vide si c'est une requête GET
         return render(request, 'Demande_avance_salaire.html', {'form': form, 'utilisateur': utilisateur_id})
-    
+
+#Vue pour la suppression d'une demande de conge 
+def Supprimer_Demande_conge(request, utilisateur_id, demande_id):
+     if request.method == "POST":
+        demande = get_object_or_404(DemandeConge, id=demande_id)
+        demande.delete()  # Supprimer la demande
+        return redirect('Mes_Demandes_conges', utilisateur_id)  # Rediriger vers la liste des demandes de conges 
+     return redirect('Mes_Demandes_conges', utilisateur_id)  # Si la requête n'est pas POST, rediriger vers la liste des conges 
+
 
 # vue pour la page d'acceuil du candidat 
 def acceuil_candidat(request, utilisateur_id):

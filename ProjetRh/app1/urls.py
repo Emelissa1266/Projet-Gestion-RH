@@ -55,6 +55,7 @@ urlpatterns = [
     path('acceuil-emp/Mes_contrats/<int:utilisateur_id>/', views.Mes_contrats, name='Mes_contrats'),
     path('acceuil-emp/profil/<int:utilisateur_id>/', views.profil_employe, name='profil_employe'),
     path('acceuil-emp/Demande_conge/<int:utilisateur_id>/', views.Demande_conge, name='Demande_conge'),
+    path('acceuil-emp/Mes_Demandes_conges/supprimer_demande_conge/<int:utilisateur_id>/<int:demande_id>/', views.Supprimer_Demande_conge, name='Supprimer_Demande_conge'),
     path('acceuil-emp/Mes_Demandes_conges/<int:utilisateur_id>', views.Mes_Demandes_conges, name='Mes_Demandes_conges'),
     path('acceuil-emp/Demande_avance_salaire/<int:utilisateur_id>/', views.Demande_avance_salaire, name='Demande_avance_salaire'),
     path('acceuil-cand/<int:utilisateur_id>/', views.acceuil_candidat, name='acceuil-cand'),
