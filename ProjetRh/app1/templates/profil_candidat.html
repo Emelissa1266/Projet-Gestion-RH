@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Profil</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Poppins', sans-serif;
+        }
+        .container {
+            margin-top: 100px;
+            max-width: 600px;
+        }
+        .form-control {
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        .btn-primary {
+            background-color: #1ad2ada6;
+            border-color: #1ad267a6;
+        }
+        .btn-primary:hover {
+            background-color: #32a895;
+            border-color: #32a895;
+        }
+        .card {
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .card-header {
+            background-color: #1ad2ada6;
+            color: white;
+            font-weight: bold;
+            text-align: center;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+        .card-footer {
+            background-color: #f1f1f1;
+            text-align: center;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                Mon Profil
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <!-- Formulaires Django -->
+                    {{ form.as_p }}
+
+                    <!-- Bouton d'envoi -->
+                    <button type="submit" class="btn btn-primary w-100">Sauvegarder les modifications</button>
+                </form>
+            </div>
+            <div class="card-footer">
+                <a href="{% url 'acceuil-cand' utilisateur.id %}" class="btn btn-secondary w-100">Retour</a>
+            </div>
+        </div>
+    </div>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>

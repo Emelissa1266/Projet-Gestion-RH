@@ -164,3 +164,19 @@ class EmployeProfileForm(forms.ModelForm):
             'adresse': forms.TextInput(attrs={'class': 'form-control'}),
             'Historique_professionnel': forms.Textarea(attrs={'class': 'form-control'}),
         }
+
+class CandidatProfileForm(forms.ModelForm):
+    class Meta:
+        model = Candidat
+        fields = [
+            'Nom', 
+            'Prenom', 
+            'Email',
+            'CV',
+        ]
+        widgets = {
+            'Nom': forms.TextInput(attrs={'class': 'form-control'}),
+            'Prenom': forms.TextInput(attrs={'class': 'form-control'}),
+            'Email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'CV': forms.Textarea(attrs={'class': 'form-control'}),
+        }

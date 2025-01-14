@@ -172,10 +172,12 @@
             <li><a href="{% url 'acceuil-cand' utilisateur %}" class="active"><i class='bx bx-home-alt-2'></i>Home</a></li>
             <li><a href="{% url 'demande_emploi' utilisateur %}">Demande Emploi</a></li>
             <li><a href="{% url 'etat_candidature' utilisateur %}">Consulter Etat Candidature</a></li>
-            <li><a href="#">Mon Profil</a></li>
+           
+
         </ul>
         <div class="main">
             <a href="{% url 'homecandidat' %}"><i class='bx bx-log-out'></i></a>
+            <a href="{% url 'profil_candidat' utilisateur %}"><i class='bx bx-user-circle'></i></a>
             <div class="bx bx-menu" id="menu-icon"></div>
         </div>
     </header>

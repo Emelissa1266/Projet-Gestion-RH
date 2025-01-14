@@ -1,14 +1,14 @@
 from django.contrib import admin
 from django.urls import path 
-from . import views
-from django.conf import settings
+from . import views 
 from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = [
     path('login/', views.RedirectionVersPage, name='connexion'),
     path('home/signup/', views.signup, name='inscription'),  # Ajoute une vue pour l'inscription
     path('home/', views.home_candidat, name='homecandidat'),  # Page d'accueil 
-    path('acceuil-arh/', views.acceuil_arh, name='acceuil_arh'),  # URL pour la page d'accueil ARH
+    path('acceuil-arh/', views.acceuil_arh, name='acceuil_arh'),
     path('employes/', views.liste_employes, name='liste_employes'),
     path('employes/ajouter/', views.ajouter_employe, name='ajouter_employe'),
     path('employes/modifier/<int:employe_id>/', views.modifier_employe, name='modifier_employe'),
@@ -55,9 +55,9 @@ urlpatterns = [
     path('acceuil-emp/Mes_contrats/<int:utilisateur_id>/', views.Mes_contrats, name='Mes_contrats'),
     path('acceuil-emp/profil/<int:utilisateur_id>/', views.profil_employe, name='profil_employe'),
     path('acceuil-emp/Demande_conge/<int:utilisateur_id>/', views.Demande_conge, name='Demande_conge'),
-    path('acceuil-emp/Mes_Demandes_conges/supprimer_demande_conge/<int:utilisateur_id>/<int:demande_id>/', views.Supprimer_Demande_conge, name='Supprimer_Demande_conge'),
     path('acceuil-emp/Mes_Demandes_conges/<int:utilisateur_id>', views.Mes_Demandes_conges, name='Mes_Demandes_conges'),
     path('acceuil-emp/Demande_avance_salaire/<int:utilisateur_id>/', views.Demande_avance_salaire, name='Demande_avance_salaire'),
+    path('acceuil-cand/MonProfil/<int:utilisateur_id>/', views.profil_candidat, name='profil_candidat'),
     path('acceuil-cand/<int:utilisateur_id>/', views.acceuil_candidat, name='acceuil-cand'),
     path('acceuil-cand/Demande_Emploi/<int:utilisateur_id>/', views.liste_recrutements_Candidat, name='demande_emploi'),
     path('acceuil-cand/Demande_Emploi/<int:utilisateur_id>/<int:recrutement_id>', views.Demande_Emploi, name='demande_emploi'),

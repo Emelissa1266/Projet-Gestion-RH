@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect,get_object_or_404
 from django.contrib.auth.hashers import make_password, check_password
-from .forms import loginForm, SignupForm,EmployeProfileForm  ,EmployeForm ,UtilisateurForm ,CongeForm, SalaireForm, ContratForm, RecrutementForm, EvaluationForm, DemandeCongeForm, DemandeAvanceSalaireForm
+from .forms import loginForm, SignupForm,EmployeProfileForm,CandidatProfileForm  ,EmployeForm ,UtilisateurForm ,CongeForm, SalaireForm, ContratForm, RecrutementForm, EvaluationForm, DemandeCongeForm, DemandeAvanceSalaireForm
 from .models import Utilisateur, Candidat, Employe, Service, Competances, Formations, Recrutement, Salaire, Evaluation ,Conge ,DemandeConge, DemandeAvanceSalaire, Contrat, ArchiveContrat
 from django.contrib import messages
 from django.http import JsonResponse
@@ -68,7 +68,7 @@ def RedirectionVersPage(request):
                             return render(request, 'AcceuilEmp.html', {'utilisateur': utilisateur.id})
                          else:
                               if Login == utilisateur.Login and Mot_de_passe == utilisateur.mot_de_passe and utilisateur.role == 'candidate': # Si le login et le mot de passe sont corrects et le rôle est "candidate"
-                                 return render(request, 'AcceuilCond.html', {'utilisateur': utilisateur.id})
+                                 return redirect('acceuil-cand', utilisateur.id)
                               else: # Si le mot de passe est incorrect
                                     form.add_error('login', "Login ou mot de passe incorrect !")
                                     msg = "Login ou mot de passe incorrect !"
@@ -576,6 +576,30 @@ def profil_employe(request, utilisateur_id):
 
     # Affiche le template avec le formulaire et l'employé
     return render(request, 'profil_employe.html', {'form': form, 'employe': employe, 'utilisateur': utilisateur})
+
+
+def profil_candidat(request, utilisateur_id):
+    utilisateur = get_object_or_404(Utilisateur, id=utilisateur_id)
+    try:
+        candidat = Candidat.objects.get(Utilisateur_Condidat=utilisateur)  # Correction ici
+    except Candidat.DoesNotExist:
+        return redirect('error_page')
+
+    if request.method == 'POST':
+        form = CandidatProfileForm(request.POST, instance=candidat)
+        if form.is_valid():
+            form.save()
+            return redirect('acceuil-cand', utilisateur_id=utilisateur.id)
+    else:
+        form = CandidatProfileForm(instance=candidat)
+
+    return render(request, 'profil_candidat.html', {
+        'form': form,
+        'candidat': candidat,
+        'utilisateur': utilisateur,
+    })
+
+
 # Vue pour afficher la fiche candidature  pour un candidat
 def Etat_candidature(request, utilisateur_id):
     candidat = Candidat.objects.get(Utilisateur_Condidat=utilisateur_id)
