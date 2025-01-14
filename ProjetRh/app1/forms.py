@@ -44,11 +44,9 @@ class EmployeForm(forms.ModelForm):
     class Meta:
         model = Employe
         fields = ['nom', 'prenom', 'date_de_naissance', 'date_aumbauche', 'adresse', 
-                  'Historique_professionnel', 'Service_Employe', 'Competance_Employe', 
-                  'Employe_Formation']
+                  'Historique_professionnel', 'Service_Employe']
         widgets = {
-            'Competance_Employe': forms.CheckboxSelectMultiple(),
-            'Employe_Formation': forms.CheckboxSelectMultiple(),
+            'Historique_professionnel': forms.Textarea(attrs={'class': 'form-control'}),
         }
 
 class CongeForm(forms.ModelForm):
