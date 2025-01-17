@@ -169,17 +169,34 @@
 <body>
     <header>
         <ul class="navbar">
-            <li><a href="{% url 'acceuil-emp'  utilisateur %}" class="active"><i class='bx bx-home-alt-2'></i>Home</a></li>
-            <li><a href="{% url 'Mes_conges' utilisateur %}">Conges</a></li>
-            <li><a href="{% url 'Mes_salaires' utilisateur %}">Salaires</a></li>
-            <li><a href="{% url 'Mes_contrats' utilisateur %}">Contrats</a></li>
+            <li><a href="{% url 'acceuil-emp' utilisateur %}" class="active">
+                <i class='bx bx-home-alt-2'></i>
+                <span>Accueil</span>
+            </a></li>
+            <li><a href="{% url 'Mes_conges' utilisateur %}">
+                <i class='bx bx-calendar'></i>
+                <span>Congés</span>
+            </a></li>
+            <li><a href="{% url 'Mes_salaires' utilisateur %}">
+                <i class='bx bx-wallet'></i>
+                <span>Salaires</span>
+            </a></li>
+            <li><a href="{% url 'Mes_contrats' utilisateur %}">
+                <i class='bx bx-file'></i>
+                <span>Contrats</span>
+            </a></li>
         </ul>
         <div class="main">
-            <a href="{% url 'homecandidat' %}"><i class='bx bx-log-out'></i></a>
-            <a href="{% url 'profil_employe' utilisateur %}"><i class='bx bx-user-circle'></i></a>
+            <a href="{% url 'profil_employe' utilisateur %}" title="Profile">
+                <i class='bx bx-user-circle'></i>
+            </a>
+            <a href="{% url 'homecandidat' %}" title="Déconnexion">
+                <i class='bx bx-log-out'></i>
+            </a>
             <div class="bx bx-menu" id="menu-icon"></div>
         </div>
     </header>
+
 
     <main class="container">
         <section class="features row mt-5">
