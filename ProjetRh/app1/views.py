@@ -451,7 +451,7 @@ def evaluer_employe(request, employe_id):
 # Vue pour la liste des employés pour le manager
 def liste_employes_Manager(request):
     employes = Employe.objects.all()
-    return render(request, 'liste_Employe.html', {'employes': employes})
+    return render(request, 'liste_employes_Evaluations.html', {'employes': employes})
 
 # Vue pour la page d'accueil de l'employé
 def acceuil_emp(request, utilisateur_id):
@@ -509,16 +509,20 @@ def Demande_avance_salaire(request, utilisateur_id):
             demande.statut = "En attente"
 
            # Récupérer l'année de la date de la demande
-            demandeS = DemandeAvanceSalaire.objects.filter(Employe_demande=demande.Employe_demande).order_by('-Date_demande').first()
-            if demandeS and demandeS.Date_demande.year == demande.Date_demande.year:
-                demande.num_demande = demandeS.num_demande + 1
-                if demande.num_demande > 2: # Vérifier si l'employé a déjà fait 2 demandes d'avance de salaire pour la même année
-                    messages = "Vous avez atteint le nombre maximum de demandes d'avance de salaire pour cette année."
-                    return render(request, 'Mes_salaires.html', { 'utilisateur': utilisateur_id, 'messages': messages})
-                else:
-                   demande.save()
+            demandeS = DemandeAvanceSalaire.objects.filter(Employe_demande=demande.Employe_demande).order_by('-Date_demande').last()
+            if demandeS :
+                    if demandeS.Date_demande.year == demande.Date_demande.year :
+                        demande.num_demande = demandeS.num_demande + 1
+                        if demande.num_demande > 2: # Vérifier si l'employé a déjà fait 2 demandes d'avance de salaire pour la même année
+                            messages = "Vous avez atteint le nombre maximum de demandes d'avance de salaire pour cette année."
+                            return render(request, 'Mes_salaires.html', { 'utilisateur': utilisateur_id, 'messages': messages})
+                        else:
+                            demande.save()
+                    else: 
+                        demande.num_demande = 1
+                        demande.save()
             else:
-                if demandeS.Date_demande.year == demande.Date_demande.year: # Si l'employé n'a pas encore fait de demande d'avance de salaire pour l'année en cours
+                    # Si l'employé n'a pas encore fait de demande d'avance de salaire pour l'année en cours
                    demande.num_demande = 1
                    demande.save()
             
