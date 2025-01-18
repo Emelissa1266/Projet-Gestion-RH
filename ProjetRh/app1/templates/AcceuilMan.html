@@ -169,9 +169,16 @@
 <body>
     <header>
         <ul class="navbar">
-            <li><a href="{% url 'acceuil-man' %}" class="active"><i class='bx bx-home-alt-2'></i>Home</a></li>
-            <li><a href="{% url 'liste_employes_Evaluations' %}">Evaluations</a></li>
-            <li><a href="{% url 'liste_Employes' %}">Fiches Employes</a></li>
+            <li><a href="{% url 'acceuil-man' %}" class="active">
+                <i class='bx bx-home-alt-2'></i>
+                <span>Accueil</span>
+            </a></li>
+            <li><a href="{% url 'liste_employes_Evaluations' %}"><i class='bx bx-file'></i>
+                <span>Evaluations</span>
+            </a></li>
+            <li><a href="{% url 'liste_Employes' %}"><i class='bx bx-file-blank'></i>
+                        <span>Contrats</span>
+                    </a></li>
         </ul>
         <div class="main">
             <a href="{% url 'homecandidat' %}"><i class='bx bx-log-out'></i></a>

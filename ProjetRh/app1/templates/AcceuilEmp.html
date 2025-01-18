@@ -36,45 +36,69 @@
             width: 100%;
             top: 0;
             z-index: 1000;
+            background: rgba(26, 27, 31, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 12%;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);}
+        .header-content {
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            background: transparent;
-            padding: 15px 12%;
-            transition: all 0.2s ease;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
         }
+
         .navbar {
             display: flex;
+            gap: 2rem;
         }
+
         .navbar a {
             color: var(--text-color);
-            font-size: 1.1rem;
+            font-size: 0.95rem;
             font-weight: 500;
-            padding: 5px 0;
-            margin: 0 30px;
-            transition: all 0.5s ease;
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            transition: all 0.3s ease;
         }
+
+        .navbar a i {
+            font-size: 1.25rem;
+        }
+
         .navbar a:hover {
             color: var(--main-color);
+            background: rgba(26, 210, 173, 0.1);
+            transform: translateY(-2px);
         }
+
         .navbar a.active {
             color: var(--main-color);
+            background: rgba(26, 210, 173, 0.15);
         }
         .main {
             display: flex;
             align-items: center;
+            gap: 1.5rem;
         }
+
         .main a {
-            margin-right: 25px;
-            margin-left: 10px;
             color: var(--text-color);
-            font-size: 1.1rem;
-            font-weight: 500;
-            transition: all 0.5s ease;
+            font-size: 1.5rem;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
         }
+
         .main a:hover {
             color: var(--main-color);
+            transform: translateY(-2px);
+            background: rgba(26, 210, 173, 0.1);
         }
+
         #menu-icon {
             font-size: 35px;
             color: var(--text-color);
@@ -168,6 +192,8 @@
 </head>
 <body>
     <header>
+        <div class="header-content">
+            <nav>
         <ul class="navbar">
             <li><a href="{% url 'acceuil-emp' utilisateur %}" class="active">
                 <i class='bx bx-home-alt-2'></i>
@@ -186,6 +212,7 @@
                 <span>Contrats</span>
             </a></li>
         </ul>
+        </nav>
         <div class="main">
             <a href="{% url 'profil_employe' utilisateur %}" title="Profile">
                 <i class='bx bx-user-circle'></i>
@@ -194,6 +221,7 @@
                 <i class='bx bx-log-out'></i>
             </a>
             <div class="bx bx-menu" id="menu-icon"></div>
+        </div>
         </div>
     </header>
 

@@ -1,18 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
 {% load static %}
+<!DOCTYPE html>
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Accueil - candidats</title>
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+    <title>Portail Candidats - Carrières</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
     <style>
+        :root {
+            --bg-color: #1a1b1f;
+            --text-color: #fcf8f8;
+            --main-color: #1ad2ada6;
+            --hover-color: #32a895;
+            --card-bg: #2a2b30;
+            --gradient-start: #1ad2ad33;
+            --gradient-end: #32a89533;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -21,198 +28,343 @@
             text-decoration: none;
             list-style: none;
         }
-        :root {
-            --bg-color: #222327;
-            --text-color: #fcf8f8;
-            --main-color: #1ad2ada6;
-        }
+
         body {
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
             background-color: var(--bg-color);
-            margin: 0;
-            padding: 0;
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
+
         header {
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: transparent;
-            padding: 15px 12%;
-            transition: all 0.2s ease;
+            background: rgba(26, 27, 31, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 12%;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
         }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
         .navbar {
             display: flex;
+            gap: 2rem;
         }
+
         .navbar a {
             color: var(--text-color);
-            font-size: 1.1rem;
+            font-size: 0.95rem;
             font-weight: 500;
-            padding: 5px 0;
-            margin: 0 30px;
-            transition: all 0.5s ease;
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            transition: all 0.3s ease;
         }
+
+        .navbar a i {
+            font-size: 1.25rem;
+        }
+
         .navbar a:hover {
             color: var(--main-color);
+            background: rgba(26, 210, 173, 0.1);
+            transform: translateY(-2px);
         }
+
         .navbar a.active {
             color: var(--main-color);
+            background: rgba(26, 210, 173, 0.15);
         }
+
         .main {
             display: flex;
             align-items: center;
+            gap: 1.5rem;
         }
+
         .main a {
-            margin-right: 25px;
-            margin-left: 10px;
             color: var(--text-color);
-            font-size: 1.1rem;
-            font-weight: 500;
-            transition: all 0.5s ease;
+            font-size: 1.5rem;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
         }
+
         .main a:hover {
             color: var(--main-color);
+            transform: translateY(-2px);
+            background: rgba(26, 210, 173, 0.1);
         }
+
         #menu-icon {
-            font-size: 35px;
-            color: var(--text-color);
-            cursor: pointer;
             display: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--text-color);
         }
+
+        .hero-section {
+            padding: 8rem 2rem 4rem;
+            text-align: center;
+            background: linear-gradient(180deg, rgba(26, 210, 173, 0.1), transparent);
+        }
+
+        .hero-section h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--text-color), var(--main-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero-section p {
+            font-size: 1.1rem;
+            color: rgba(252, 248, 248, 0.8);
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        main {
+            flex-grow: 1;
+            padding: 0 2rem 4rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: rgba(42, 43, 48, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            height: 100%;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            border-color: var(--main-color);
+        }
+
+        .feature-card i {
+            font-size: 2.5rem;
+            color: var(--main-color);
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            color: var(--text-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-card p {
+            color: rgba(252, 248, 248, 0.8);
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            background: var(--main-color);
+            color: var(--text-color);
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: var(--hover-color);
+            transform: translateY(-2px);
+        }
+
+        footer {
+            background: rgba(42, 43, 48, 0.9);
+            backdrop-filter: blur(10px);
+            color: var(--text-color);
+            text-align: center;
+            padding: 2rem;
+            margin-top: auto;
+        }
+
+        footer a {
+            color: var(--main-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover {
+            color: var(--hover-color);
+        }
+
         @media (max-width: 1280px) {
             header {
-                padding: 14px 2%;
-            }
-            .navbar a {
-                margin: 0 20px;
-                padding: 5px 0;
+                padding: 1rem 5%;
             }
         }
+
         @media (max-width: 1090px) {
             #menu-icon {
                 display: block;
             }
+
             .navbar {
                 position: absolute;
                 top: 100%;
                 right: -100%;
-                width: 270px;
-                height: auto;
-                background: var(--main-color);
-                display: flex;
+                width: 300px;
                 flex-direction: column;
-                border-radius: 10px;
-                transition: all 0.5s ease;
+                background: var(--card-bg);
+                padding: 1rem;
+                border-radius: 1rem;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+                transition: 0.5s ease;
             }
-            .navbar a {
-                display: block;
-                margin: 12px 0;
-                padding: 0 25px;
-                color: var(--text-color);
-            }
-            .navbar a:hover {
-                color: var(--text-color);
-            }
-            .navbar a.active {
-                color: var(--text-color);
-            }
+
             .navbar.open {
-                right: 2%;
+                right: 2rem;
+            }
+
+            .navbar a {
+                padding: 1rem;
+            }
+
+            .hero-section {
+                padding: 6rem 1rem 3rem;
+            }
+
+            .hero-section h1 {
+                font-size: 2rem;
             }
         }
-        .features {
-            margin-top: 40px;
-        }
-        .feature-card {
-            background-color: #ffffff;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            padding: 30px;
-            text-align: center;
-            height: 250px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .feature-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-        }
-        .btn-primary {
-            background-color: #1ad2ada6;
-            border-color: #1ad267a6;
-        }
-        .btn-primary:hover {
-            background-color: #32a895;
-            border-color: #32a895;
-        }
-        .footer {
-            background-color: #343a40;
-            color: white;
-            text-align: center;
-            padding: 15px;
-            margin-top: 120px;
-        }
-        .footer a {
-            color: #ffffff;
-            text-decoration: underline;
-        }
-        .footer a:hover {
-            color: #d4d4d4;
-        }
-        .container {
-            margin-top: 120px;
+
+        @media (max-width: 768px) {
+            main {
+                padding: 0 1rem 2rem;
+            }
+
+            .features {
+                gap: 1rem;
+            }
+
+            .hero-section h1 {
+                font-size: 1.75rem;
+            }
         }
     </style>
-
 </head>
 <body>
     <header>
-        <ul class="navbar">
-            <li><a href="{% url 'acceuil-cand' utilisateur %}" class="active"><i class='bx bx-home-alt-2'></i>Home</a></li>
-            <li><a href="{% url 'demande_emploi' utilisateur %}">Demande Emploi</a></li>
-            <li><a href="{% url 'etat_candidature' utilisateur %}">Consulter Etat Candidature</a></li>
-           
+        <div class="header-content">
+            <nav>
+                <ul class="navbar">
+                    <li><a href="{% url 'acceuil-cand' utilisateur %}" class="active">
+                        <i class='bx bx-home-alt-2'></i>
+                        <span>Accueil</span>
+                    </a></li>
+                    <li><a href="{% url 'demande_emploi' utilisateur %}">
+                        <i class='bx bx-briefcase'></i>
+                        <span>Postuler</span>
+                    </a></li>
+                    <li><a href="{% url 'etat_candidature' utilisateur %}">
+                        <i class='bx bx-list-check'></i>
+                        <span>Suivi Candidature</span>
+                    </a></li>
+                </ul>
+            </nav>
 
-        </ul>
-        <div class="main">
-            <a href="{% url 'homecandidat' %}"><i class='bx bx-log-out'></i></a>
-            <a href="{% url 'profil_candidat' utilisateur %}"><i class='bx bx-user-circle'></i></a>
-            <div class="bx bx-menu" id="menu-icon"></div>
+            <div class="main">
+                <a href="{% url 'profil_candidat' utilisateur %}" title="Mon Profil">
+                    <i class='bx bx-user-circle'></i>
+                </a>
+                <a href="{% url 'homecandidat' %}" title="Déconnexion">
+                    <i class='bx bx-log-out'></i>
+                </a>
+                <div class="bx bx-menu" id="menu-icon"></div>
+            </div>
         </div>
     </header>
 
-    <main class="container">
-        <section class="features row mt-5">
+    <section class="hero-section">
+        <h1>Bienvenue dans votre espace candidat</h1>
+        <p>Découvrez nos opportunités de carrière et suivez vos candidatures en temps réel.</p>
+    </section>
+
+    <main>
+        <div class="features">
+            <div class="feature-card">
+                <i class='bx bx-briefcase-alt-2'></i>
+                <h3>Postuler</h3>
+                <p>Déposez votre CV et votre lettre de motivation pour nos offres d'emploi actuelles.</p>
+                <a href="{% url 'demande_emploi' utilisateur %}" class="btn">Postuler maintenant</a>
+            </div>
             
-            <div class="col-md-4 mb-4">
-                <div class="feature-card">
-                    <h3>Demande Emploi</h3>
-                    <p>Envoyez une demande d'emploi.</p>
-                    <a href="{% url 'demande_emploi' utilisateur %}" class="btn btn-primary mt-3">Voir plus</a>
-                </div>
+            <div class="feature-card">
+                <i class='bx bx-time-five'></i>
+                <h3>Suivi de Candidature</h3>
+                <p>Suivez l'état de vos candidatures et restez informé de leur progression.</p>
+                <a href="{% url 'etat_candidature' utilisateur %}" class="btn">Voir mes candidatures</a>
             </div>
-            <div class="col-md-4 mb-4">
-                <div class="feature-card">
-                    <h3>Consulter Etat Candidature</h3>
-                    <p>Consultez l'état de votre candidature.</p>
-                    <a href="{% url 'etat_candidature' utilisateur %}" class="btn btn-primary mt-3">Voir plus</a>
-                </div>
-            </div>
-        </section>
+        </div>
     </main>
 
-    <footer class="footer">
-        <p>&copy; 2024 Gestion des Ressources Humaines. Tous droits réservés. | <a href="#">Conditions d'utilisation</a></p>
+    <footer>
+        <p>&copy; 2024 Portail Carrières. Tous droits réservés. | <a href="#">Conditions d'utilisation</a></p>
     </footer>
+
     <script>
-        let menu = document.querySelector('#menu-icon');
-        let navbar = document.querySelector('.navbar');
-        menu.onclick = () => {
-            menu.classList.toggle('bx-x');
+        const menuIcon = document.getElementById('menu-icon');
+        const navbar = document.querySelector('.navbar');
+
+        menuIcon.addEventListener('click', () => {
+            menuIcon.classList.toggle('bx-x');
             navbar.classList.toggle('open');
-        }
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!navbar.contains(e.target) && !menuIcon.contains(e.target)) {
+                navbar.classList.remove('open');
+                menuIcon.classList.remove('bx-x');
+            }
+        });
+
+        // Add active class to current nav item
+        const navItems = document.querySelectorAll('.navbar a');
+        navItems.forEach(item => {
+            if (item.getAttribute('href') === window.location.pathname) {
+                item.classList.add('active');
+            }
+        });
     </script>
-    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
 </body>
 </html>
