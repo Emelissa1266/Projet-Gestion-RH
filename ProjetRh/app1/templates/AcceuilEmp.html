@@ -1,18 +1,24 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
-{% load static %}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Accueil - Employé</title>
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <title>Tableau de Bord - Employé</title>
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg-color: #222327;
+            --text-color: #fcf8f8;
+            --main-color: #1ad2ada6;
+            --card-bg: #2a2b30;
+            --hover-color: rgba(26, 210, 173, 0.15);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -21,16 +27,15 @@
             text-decoration: none;
             list-style: none;
         }
-        :root {
-            --bg-color: #222327;
-            --text-color: #fcf8f8;
-            --main-color: #1ad2ada6;
-        }
+
         body {
             background-color: var(--bg-color);
-            margin: 0;
-            padding: 0;
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
+
         header {
             position: fixed;
             width: 100%;
@@ -39,7 +44,9 @@
             background: rgba(26, 27, 31, 0.95);
             backdrop-filter: blur(10px);
             padding: 1rem 12%;
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);}
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+        }
+
         .header-content {
             display: flex;
             justify-content: space-between;
@@ -71,14 +78,15 @@
 
         .navbar a:hover {
             color: var(--main-color);
-            background: rgba(26, 210, 173, 0.1);
+            background: var(--hover-color);
             transform: translateY(-2px);
         }
 
         .navbar a.active {
             color: var(--main-color);
-            background: rgba(26, 210, 173, 0.15);
+            background: var(--hover-color);
         }
+
         .main {
             display: flex;
             align-items: center;
@@ -96,171 +104,276 @@
         .main a:hover {
             color: var(--main-color);
             transform: translateY(-2px);
-            background: rgba(26, 210, 173, 0.1);
+            background: var(--hover-color);
         }
 
         #menu-icon {
-            font-size: 35px;
-            color: var(--text-color);
-            cursor: pointer;
             display: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--text-color);
         }
+
+        .container {
+            max-width: 1200px;
+            margin: 120px auto 0;
+            padding: 0 2rem;
+        }
+
+      
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-top: 2rem;
+            justify-content: center;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            border-radius: 1rem;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            width: 300px;
+            height: 273px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            border-color: var(--main-color);
+        }
+
+        .feature-card h3 {
+            color: var(--main-color);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .feature-card p {
+            color: var(--text-color);
+            opacity: 0.8;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: var(--main-color);
+            color: var(--text-color);
+        }
+
+        .btn-primary:hover {
+            background: #32a895;
+            transform: translateY(-2px);
+        }
+
         @media (max-width: 1280px) {
             header {
-                padding: 14px 2%;
-            }
-            .navbar a {
-                margin: 0 20px;
-                padding: 5px 0;
+                padding: 1rem 5%;
             }
         }
+
         @media (max-width: 1090px) {
             #menu-icon {
                 display: block;
             }
+
             .navbar {
                 position: absolute;
                 top: 100%;
                 right: -100%;
                 width: 270px;
-                height: auto;
-                background: var(--main-color);
+                background: var(--card-bg);
                 display: flex;
                 flex-direction: column;
-                border-radius: 10px;
+                border-radius: 1rem;
                 transition: all 0.5s ease;
+                padding: 1rem;
+                gap: 0.5rem;
+                border: 1px solid rgba(255, 255, 255, 0.1);
             }
-            .navbar a {
-                display: block;
-                margin: 12px 0;
-                padding: 0 25px;
-                color: var(--text-color);
-            }
-            .navbar a:hover {
-                color: var(--text-color);
-            }
-            .navbar a.active {
-                color: var(--text-color);
-            }
+
             .navbar.open {
                 right: 2%;
             }
+
+            .navbar a {
+                padding: 0.75rem 1rem;
+                display: flex;
+                align-items: center;
+            }
+
+            .container {
+                padding: 0 1rem;
+            }
         }
-        .features {
-            margin-top: 40px;
+
+        @media (max-width: 768px) {
+            .features {
+                grid-template-columns: 1fr;
+            }
         }
-        .feature-card {
-            background-color: #ffffff;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            padding: 30px;
-            text-align: center;
-            height: 250px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+        .notification {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            padding: 1rem 1.5rem;
+            border-radius: 0.5rem;
+            background: var(--main-color);
+            color: var(--text-color);
+            font-weight: 500;
+            animation: slideIn 0.3s ease;
+            z-index: 1001;
+            display: none;
         }
-        .feature-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-        }
-        .btn-primary {
-            background-color: #1ad2ada6;
-            border-color: #1ad267a6;
-        }
-        .btn-primary:hover {
-            background-color: #32a895;
-            border-color: #32a895;
-        }
-        .footer {
-            background-color: #343a40;
-            color: white;
-            text-align: center;
-            padding: 15px;
-            margin-top: 120px;
-        }
-        .footer a {
-            color: #ffffff;
-            text-decoration: underline;
-        }
-        .footer a:hover {
-            color: #d4d4d4;
-        }
-        .container {
-            margin-top: 120px;
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
         }
     </style>
-
 </head>
 <body>
     <header>
         <div class="header-content">
             <nav>
-        <ul class="navbar">
-            <li><a href="{% url 'acceuil-emp' utilisateur %}" class="active">
-                <i class='bx bx-home-alt-2'></i>
-                <span>Accueil</span>
-            </a></li>
-            <li><a href="{% url 'Mes_conges' utilisateur %}">
-                <i class='bx bx-calendar'></i>
-                <span>Congés</span>
-            </a></li>
-            <li><a href="{% url 'Mes_salaires' utilisateur %}">
-                <i class='bx bx-wallet'></i>
-                <span>Salaires</span>
-            </a></li>
-            <li><a href="{% url 'Mes_contrats' utilisateur %}">
-                <i class='bx bx-file'></i>
-                <span>Contrats</span>
-            </a></li>
-        </ul>
-        </nav>
-        <div class="main">
-            <a href="{% url 'profil_employe' utilisateur %}" title="Profile">
-                <i class='bx bx-user-circle'></i>
-            </a>
-            <a href="{% url 'homecandidat' %}" title="Déconnexion">
-                <i class='bx bx-log-out'></i>
-            </a>
-            <div class="bx bx-menu" id="menu-icon"></div>
-        </div>
+                <ul class="navbar">
+                    <li><a href="{% url 'acceuil-emp' utilisateur %}" class="active">
+                        <i class='bx bx-home-alt-2'></i>
+                        <span>Accueil</span>
+                    </a></li>
+                    <li><a href="{% url 'Mes_conges' utilisateur %}">
+                        <i class='bx bx-calendar'></i>
+                        <span>Congés</span>
+                    </a></li>
+                    <li><a href="{% url 'Mes_salaires' utilisateur %}">
+                        <i class='bx bx-wallet'></i>
+                        <span>Salaires</span>
+                    </a></li>
+                    <li><a href="{% url 'Mes_contrats' utilisateur %}">
+                        <i class='bx bx-file'></i>
+                        <span>Contrats</span>
+                    </a></li>
+                </ul>
+            </nav>
+            <div class="main">
+                <a href="{% url 'profil_employe' utilisateur %}" title="Profile">
+                    <i class='bx bx-user-circle'></i>
+                </a>
+                <a href="{% url 'homecandidat' %}" title="Déconnexion">
+                    <i class='bx bx-log-out'></i>
+                </a>
+                <div class="bx bx-menu" id="menu-icon"></div>
+            </div>
         </div>
     </header>
 
-
     <main class="container">
-        <section class="features row mt-5">
-            
-            <div class="col-md-4 mb-4">
-                <div class="feature-card">
-                    <h3>Mes conges</h3>
-                    <p>Consultez vos conges ou demandez des conges.</p>
-                    <a href="{% url 'Mes_conges' utilisateur %}" class="btn btn-primary mt-3">Voir plus</a>
+        <section class="features">
+            <div class="feature-card">
+                <div>
+                    <h3>Mes Congés</h3>
+                    <p>Gérez vos demandes de congés et consultez votre historique de congés en temps réel.</p>
                 </div>
+                <a href="{% url 'Mes_conges' utilisateur %}" class="btn btn-primary">Accéder</a>
             </div>
-            <div class="col-md-4 mb-4">
-                <div class="feature-card">
-                    <h3>Mes salaires</h3>
-                    <p>Consultez vos salairs ou demandez des avances du salaire.</p>
-                    <a href="{% url 'Mes_salaires' utilisateur %}" class="btn btn-primary mt-3">Voir plus</a>
+
+            <div class="feature-card">
+                <div>
+                    <h3>Mes Salaires</h3>
+                    <p>Consultez vos fiches de paie et gérez vos demandes d'avance sur salaire.</p><br>
                 </div>
+                <a href="{% url 'Mes_salaires' utilisateur %}" class="btn btn-primary">Accéder</a>
             </div>
-            <div class="col-md-4 mb-4">
-                <div class="feature-card">
-                    <h3>Mes contrats</h3>
-                    <p>Consultez vos contrats.</p>
-                    <a href="{% url 'Mes_contrats' utilisateur %}" class="btn btn-primary mt-3">Voir plus</a>
+
+            <div class="feature-card">
+                <div>
+                    <h3>Mes Contrats</h3>
+                    <p>Accédez à vos documents contractuels et suivez l'évolution de votre carrière.</p><br>
                 </div>
+                <a href="{% url 'Mes_contrats' utilisateur %}" class="btn btn-primary">Accéder</a>
             </div>
         </section>
     </main>
 
+    <div id="notification" class="notification"></div>
+
     <script>
-        let menu = document.querySelector('#menu-icon');
-        let navbar = document.querySelector('.navbar');
-        menu.onclick = () => {
-            menu.classList.toggle('bx-x');
+        // Menu mobile toggle
+        const menuIcon = document.querySelector('#menu-icon');
+        const navbar = document.querySelector('.navbar');
+        
+        menuIcon.addEventListener('click', () => {
+            menuIcon.classList.toggle('bx-x');
             navbar.classList.toggle('open');
+        });
+
+        // Fermer le menu au clic en dehors
+        document.addEventListener('click', (e) => {
+            if (!navbar.contains(e.target) && !menuIcon.contains(e.target)) {
+                navbar.classList.remove('open');
+                menuIcon.classList.remove('bx-x');
+            }
+        });
+
+        // Système de notification
+        function showNotification(message, duration = 3000) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.style.display = 'block';
+            
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, duration);
         }
+
+        // Animation des cartes au scroll
+        const cards = document.querySelectorAll('.feature-card');
+        
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        cards.forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'all 0.6s ease';
+            observer.observe(card);
+        });
     </script>
-    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
 </body>
 </html>

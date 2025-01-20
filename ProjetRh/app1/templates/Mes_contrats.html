@@ -13,6 +13,15 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg-color: #222327;
+            --text-color: #fcf8f8;
+            --main-color: #1ad2ada6;
+            --hover-color: #32a895;
+            --card-bg: #2a2b2f;
+            --border-color: rgba(255, 255, 255, 0.1);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -21,115 +30,177 @@
             text-decoration: none;
             list-style: none;
         }
-        :root {
-            --bg-color: #222327;
-            --text-color: #fcf8f8;
-            --main-color: #1ad2ada6;
-        }
+
         body {
             background-color: var(--bg-color);
             color: var(--text-color);
+            min-height: 100vh;
         }
+
         header {
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
+            background: rgba(34, 35, 39, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 12%;
             display: flex;
-            align-items: center;
             justify-content: flex-end;
-            background: transparent;
-            padding: 15px 12%;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
         }
+
+        .container {
+            max-width: 1200px;
+            margin: 7rem auto 2rem;
+            padding: 0 1.5rem;
+        }
+
         h1 {
             color: var(--main-color);
+            font-size: 2rem;
             font-weight: 700;
+            margin-bottom: 2rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            width: 50%;
+            height: 3px;
+            background: var(--main-color);
+            border-radius: 2px;
+        }
+
+        .table-container {
+            background: var(--card-bg);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+
+        th, td {
+            padding: 1rem;
             text-align: left;
-            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
         }
-        
-        .table {
-            background-color: #333;
-            color: var(--text-color);
-            border-radius: 10px;
-            overflow: hidden;
-        }
-        .table th {
-            background-color: #444;
-            color: var(--text-color);
+
+        th {
+            background-color: rgba(26, 210, 173, 0.1);
+            color: var(--main-color);
+            font-weight: 600;
             text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
         }
-        .table td {
-            background-color: #555;
+
+        tr:last-child td {
+            border-bottom: none;
         }
-        .table-striped tbody tr:nth-of-type(odd) {
-            background-color: #666;
-        }
-        .btn-primary {
-            background-color: var(--main-color);
-            border: none;
-        }
-        .btn-primary:hover {
-            background-color: #32a895;
-        }
-        .btn-warning {
-            background-color: #ffc107;
-            border: none;
-        }
-        .btn-warning:hover {
-            background-color: #e0a800;
-        }
-        .btn-danger {
-            background-color: #dc3545;
-            border: none;
-        }
-        .btn-danger:hover {
-            background-color: #c82333;
-        }
-        .modal-content {
-            background-color: #333;
-            color: var(--text-color);
-        }
-        .modal-header {
-            border-bottom: 1px solid #444;
-        }
-        .modal-footer {
-            border-top: 1px solid #444;
-        }
-        .btn-secondary {
-            background-color: #6c757d;
-        }
-        .btn-secondary:hover {
-            background-color: #5a6268;
-        }
-        .container {
-            margin-top: 120px;
-        }
-        .btn {
-            font-weight: bold;
+
+        tbody tr {
             transition: all 0.3s ease;
         }
-        .archives {
-            color: var(--text-color);
-            font-size: 1.1rem;
-            font-weight: 500;
-            padding: 5px 0;
-            margin: 0 30px;
-            transition: all .50s ease;
+
+        tbody tr:hover {
+            background: rgba(26, 210, 173, 0.05);
         }
-        .archives:hover {
+
+        .dm_conge {
+            color: var(--text-color);
+            font-size: 0.95rem;
+            font-weight: 500;
+            padding: 0.75rem 1.25rem;
+            margin: 0 0.5rem;
+            border-radius: 0.75rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .dm_conge i {
+            font-size: 1.25rem;
+        }
+
+        .dm_conge:hover {
             color: var(--main-color);
+            background: rgba(26, 210, 173, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            border: none;
+            font-size: 0.95rem;
+        }
+
+        .btn-secondary {
+            background: rgba(108, 117, 125, 0.2);
+            color: var(--text-color);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(108, 117, 125, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .btn i {
+            font-size: 1.25rem;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .container {
+                margin-top: 9rem;
+                padding: 0 1rem;
+            }
+
+            .dm_conge {
+                margin: 0.5rem;
+            }
+
+            th, td {
+                padding: 0.75rem;
+                font-size: 0.9rem;
+            }
         }
     </style>
 </head>
 <body>
     <header>
-        <a href="#" class="archives">Demander un renouvellement</a>
+        <a href="#" class="dm_conge">Demander un renouvellement</a>
     </header>
-    <div class="container mt-5">
-        <h1 class="mb-4">Liste des contrats </h1>
-        <table class="table table-bordered table-striped">
-            <thead class="thead-dark">
+    <div class="container">
+        <h1>Liste des contrats </h1>
+        <div class="table-container">
+        <table>
+            <thead>
                 <tr>
                     <th>ID</th>
                     <th>Nom</th>
@@ -152,10 +223,15 @@
                 {% endfor %}
             </tbody>
         </table>
-        
+        </div>
 
         <!-- Bouton Terminer qui redirige vers AcceuilRH.html -->
-        <a href="{% url 'acceuil-emp' utilisateur %}" class="btn btn-secondary mt-3">Terminer</a>
+        <div style="margin-top: 2rem;">
+            <a href="{% url 'acceuil-emp' utilisateur %}" class="btn btn-secondary">
+                <i class='bx bx-arrow-back'></i>
+                <span>Retour</span>
+            </a>
+        </div>
     </div>
 
    

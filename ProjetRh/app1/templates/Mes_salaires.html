@@ -12,6 +12,15 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg-color: #222327;
+            --text-color: #fcf8f8;
+            --main-color: #1ad2ada6;
+            --hover-color: #32a895;
+            --card-bg: #2a2b2f;
+            --border-color: rgba(255, 255, 255, 0.1);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -20,115 +29,173 @@
             text-decoration: none;
             list-style: none;
         }
-        :root {
-            --bg-color: #222327;
-            --text-color: #fcf8f8;
-            --main-color: #1ad2ada6;
-            --hover-color: #32a895;
-            --warning-color: #ffc107;
-            --danger-color: #dc3545;
-        }
+
         body {
             background-color: var(--bg-color);
             color: var(--text-color);
+            min-height: 100vh;
         }
+
         header {
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
+            background: rgba(34, 35, 39, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 12%;
             display: flex;
-            align-items: center;
             justify-content: flex-end;
-            background: transparent;
-            padding: 15px 12%;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
         }
+
+        .container {
+            max-width: 1200px;
+            margin: 7rem auto 2rem;
+            padding: 0 1.5rem;
+        }
+
         h1 {
             color: var(--main-color);
+            font-size: 2rem;
             font-weight: 700;
+            margin-bottom: 2rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            width: 50%;
+            height: 3px;
+            background: var(--main-color);
+            border-radius: 2px;
+        }
+
+        .table-container {
+            background: var(--card-bg);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+
+        th, td {
+            padding: 1rem;
             text-align: left;
-            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
         }
-        .table {
-            background-color: #333;
-            color: var(--text-color);
-            border-radius: 10px;
-            overflow: hidden;
-        }
-        .table th {
-            background-color: #444;
-            color: var(--text-color);
+
+        th {
+            background-color: rgba(26, 210, 173, 0.1);
+            color: var(--main-color);
+            font-weight: 600;
             text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
         }
-        .table td {
-            background-color: #555;
+
+        tr:last-child td {
+            border-bottom: none;
         }
-        .table-striped tbody tr:nth-of-type(odd) {
-            background-color: #666;
-        }
-        .btn {
-            font-weight: bold;
+
+        tbody tr {
             transition: all 0.3s ease;
         }
-        .btn-primary {
-            background-color: var(--main-color);
-            border: none;
+
+        tbody tr:hover {
+            background: rgba(26, 210, 173, 0.05);
         }
-        .btn-primary:hover {
-            background-color: var(--hover-color);
-        }
-        .btn-warning {
-            background-color: var(--warning-color);
-            border: none;
-        }
-        .btn-warning:hover {
-            background-color: #e0a800;
-        }
-        .btn-danger {
-            background-color: var(--danger-color);
-            border: none;
-        }
-        .btn-danger:hover {
-            background-color: #c82333;
-        }
-        .btn-secondary {
-            background-color: #6c757d;
-        }
-        .btn-secondary:hover {
-            background-color: #5a6268;
-        }
-        .modal-content {
-            background-color: #333;
+
+        .dm_conge {
             color: var(--text-color);
-        }
-        .modal-header, .modal-footer {
-            border-color: #444;
-        }
-        .container {
-            margin-top: 50px;
-        }
-        .action-buttons {
-            display: flex;
-            gap: 10px;
-        }
-        .dm_salaire {
-            color: var(--text-color);
-            font-size: 1.1rem;
+            font-size: 0.95rem;
             font-weight: 500;
-            padding: 5px 0;
-            margin: 0 30px;
-            transition: all .50s ease;
+            padding: 0.75rem 1.25rem;
+            margin: 0 0.5rem;
+            border-radius: 0.75rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
-        .dm_salaire:hover {
+
+        .dm_conge i {
+            font-size: 1.25rem;
+        }
+
+        .dm_conge:hover {
             color: var(--main-color);
+            background: rgba(26, 210, 173, 0.1);
+            transform: translateY(-2px);
         }
-        
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            border: none;
+            font-size: 0.95rem;
+        }
+
+        .btn-secondary {
+            background: rgba(108, 117, 125, 0.2);
+            color: var(--text-color);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(108, 117, 125, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .btn i {
+            font-size: 1.25rem;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .container {
+                margin-top: 9rem;
+                padding: 0 1rem;
+            }
+
+            .dm_conge {
+                margin: 0.5rem;
+            }
+
+            th, td {
+                padding: 0.75rem;
+                font-size: 0.9rem;
+            }
+        }
     </style>
 </head>
 <body>
     <header>
-        <a href="{% url 'Demande_avance_salaire' utilisateur %}" class="dm_salaire">Demander avance sur le salaire</a>
+        <a href="{% url 'Demande_avance_salaire' utilisateur %}" class="dm_conge">Demander avance sur le salaire</a>
     </header>
+
     <div class="container">
         <h1>Liste des salaires</h1>
 
@@ -139,7 +206,7 @@
          </div>
             {% endif %}
 
-        <table class="table table-bordered table-striped">
+        <table class="table-container">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -171,9 +238,11 @@
                 {% endfor %}
             </tbody>
         </table>
-        <div class="d-flex justify-content-between mt-4">
-            
-            <a href="{% url 'acceuil-emp' utilisateur %}" class="btn btn-secondary">Terminer</a>
+        <div style="margin-top: 2rem;">
+            <a href="{% url 'acceuil-emp' utilisateur %}" class="btn btn-secondary">
+                <i class='bx bx-arrow-back'></i>
+                <span>Retour</span>
+            </a>
         </div>
     </div>
 
