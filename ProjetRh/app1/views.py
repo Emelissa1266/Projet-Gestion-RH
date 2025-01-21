@@ -25,33 +25,33 @@ def signup(request):
     if request.method == 'POST':
         form = SignupForm(request.POST)
         if form.is_valid():
-            # Sauvegarder l'utilisateur sans le valider pour ajouter des champs personnalisés
+            # Créer un utilisateur sans l'enregistrer pour ajouter des champs personnalisés
             utilisateur = form.save(commit=False)
             utilisateur.Login = form.cleaned_data['Login']
             
-            # Hacher le mot de passe avant de l'enregistrer
+            # Hacher le mot de passe avant de le sauvegarder
             utilisateur.mot_de_passe = make_password(form.cleaned_data['mot_de_passe'])
-            
             utilisateur.role = 'candidate'  # Rôle par défaut
-            utilisateur.save()  # Sauvegarder l'utilisateur dans la base de données
+            utilisateur.save()
 
-            # Créer un objet Candidat associé à cet utilisateur
+            # Créer un objet Candidat lié à cet utilisateur
             Candidat.objects.create(
                 Nom=utilisateur.nom,
                 Prenom=utilisateur.prenom,
                 Utilisateur_Condidat=utilisateur,
-                Email=utilisateur.Login,  # Utiliser l'email fourni comme login
+                Email=utilisateur.Login,  # Utiliser l'email comme identifiant
                 Etat_condidature="en attente"  # État par défaut
             )
 
-            # Rediriger vers la page d'accueil après l'inscription
+            # Rediriger vers la page de connexion après inscription
             return redirect('connexion')
     else:
-        # Créer un formulaire vide si la requête est GET
+        # Formulaire vide pour une requête GET
         form = SignupForm()
 
-    # Rendre la page d'inscription avec le formulaire
+    # Rendre le template avec le formulaire
     return render(request, 'signup.html', {'form': form})
+
 
 
 

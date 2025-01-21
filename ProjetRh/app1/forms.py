@@ -12,10 +12,22 @@ class SignupForm(forms.ModelForm):
         model = Utilisateur
         fields = ['Login', 'mot_de_passe', 'nom', 'prenom']
         widgets = {
-            'Login': forms.EmailInput(attrs={'placeholder': 'Please enter your email', 'class': 'form-control'}),
-            'mot_de_passe': forms.PasswordInput(attrs={'placeholder': 'Mot de passe', 'class': 'form-control'}),
-            'nom': forms.TextInput(attrs={'placeholder': 'Nom', 'class': 'form-control'}),
-            'prenom': forms.TextInput(attrs={'placeholder': 'Prénom', 'class': 'form-control'}),
+            'Login': forms.EmailInput(attrs={
+                'placeholder': 'Veuillez entrer votre email',
+                'class': 'form-control',
+            }),
+            'mot_de_passe': forms.PasswordInput(attrs={
+                'placeholder': 'Mot de passe',
+                'class': 'form-control',
+            }),
+            'nom': forms.TextInput(attrs={
+                'placeholder': 'Nom',
+                'class': 'form-control',
+            }),
+            'prenom': forms.TextInput(attrs={
+                'placeholder': 'Prénom',
+                'class': 'form-control',
+            }),
         }
         labels = {
             'Login': 'Nom d\'utilisateur',
@@ -23,7 +35,8 @@ class SignupForm(forms.ModelForm):
             'nom': 'Nom',
             'prenom': 'Prénom',
         }
-        mot_de_passe = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+
+
 
 
 from django import forms
