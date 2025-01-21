@@ -103,13 +103,13 @@ class ContratForm(forms.ModelForm):
 class RecrutementForm(forms.ModelForm):
     class Meta:
         model = Recrutement
-        fields = ['offre_emploi', 'description', 'status', 'date_debut', 'Condidat_Recrutement']
+        fields = ['offre_emploi', 'description', 'status', 'date_debut']
         widgets = {
             'offre_emploi': forms.TextInput(attrs={'class': 'form-control'}),
             'description': forms.Textarea(attrs={'class': 'form-control'}),
             'status': forms.TextInput(attrs={'class': 'form-control'}),
             'date_debut': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
-            'Condidat_Recrutement': forms.SelectMultiple(attrs={'class': 'form-control'}),
+           
         }
 
 

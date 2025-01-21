@@ -30,7 +30,7 @@ def signup(request):
             utilisateur.Login = form.cleaned_data['Login']
             
             # Hacher le mot de passe avant de le sauvegarder
-            utilisateur.mot_de_passe = make_password(form.cleaned_data['mot_de_passe'])
+            utilisateur.mot_de_passe = form.cleaned_data['mot_de_passe']
             utilisateur.role = 'candidate'  # Rôle par défaut
             utilisateur.save()
 
@@ -515,7 +515,7 @@ def Demande_avance_salaire(request, utilisateur_id):
             demande.statut = "En attente"
 
            # Récupérer l'année de la date de la demande
-            demandeS = DemandeAvanceSalaire.objects.filter(Employe_demande=demande.Employe_demande).order_by('-Date_demande').last()
+            demandeS = DemandeAvanceSalaire.objects.filter(Employe_demande=demande.Employe_demande).order_by('-Date_demande').first()
             if demandeS :
                     if demandeS.Date_demande.year == demande.Date_demande.year :
                         demande.num_demande = demandeS.num_demande + 1
