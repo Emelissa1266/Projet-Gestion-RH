@@ -25,28 +25,34 @@ def signup(request):
     if request.method == 'POST':
         form = SignupForm(request.POST)
         if form.is_valid():
-           # Sauvegarder l'utilisateur sans le valider pour ajouter le rôle
-            Utilisateur =  form.save(commit=False)
-            Utilisateur.Login = form.cleaned_data['Login']
-            Utilisateur.mot_de_passe = form.cleaned_data['mot_de_passe']  # Hacher le mot de passe
-            Utilisateur.role = 'candidate'  # Par défaut, le rôle est "candidate"
+            # Sauvegarder l'utilisateur sans le valider pour ajouter des champs personnalisés
+            utilisateur = form.save(commit=False)
+            utilisateur.Login = form.cleaned_data['Login']
             
-            form.save()  # Sauvegarder l'utilisateur
+            # Hacher le mot de passe avant de l'enregistrer
+            utilisateur.mot_de_passe = make_password(form.cleaned_data['mot_de_passe'])
+            
+            utilisateur.role = 'candidate'  # Rôle par défaut
+            utilisateur.save()  # Sauvegarder l'utilisateur dans la base de données
 
-            # Créer un candidat associé à l'utilisateur
+            # Créer un objet Candidat associé à cet utilisateur
             Candidat.objects.create(
-                 Nom=Utilisateur.nom,
-                 Prenom=Utilisateur.prenom,
-                 Utilisateur_Condidat=Utilisateur,
-                 Email=Utilisateur.Login,  # Utiliser l'email fourni par l'utilisateur
-                 Etat_condidature="en attente"  # Etat par défaut pour un candidat
-             )
+                Nom=utilisateur.nom,
+                Prenom=utilisateur.prenom,
+                Utilisateur_Condidat=utilisateur,
+                Email=utilisateur.Login,  # Utiliser l'email fourni comme login
+                Etat_condidature="en attente"  # État par défaut
+            )
 
-            return redirect('connexion')  # Redirige vers la page de connexion après l'inscription
+            # Rediriger vers la page d'accueil après l'inscription
+            return redirect('connexion')
     else:
-        form = SignupForm()  # Créer un formulaire vide si c'est une requête GET
+        # Créer un formulaire vide si la requête est GET
+        form = SignupForm()
 
+    # Rendre la page d'inscription avec le formulaire
     return render(request, 'signup.html', {'form': form})
+
 
 
 #Fonction pour l'authentification
@@ -559,6 +565,10 @@ def Demande_Emploi(request, recrutement_id, utilisateur_id):
     recrutements = Recrutement.objects.all()
     return render(request, 'demande_Emploi.html', {'utilisateur': utilisateur_id, 'recrutements' : recrutements , 'messages': messages})
 
+from PIL import Image
+from io import BytesIO
+from django.core.files.base import ContentFile
+
 def profil_employe(request, utilisateur_id):
     # Récupérer l'utilisateur et l'employé via l'ID de l'utilisateur
     utilisateur = get_object_or_404(Utilisateur, id=utilisateur_id)
@@ -567,12 +577,29 @@ def profil_employe(request, utilisateur_id):
     except Employe.DoesNotExist:
         return redirect('error_page')  # Si l'utilisateur n'a pas d'employé, redirige vers une page d'erreur
 
-
     # Si l'utilisateur soumet un formulaire pour modifier son profil
     if request.method == 'POST':
-        form = EmployeProfileForm(request.POST,request.FILES, instance=employe)
+        form = EmployeProfileForm(request.POST, request.FILES, instance=employe)
         if form.is_valid():
-            form.save()  # Sauvegarder les modifications
+            # Vérifier si une image de profil est uploadée
+            if 'photo_profil' in request.FILES:
+                uploaded_image = request.FILES['photo_profil']
+
+                # Améliorer la qualité de l'image
+                image = Image.open(uploaded_image)
+                image = image.convert('RGB')  # Assurer que l'image est en mode RGB
+                image = image.resize((300, 300))  # Redimensionner à 300x300 (ou une taille souhaitée)
+
+                # Sauvegarder l'image traitée dans un objet fichier
+                buffer = BytesIO()
+                image.save(buffer, format='JPEG', quality=90)  # Qualité de 90 pour une bonne compression
+                buffer.seek(0)
+                processed_image = ContentFile(buffer.read(), name=uploaded_image.name)
+
+                # Mettre à jour l'image de profil de l'employé avec l'image traitée
+                employe.photo_profil = processed_image
+
+            form.save()  # Sauvegarder les autres modifications
             return redirect('acceuil-emp', utilisateur_id=utilisateur.id)  # Rediriger vers la même page
     else:
         # Sinon, afficher le formulaire avec les données actuelles

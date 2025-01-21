@@ -25,76 +25,130 @@
         body {
             background-color: var(--bg-color);
             color: var(--text-color);
+            min-height: 100vh;
+            padding: 2rem 1rem;
         }
         .container {
             background-color: #333;
-            padding: 30px;
-            border-radius: 10px;
+            padding: 2rem;
+            border-radius: 1rem;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            margin-top: 80px;
-            max-width: 700px;
+            margin: 2rem auto;
+            max-width: 800px;
         }
         h2 {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 2rem;
             color: var(--main-color);
+            font-size: 2rem;
+            font-weight: 600;
         }
         .profile-photo {
             width: 150px;
             height: 150px;
             border-radius: 50%;
             object-fit: cover;
-            border: 3px solid var(--main-color);
+            border: 4px solid var(--main-color);
             cursor: pointer;
-            margin: 20px auto;
+            margin: 1.5rem auto;
             display: block;
+            transition: transform 0.3s ease;
+        }
+        .profile-photo:hover {
+            transform: scale(1.05);
         }
         fieldset {
-            border: 1px solid var(--main-color);
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
+            border: 2px solid var(--main-color);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            background-color: rgba(0, 0, 0, 0.2);
         }
         legend {
             color: var(--main-color);
-            padding: 0 10px;
+            padding: 0 1rem;
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--main-color);
             font-weight: 500;
         }
-        input, select {
-            width: 97%;
-            background-color: transparent;
-            border: none;
+        input, select, textarea {
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(131, 219, 211, 0.3);
+            border-radius: 0.75rem;
+            padding: 0.75rem 1rem;
+            color: var(--text-color);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        input:focus, select:focus, textarea:focus {
             outline: none;
-            border-radius: 30px;
-            border: 1px solid rgba(167, 219, 225, 0.626);
-            margin-bottom: 10px;
-            color: white;
-            padding: 10px;
+            border-color: var(--main-color);
+            box-shadow: 0 0 0 2px rgba(131, 219, 211, 0.2);
+        }
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2383dbd3'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1.5rem;
+            padding-right: 2.5rem;
         }
         option {
             background-color: #333;
-            color: white;
+            color: var(--text-color);
         }
         .btn-primary {
             width: 100%;
-            padding: 10px 15px;
-            background-color: #32a895;
-            color: white;
-            border-radius: 20px;
+            padding: 1rem;
+            background-color: var(--main-color);
+            color: var(--bg-color);
             border: none;
+            border-radius: 0.75rem;
+            font-size: 1.1rem;
+            font-weight: 600;
             cursor: pointer;
-            font-size: 16px;
-            font-weight: bold;
-            text-align: center;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
         }
         .btn-primary:hover {
-            background-color: var(--main-color);
+            background-color: #6ac9c1;
+            transform: translateY(-2px);
         }
-        a {
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+        .btn-secondary {
+            display: inline-block;
             text-align: center;
-            display: block;
-            margin-top: 10px;
+            margin-top: 1rem;
             color: var(--main-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        .btn-secondary:hover {
+            color: #6ac9c1;
+        }
+        .error-message {
+            color: #ff6b6b;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
         }
     </style>
 </head>
@@ -113,29 +167,130 @@
             {% csrf_token %}
             <fieldset>
                 <legend>Modifier les Informations</legend>
-                {{ form.as_p }}
+                
+                <div class="form-group">
+                    {{ form.nom.label_tag }}
+                    {{ form.nom }}
+                    {% if form.nom.errors %}
+                        <div class="error-message">{{ form.nom.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    {{ form.prenom.label_tag }}
+                    {{ form.prenom }}
+                    {% if form.prenom.errors %}
+                        <div class="error-message">{{ form.prenom.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    {{ form.date_de_naissance.label_tag }}
+                    {{ form.date_de_naissance }}
+                    {% if form.date_de_naissance.errors %}
+                        <div class="error-message">{{ form.date_de_naissance.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    {{ form.date_aumbauche.label_tag }}
+                    {{ form.date_aumbauche }}
+                    {% if form.date_aumbauche.errors %}
+                        <div class="error-message">{{ form.date_aumbauche.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    {{ form.adresse.label_tag }}
+                    {{ form.adresse }}
+                    {% if form.adresse.errors %}
+                        <div class="error-message">{{ form.adresse.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    {{ form.Historique_professionnel.label_tag }}
+                    {{ form.Historique_professionnel }}
+                    {% if form.Historique_professionnel.errors %}
+                        <div class="error-message">{{ form.Historique_professionnel.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    {{ form.Service_Employe.label_tag }}
+                    {{ form.Service_Employe }}
+                    {% if form.Service_Employe.errors %}
+                        <div class="error-message">{{ form.Service_Employe.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    {{ form.Competance_Employe.label_tag }}
+                    {{ form.Competance_Employe }}
+                    {% if form.Competance_Employe.errors %}
+                        <div class="error-message">{{ form.Competance_Employe.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    {{ form.Employe_Formation.label_tag }}
+                    {{ form.Employe_Formation }}
+                    {% if form.Employe_Formation.errors %}
+                        <div class="error-message">{{ form.Employe_Formation.errors }}</div>
+                    {% endif %}
+                </div>
             </fieldset>
-            <button type="submit" class="btn btn-primary">Terminer</button>
+
+            <button type="submit" class="btn-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="17 8 12 3 7 8"/>
+                    <line x1="12" y1="3" x2="12" y2="15"/>
+                </svg>
+                Terminer
+            </button>
             <a href="{% url 'acceuil-emp' utilisateur_id=utilisateur.id %}" class="btn-secondary">Retour</a>
         </form>
     </div>
+
     <script>
-        const profilePhoto = document.getElementById('profile-photo');
-        const fileInput = document.getElementById('file-input');
+        document.addEventListener('DOMContentLoaded', () => {
+            const profilePhoto = document.getElementById('profile-photo');
+            const fileInput = document.getElementById('file-input');
 
-        profilePhoto.addEventListener('click', () => {
-            fileInput.click();
-        });
+            profilePhoto.addEventListener('click', () => {
+                fileInput.click();
+            });
 
-        fileInput.addEventListener('change', (event) => {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    profilePhoto.src = e.target.result;
-                };
-                reader.readAsDataURL(file);
-            }
+            fileInput.addEventListener('change', (event) => {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        profilePhoto.src = e.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            // Add animation for form submission
+            const form = document.querySelector('form');
+            form.addEventListener('submit', function(e) {
+                const submitButton = this.querySelector('.btn-primary');
+                const originalText = submitButton.innerHTML;
+                
+                submitButton.innerHTML = `
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 6L9 17l-5-5"/>
+                    </svg>
+                    Enregistré
+                `;
+                
+                // The form will submit normally, this is just for visual feedback
+                setTimeout(() => {
+                    submitButton.innerHTML = originalText;
+                }, 2000);
+            });
         });
     </script>
 </body>

@@ -24,11 +24,7 @@ class SignupForm(forms.ModelForm):
             'prenom': 'Prénom',
         }
         mot_de_passe = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
-    def clean_mot_de_passe(self):
-        mot_de_passe = self.cleaned_data.get('mot_de_passe')
-        if len(mot_de_passe) < 8:
-            raise forms.ValidationError("Le mot de passe doit contenir au moins 8 caractères.")
-        return mot_de_passe
+
 
 from django import forms
 from .models import Utilisateur, Employe
