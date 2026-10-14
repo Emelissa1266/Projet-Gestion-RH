@@ -172,6 +172,7 @@ class EmployeProfileForm(forms.ModelForm):
             'Historique_professionnel': forms.Textarea(attrs={'class': 'form-control'}),
         }
 
+#class CandidatProfileForm
 class CandidatProfileForm(forms.ModelForm):
     class Meta:
         model = Candidat
