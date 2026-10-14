@@ -9,12 +9,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.utils import timezone
 from django.core.mail import send_mail
 from django.contrib.auth import authenticate, login
-import pandas as pd 
-import plotly.express as px
 from datetime import datetime
-from plotly.offline import plot
-from django.shortcuts import render
-
+import json
 
 
 def home_candidat(request):
@@ -639,95 +635,150 @@ def Etat_candidature(request, utilisateur_id):
 #retrieve data from Employe model and convert it into a Pandas DataFrame.
 def get_employe_data():
     employes = Employe.objects.all().values(
-        'id', 'nom', 'prenom', 'sexe', 'date_de_naissance', 'date_aumbauche', 'Service_Employe'
+        'sexe', 'date_de_naissance', 'date_aumbauche'
     )
-    df = pd.DataFrame(employes)
-    return df
+    return list(employes)
 
 # Calcul de l'âge et de l'ancienneté
-def calculate_age_and_seniority(df):
-    today = datetime.today()
-    
-    # Assurez-vous que les colonnes 'date_de_naissance' et 'date_aumbauche' sont des dates
-    df['date_de_naissance'] = pd.to_datetime(df['date_de_naissance'], errors='coerce')
-    df['date_aumbauche'] = pd.to_datetime(df['date_aumbauche'], errors='coerce')
-    
-    # Calcul de l'âge
-    df['age'] = df['date_de_naissance'].apply(lambda x: today.year - x.year - ((today.month, today.day) < (x.month, x.day)))
-    
-    # Calcul de l'ancienneté
-    df['anciennete'] = df['date_aumbauche'].apply(lambda x: today.year - x.year - ((today.month, today.day) < (x.month, x.day)))
-    
-    return df
+def calculate_years(date_value):
+    if not date_value:
+        return None
+    if isinstance(date_value, datetime):
+        date_value = date_value.date()
+    today = datetime.today().date()
+    years = today.year - date_value.year - ((today.month, today.day) < (date_value.month, date_value.day))
+    return years if years >= 0 else None
 
 # Fonction pour analyser la répartition par sexe
 def analyze_gender_distribution():
-    df = get_employe_data()
-    df = calculate_age_and_seniority(df)
-    gender_count = df['sexe'].value_counts()
-    return gender_count
+    counts = {'Masculin': 0, 'Féminin': 0, 'Inconnu': 0}
+    for employe in get_employe_data():
+        sexe = employe.get('sexe')
+        if not sexe:
+            key = 'Inconnu'
+        else:
+            valeur = str(sexe).strip().lower()
+            if valeur in ['m', 'masculin', 'homme']:
+                key = 'Masculin'
+            elif valeur in ['f', 'féminin', 'femme']:
+                key = 'Féminin'
+            else:
+                key = 'Inconnu'
+        counts[key] += 1
+    return {label: count for label, count in counts.items() if count > 0}
 
 # Fonction pour analyser la répartition par âge
 def analyze_age_distribution():
-    df = get_employe_data()
-    df = calculate_age_and_seniority(df)
-    age_bins = [20, 30, 40, 50, 60, 70, 80]
-    df['age_group'] = pd.cut(df['age'], bins=age_bins, labels=['20-29', '30-39', '40-49', '50-59', '60-69', '70-79'])
-    age_distribution = df['age_group'].value_counts().sort_index()
-    return age_distribution
+    groups = {'20-29': 0, '30-39': 0, '40-49': 0, '50-59': 0, '60-69': 0, '70+': 0}
+    for employe in get_employe_data():
+        age = calculate_years(employe.get('date_de_naissance'))
+        if age is None or age < 20:
+            continue
+        if age < 30:
+            groups['20-29'] += 1
+        elif age < 40:
+            groups['30-39'] += 1
+        elif age < 50:
+            groups['40-49'] += 1
+        elif age < 60:
+            groups['50-59'] += 1
+        elif age < 70:
+            groups['60-69'] += 1
+        else:
+            groups['70+'] += 1
+    return {label: count for label, count in groups.items() if count > 0}
 
 # Fonction pour analyser la répartition par ancienneté
 def analyze_seniority_distribution():
-    df = get_employe_data()
-    df = calculate_age_and_seniority(df)
-    seniority_bins = [0, 2, 5, 10, 15, 20, 30]
-    df['seniority_group'] = pd.cut(df['anciennete'], bins=seniority_bins, labels=['0-2', '3-5', '6-10', '11-15', '16-20', '20+'])
-    seniority_distribution = df['seniority_group'].value_counts().sort_index()
-    return seniority_distribution
+    groups = {'0-2': 0, '3-5': 0, '6-10': 0, '11-15': 0, '16-20': 0, '20+': 0}
+    for employe in get_employe_data():
+        seniority = calculate_years(employe.get('date_aumbauche'))
+        if seniority is None or seniority < 0:
+            continue
+        if seniority <= 2:
+            groups['0-2'] += 1
+        elif seniority <= 5:
+            groups['3-5'] += 1
+        elif seniority <= 10:
+            groups['6-10'] += 1
+        elif seniority <= 15:
+            groups['11-15'] += 1
+        elif seniority <= 20:
+            groups['16-20'] += 1
+        else:
+            groups['20+'] += 1
+    return {label: count for label, count in groups.items() if count > 0}
 
-# Fonction pour créer un graphique de la répartition par sexe
-def plot_gender_distribution():
-    gender_count = analyze_gender_distribution()
-    fig = px.bar(
-        x=gender_count.index, 
-        y=gender_count.values, 
-        labels={'x': 'Gender', 'y': 'Count'},
-        title="Gender Distribution of Employees"
-    )
-    return plot(fig, output_type="div")
+# Analyse des candidatures
+def analyze_candidature_status():
+    counts = {}
+    for candidat in Candidat.objects.all().values('Etat_condidature'):
+        status = candidat.get('Etat_condidature') or 'Inconnu'
+        counts[status] = counts.get(status, 0) + 1
+    return counts
 
-# Fonction pour créer un graphique de la répartition par âge
-def plot_age_distribution():
-    age_distribution = analyze_age_distribution()
-    fig = px.bar(
-        x=age_distribution.index, 
-        y=age_distribution.values, 
-        labels={'x': 'Age Group', 'y': 'Count'},
-        title="Age Distribution of Employees"
-    )
-    return plot(fig, output_type="div")
+# Analyse des types de congé
+def analyze_conge_type_distribution():
+    type_labels = dict(Conge.TYPE_CHOICES)
+    counts = {}
+    for conge in Conge.objects.all().values('type_conge'):
+        key = type_labels.get(conge.get('type_conge'), conge.get('type_conge') or 'Inconnu')
+        counts[key] = counts.get(key, 0) + 1
+    return counts
 
-# Fonction pour créer un graphique de la répartition par ancienneté
-def plot_seniority_distribution():
-    seniority_distribution = analyze_seniority_distribution()
-    fig = px.bar(
-        x=seniority_distribution.index, 
-        y=seniority_distribution.values, 
-        labels={'x': 'Seniority Group', 'y': 'Count'},
-        title="Seniority Distribution of Employees"
-    )
-    return plot(fig, output_type="div")
+# Analyse du statut des demandes de congé
+def analyze_demande_conge_status_distribution():
+    status_labels = {'en_attente': 'En attente', 'approuve': 'Approuvé', 'rejete': 'Rejeté'}
+    counts = {}
+    for demande in DemandeConge.objects.all().values('statut'):
+        key = status_labels.get(demande.get('statut'), demande.get('statut') or 'Inconnu')
+        counts[key] = counts.get(key, 0) + 1
+    return counts
+
+# Tendance des salaires nets par mois
+def analyze_salary_trend():
+    trend = {}
+    for row in Salaire.objects.order_by('mois_annee').values('mois_annee', 'salaire_net'):
+        date_value = row.get('mois_annee')
+        if not date_value:
+            continue
+        if isinstance(date_value, datetime):
+            date_value = date_value.date()
+        label = date_value.strftime('%b %Y')
+        trend.setdefault(label, []).append(row.get('salaire_net') or 0)
+    return {label: round(sum(values) / len(values), 2) for label, values in trend.items()}
+
+# Résultats des évaluations employés
+def analyze_evaluation_results_distribution():
+    counts = {}
+    for row in Evaluation.objects.all().values('Resultat'):
+        key = row.get('Resultat') or 'Non défini'
+        counts[key] = counts.get(key, 0) + 1
+    return counts
 
 # Vue pour la page d'accueil ARH
 def acceuil_arh(request):
-    # Création des graphiques
-    gender_chart = plot_gender_distribution()
-    age_chart = plot_age_distribution()
-    seniority_chart = plot_seniority_distribution()
+    gender_data = analyze_gender_distribution()
+    age_data = analyze_age_distribution()
+    seniority_data = analyze_seniority_distribution()
+    candidature_data = analyze_candidature_status()
+    conge_type_data = analyze_conge_type_distribution()
+    demande_conge_status_data = analyze_demande_conge_status_distribution()
+    salaire_trend_data = analyze_salary_trend()
+    evaluation_data = analyze_evaluation_results_distribution()
 
-    # Rendu du template avec les graphiques
     return render(request, 'AcceuilARH.html', {
-        'gender_chart': gender_chart,
-        'age_chart': age_chart,
-        'seniority_chart': seniority_chart,
+        'gender_data': json.dumps(gender_data),
+        'age_data': json.dumps(age_data),
+        'seniority_data': json.dumps(seniority_data),
+        'candidature_data': json.dumps(candidature_data),
+        'conge_type_data': json.dumps(conge_type_data),
+        'demande_conge_status_data': json.dumps(demande_conge_status_data),
+        'salaire_trend_data': json.dumps(salaire_trend_data),
+        'evaluation_data': json.dumps(evaluation_data),
+        'total_employes': Employe.objects.count(),
+        'total_conges': Conge.objects.count(),
+        'total_salaires': Salaire.objects.count(),
+        'total_candidats': Candidat.objects.count(),
+        'total_evaluations': Evaluation.objects.count(),
     })

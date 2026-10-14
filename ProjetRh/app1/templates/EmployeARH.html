@@ -6,8 +6,16 @@
     <title>Gestion des Employés</title>
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    
+    
+    
 </head>
 <body>
+    <div class="theme-control-bar">
+        <a href="{% url 'acceuil_arh' %}" class="btn btn-primary" id="dashboard-return">Retour au Dashboard</a>
+        <button id="theme-toggle" class="btn btn-secondary">Mode Clair/Sombre</button>
+    </div>
+
     <header class="header bg-dark text-white text-center py-3">
         <h1>Gestion des Employés</h1>
     </header>
@@ -47,6 +55,9 @@
             </tbody>
         </table>
     </main>
-    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>    <script src="{% static 'js/theme-toggle.js' %}"></script>
+    <script src="{% static 'js/theme-toggle.js' %}"></script>
+    <script src="{% static 'js/theme-toggle.js' %}"></script>
+    <script src="{% static 'js/theme-toggle.js' %}"></script>
 </body>
 </html>

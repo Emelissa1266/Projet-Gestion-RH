@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ajouter un employé</title>
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * {
@@ -121,6 +122,10 @@
     </style>
 </head>
 <body>
+    <div class="d-flex justify-content-between p-3">
+        <a href="{% url 'acceuil_arh' %}" class="btn btn-primary">Retour au Dashboard</a>
+        <button id="theme-toggle" class="btn btn-secondary">Mode Clair/Sombre</button>
+    </div>
     <div class="container">
         <h1>Ajouter un employé</h1>
         <form method="POST">
@@ -141,5 +146,17 @@
         
     </div>
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggleButton = document.getElementById('theme-toggle');
+            const currentTheme = localStorage.getItem('theme') || 'dark';
+            document.body.classList.add(currentTheme + '-mode');
+            toggleButton.addEventListener('click', function() {
+                document.body.classList.toggle('light-mode');
+                const theme = document.body.classList.contains('light-mode') ? 'light' : 'dark';
+                localStorage.setItem('theme', theme);
+            });
+        });
+    </script>
 </body>
 </html>

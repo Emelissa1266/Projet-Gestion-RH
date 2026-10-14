@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 {% load static %}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Accueil - Gestion des Ressources Humaines</title>
+    <title>Tableau de bord RH</title>
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
@@ -12,247 +12,122 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-            text-decoration: none;
-            list-style: none;
-        }
-        :root {
-            --bg-color: #222327;
-            --text-color: #fcf8f8;
-            --main-color: #1ad2ada6;
-        }
-        body {
-            background-color: var(--bg-color);
-            margin: 0;
-            padding: 0;
-        }
-        header {
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: var(--bg-color);
-            padding: 15px 12%;
-            transition: all 0.2s ease;
-        }
-        .navbar {
-            display: flex;
-            gap: 1.5rem;
-        }
-
-        .navbar a {
-            color: var(--text-color);
-            font-size: 0.95rem;
-            font-weight: 500;
-            padding: 0.5rem 1rem;
-            border-radius: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: all 0.3s ease;
-        }
-
-        .navbar a i {
-            font-size: 1.2rem;
-        }
-
-        .navbar a:hover {
-            color: var(--main-color);
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .navbar a.active {
-            color: var(--main-color);
-            background: rgba(26, 210, 173, 0.1);
-        }
-        .main {
-            display: flex;
-            align-items: center;
-        }
-        .main a {
-            margin-right: 25px;
-            margin-left: 10px;
-            color: var(--text-color);
-            font-size: 1.1rem;
-            font-weight: 500;
-            transition: all 0.5s ease;
-        }
-        .main a:hover {
-            color: var(--main-color);
-        }
-        #menu-icon {
-            font-size: 35px;
-            color: var(--text-color);
-            cursor: pointer;
-            display: none;
-        }
-        @media (max-width: 1280px) {
-            header {
-                padding: 1rem 5%;
-            }
-        }
-       
-        @media (max-width: 1090px) {
-            #menu-icon {
-                display: block;
-            }
-
-            .navbar {
-                color: black;
-                position: absolute;
-                top: 100%;
-                right: -100%;
-                width: 270px;
-                flex-direction: column;
-                background: var(--card-bg);
-                padding: 1rem;
-                border-radius: 0.5rem;
-                box-shadow: 0 4px 12px var(--shadow-color);
-                transition: 0.5s ease;
-            }
-
-            .navbar.open {
-                right: 2rem;
-            }
-
-            .navbar a {
-                padding: 0.75rem 1rem;
-            }
-
-            .navbar a:hover,
-            .navbar a.active {
-                background: var(--main-color);
-                color: var(--text-color);
-            }
-        }
-        .features {
-            margin-top: 40px;
-        }
-        .feature-card {
-            background-color: #ffffff;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            padding: 30px;
-            height: 250px;
-            text-align: center;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .feature-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-        }
-        .btn-primary {
-            background-color: #1ad2ada6;
-            border-color: #1ad267a6;
-        }
-        .btn-primary:hover {
-            background-color: #32a895;
-            border-color: #32a895;
-        }
-        .footer {
-            background-color: #343a40;
-            color: white;
-            text-align: center;
-            padding: 15px;
-            margin-top: 120px;
-        }
-        .footer a {
-            color: #ffffff;
-            text-decoration: underline;
-        }
-        .footer a:hover {
-            color: #d4d4d4;
-        }
-        .container {
-            margin-top: 20px;
-        }
-        h2{
-            color: #ffffff;
-            text-align: center;
-            margin-bottom: 30px;
-        }
-    </style>
-
+    
 </head>
 <body>
     <header>
-            <ul class="navbar">
-                <li><a href="{% url 'acceuil_arh' %}" class="active">
-                    <i class='bx bx-home-alt-2'></i>
-                    <span>Accueil</span>
-                </a></li>
-                <li><a href="{% url 'liste_employes' %}">
-                    <i class='bx bx-user'></i>
-                    <span>Employés</span>
-                </a></li>
-                <li><a href="{% url 'liste_conges' %}">
-                    <i class='bx bx-calendar'></i>
-                    <span>Congés</span>
-                </a></li>
-                <li><a href="{% url 'liste_salaires' %}">
-                    <i class='bx bx-wallet'></i>
-                    <span>Salaires</span>
-                </a></li>
-                <li><a href="{% url 'liste_evaluations' %}">
-                    <i class='bx bx-file'></i>
-                    <span>Rapports</span>
-                </a></li>
-                <li><a href="{% url 'liste_contrats' %}">
-                    <i class='bx bx-file-blank'></i>
-                    <span>Contrats</span>
-                </a></li>
-                <li><a href="{% url 'liste_recrutements' %}">
-                    <i class='bx bx-user-plus'></i>
-                    <span>Recrutement</span>
-                </a></li>
-            </ul>
+        <div class="site-brand">
+            <i class='bx bx-bar-chart-alt-2'></i>
+            <div>
+                <div>RH Dashboard</div>
+                <small style="color: rgba(248,244,238,0.72); font-weight: 500;">Vue direct du pilotage des talents</small>
+            </div>
+        </div>
+
+        <ul class="navbar">
+            <li><a href="{% url 'acceuil_arh' %}" class="active"><i class='bx bx-home-alt-2'></i>Accueil</a></li>
+            <li><a href="{% url 'liste_employes' %}"><i class='bx bx-user'></i>Employés</a></li>
+            <li><a href="{% url 'liste_conges' %}"><i class='bx bx-calendar'></i>Congés</a></li>
+            <li><a href="{% url 'liste_salaires' %}"><i class='bx bx-wallet'></i>Salaires</a></li>
+            <li><a href="{% url 'liste_evaluations' %}"><i class='bx bx-file'></i>Rapports</a></li>
+            <li><a href="{% url 'liste_contrats' %}"><i class='bx bx-file-blank'></i>Contrats</a></li>
+            <li><a href="{% url 'liste_recrutements' %}"><i class='bx bx-user-plus'></i>Recrutement</a></li>
+        </ul>
+
         <div class="main">
-            <a href="{% url 'homecandidat' %}"><i class='bx bx-log-out'></i></a>
+        <button id="theme-toggle"><i class='bx bx-moon'></i><span>Mode clair</span></button>
+            <a href="{% url 'homecandidat' %}" title="Déconnexion"><i class='bx bx-log-out-circle'></i></a>
             <div class="bx bx-menu" id="menu-icon"></div>
         </div>
-    </header><br>
-    
+    </header>
+
     <main class="container">
-        
-        <!-- Graphique de répartition par sexe -->
-        <div>
-            <h3>Répartition par sexe</h3>
-            {{ gender_chart|safe }}
-        </div>
+        <section class="dashboard-title">
+            <div>
+                <hr>
+                <h1>Tableau de bord RH</h1>
+                <p>Une vue synthétique de vos effectifs, congés et performances pour piloter vos décisions avec un style professionnel.</p>
+            </div>
+        </section>
 
-        <!-- Graphique de répartition par âge -->
-        <div>
-            <h3>Répartition par âge</h3>
-            {{ age_chart|safe }}
-        </div>
+        <section class="kpi-row">
+            <article class="stat-card">
+                <span class="icon"><i class='bx bx-group'></i></span>
+                <h3>{{ total_employes|default:'--' }}</h3>
+                <p>Employés actifs</p>
+            </article>
+            <article class="stat-card">
+                <span class="icon"><i class='bx bx-calendar-check'></i></span>
+                <h3>{{ total_conges|default:'--' }}</h3>
+                <p>Congés enregistrés</p>
+            </article>
+            <article class="stat-card">
+                <span class="icon"><i class='bx bx-wallet-alt'></i></span>
+                <h3>{{ total_salaires|default:'--' }}</h3>
+                <p>Paiements en cours</p>
+            </article>
+            <article class="stat-card">
+                <span class="icon"><i class='bx bx-briefcase'></i></span>
+                <h3>{{ total_candidats|default:'--' }}</h3>
+                <p>Candidatures reçues</p>
+            </article>
+        </section>
 
-        <!-- Graphique de répartition par ancienneté -->
-        <div>
-            <h3>Répartition par ancienneté</h3>
-            {{ seniority_chart|safe }}
-        </div>
-        
+        <section class="charts-grid">
+            <article class="chart-card">
+                <h3>Répartition par sexe</h3>
+                <div class="chart-wrapper">
+                    <canvas id="genderChart"></canvas>
+                </div>
+            </article>
+            <article class="chart-card">
+                <h3>Répartition par âge</h3>
+                <div class="chart-wrapper">
+                    <canvas id="ageChart"></canvas>
+                </div>
+            </article>
+            <article class="chart-card">
+                <h3>Répartition par ancienneté</h3>
+                <div class="chart-wrapper">
+                    <canvas id="seniorityChart"></canvas>
+                </div>
+            </article>
+            <article class="chart-card">
+                <h3>Statut des candidatures</h3>
+                <div class="chart-wrapper">
+                    <canvas id="candidatureChart"></canvas>
+                </div>
+            </article>
+            <article class="chart-card">
+                <h3>Types de congé</h3>
+                <div class="chart-wrapper">
+                    <canvas id="congeChart"></canvas>
+                </div>
+            </article>
+            <article class="chart-card">
+                <h3>Trend des salaires nets</h3>
+                <div class="chart-wrapper">
+                    <canvas id="salaireChart"></canvas>
+                </div>
+            </article>
+            <article class="chart-card">
+                <h3>Résultats des évaluations</h3>
+                <div class="chart-wrapper">
+                    <canvas id="evaluationChart"></canvas>
+                </div>
+            </article>
+        </section>
     </main>
 
     <footer class="footer">
         <p>&copy; 2024 Gestion des Ressources Humaines. Tous droits réservés. | <a href="#">Conditions d'utilisation</a></p>
     </footer>
-    <script>
-        let menu = document.querySelector('#menu-icon');
-        let navbar = document.querySelector('.navbar');
-        menu.onclick = () => {
-            menu.classList.toggle('bx-x');
-            navbar.classList.toggle('open');
-        }
-    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/theme-toggle.js' %}"></script>
+    <script src="{% static 'js/theme-toggle.js' %}"></script>
+    <script src="{% static 'js/theme-toggle.js' %}"></script>
 </body>
 </html>

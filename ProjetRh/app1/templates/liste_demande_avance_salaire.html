@@ -6,8 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Liste des Demandes d'avance du salaire</title>
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    
+    
 </head>
 <body>
+    <div class="theme-control-bar">
+        <a href="{% url 'acceuil_arh' %}" class="btn btn-primary" id="dashboard-return">Retour au Dashboard</a>
+        <button id="theme-toggle" class="btn btn-secondary">Mode Clair/Sombre</button>
+    </div>
+
     <div class="container mt-5">
         <h1 class="mb-4">Liste des Demandes d'avance du salaire</h1>
         <table class="table table-bordered table-striped">
@@ -41,6 +49,9 @@
             </tbody>
         </table>
     </div>
-    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>    <script src="{% static 'js/theme-toggle.js' %}"></script>
+    <script src="{% static 'js/theme-toggle.js' %}"></script>
+    <script src="{% static 'js/theme-toggle.js' %}"></script>
+    <script src="{% static 'js/theme-toggle.js' %}"></script>
 </body>
 </html>

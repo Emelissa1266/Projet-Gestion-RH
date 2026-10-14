@@ -1,81 +1,20 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fiche de Contrat</title>
-    <style>
-        body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-}
-
-.container {
-    width: 80%;
-    margin: 0 auto;
-    background-color: #fff;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-header {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-header h1 {
-    margin: 0;
-    font-size: 24px;
-}
-
-.company-info {
-    text-align: center;
-    margin-top: 10px;
-}
-
-.employee-info, .contract-details {
-    margin-bottom: 20px;
-}
-
-.employee-info h2, .contract-details h2 {
-    font-size: 20px;
-    border-bottom: 2px solid #333;
-    padding-bottom: 5px;
-}
-
-footer {
-    text-align: center;
-    margin-top: 20px;
-}
-
-footer p {
-    margin: 5px 0;
-}
-
-footer button {
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    cursor: pointer;
-}
-
-footer button:hover {
-    background-color: #45a049;
-}
-
-/* Styles pour l'impression */
-@media print {
-    footer button {
-        display: none;
-    }
-}
-    </style>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    
+    
 </head>
 <body>
+    <div class="theme-control-bar">
+        <a href="{% url 'acceuil_arh' %}" class="btn btn-primary" id="dashboard-return">Retour au Dashboard</a>
+        <button id="theme-toggle" class="btn btn-secondary">Mode Clair/Sombre</button>
+    </div>
+
     <div class="container">
         <header>
             <h1>Fiche de Contrat</h1>
@@ -104,6 +43,9 @@ footer button:hover {
             <p>Signature de l'employeur</p>
             <button onclick="window.print()">Imprimer</button>
         </footer>
-    </div>
+    </div>    <script src="{% static 'js/theme-toggle.js' %}"></script>
+    <script src="{% static 'js/theme-toggle.js' %}"></script>
+    <script src="{% static 'js/theme-toggle.js' %}"></script>
+    <script src="{% static 'js/theme-toggle.js' %}"></script>
 </body>
 </html>
